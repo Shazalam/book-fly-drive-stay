@@ -54,6 +54,16 @@ export const TermsConditions = [
     </blockquote>`,
   },
   {
+    title: " Mobile (SMS) Communications",
+    content: `<blockquote class="bg-gray-50 border-l-4 border-blue-500 p-6 my-6 rounded-r-lg">
+  <p class="mb-4 pb-1 text-gray-700">By providing your mobile number and opting in to receive SMS messages, you consent to receive text messages from Book Fly Drive Stay. These messages may include booking confirmations, travel updates, promotional offers, and account notifications.</p>
+  <p class="mb-4 pb-1 text-gray-700">Message frequency may vary. Message and data rates may apply. You can opt out of receiving SMS messages at any time by replying STOP to any message. For assistance, reply HELP or visit <a href="https://www.bookflydrivestay.com">https://www.bookflydrivestay.com.</a></p>
+  <p class="mb-4 pb-1 text-gray-700">
+We do not share, sell, rent, or otherwise disclose your mobile (SMS) opt-in information to third parties for their marketing or promotional purposes. Mobile information will only be used for delivering the services you have explicitly requested.</p>
+  
+</blockquote>`,
+  },
+  {
     title: "Cancellations, Modifications, and Refunds",
     content: `<blockquote class="bg-gray-50 border-l-4 border-blue-500 p-6 my-6 rounded-r-lg">
       <ul class="list-disc pl-6 space-y-3">

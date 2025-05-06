@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   },
   description: "Cover your journey in no time with our travel booking service.",
   icons: {
-    icon: "/logo.png", 
+    icon: "/logo.png",
   },
   keywords: ["travel", "flight", "booking", "drive", "hotel", "trip"],
   openGraph: {
@@ -40,14 +40,7 @@ export const metadata: Metadata = {
     ],
     locale: "en_US",
     type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Book fly drive free",
-    description:
-      "Cover your journey in no time with our travel booking service.",
-    images: ["/logo.png"],
-  },
+  }
 };
 
 export default function RootLayout({
