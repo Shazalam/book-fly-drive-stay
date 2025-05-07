@@ -127,12 +127,11 @@ export const Privacy = [
   },
 
   {
-    title: " Mobile (SMS) Communications",
+    title: "SMS Consent",
     content: `<blockquote class="bg-gray-50 border-l-4 border-blue-500 p-6 my-6 rounded-r-lg">
-  <p class="mb-4 pb-1 text-gray-700">By providing your mobile number and opting in to receive SMS messages, you consent to receive text messages from Book Fly Drive Stay. These messages may include booking confirmations, travel updates, promotional offers, and account notifications.</p>
-  <p class="mb-4 pb-1 text-gray-700">Message frequency may vary. Message and data rates may apply. You can opt out of receiving SMS messages at any time by replying STOP to any message. For assistance, reply HELP or visit <a href="https://www.bookflydrivestay.com">https://www.bookflydrivestay.com.</a></p>
-  <p class="mb-4 pb-1 text-gray-700">
-We do not share, sell, rent, or otherwise disclose your mobile (SMS) opt-in information to third parties for their marketing or promotional purposes. Mobile information will only be used for delivering the services you have explicitly requested.</p>
+  <p class="mb-4 pb-1 text-gray-700">By providing your mobile number and opting in to receive SMS messages from Book Fly Drive Stay, you consent to receive text messages regarding booking confirmations, travel updates, promotional offers, and account notifications. Message frequency may vary, and standard message and data rates may apply. You may opt out at any time by replying STOP, and for assistance, reply HELP or visit our Privacy Policy.</p>
+  <p class="mb-4 pb-1 text-gray-700">To complete your booking and verify your identity, we may collect your full name, date of birth, email address, and government-issued ID. This information is used solely to process bookings and authenticate you as a customer. </p>
+  <p class="mb-4 pb-1 text-gray-700">We do not share, sell, rent, or disclose your personal information or SMS opt-in data with third parties or affiliates for marketing.</p>
   
 </blockquote>`,
   },
@@ -159,7 +158,7 @@ We do not share, sell, rent, or otherwise disclose your mobile (SMS) opt-in info
   {
     title: "Third Party Services",
     content: `<blockquote class="bg-gray-50 border-l-4 border-blue-500 p-6 my-6 rounded-r-lg">
-    <p class="mb-4 text-gray-700">Book-Fly-Drive-Stay may contain links to third-party websites or social media channels including Facebook, Twitter, etc. You understand we are in no way endorsing such sites. Such sites have their own privacy practices and we hold no control over them.</p>
+    <p class="mb-4 text-gray-700">Book-Fly-Drive-Stay may contain links to third-party websites or social media channels, including Facebook, Twitter, etc. You understand we are in no way endorsing such sites. Such sites have their own privacy practices and we hold no control over them.</p>
   </blockquote>`,
   },
   {
@@ -172,7 +171,7 @@ We do not share, sell, rent, or otherwise disclose your mobile (SMS) opt-in info
     title: "Choices and Access",
     content: `<blockquote class="bg-gray-50 border-l-4 border-blue-500 p-6 my-6 rounded-r-lg">
     <p class="mb-4 text-gray-700"><strong class="text-blue-600">Your choices regarding our use of your Personal Information</strong></p>
-    <p class="mb-4 text-gray-700">If you don't want to receive our marketing collaterals including emails and newsletter, you may opt out from our emailing list following the instructions contained in each such communication. You may also reach out to us in accordance with the "Contacting Us" section below.</p>
+    <p class="mb-4 text-gray-700">If you don't want to receive our marketing collaterals, including emails and newsletters, you may opt out of our mailing list following the instructions contained in each such communication. You may also reach out to us in accordance with the "Contacting Us" section below.</p>
     <p class="mb-4 text-gray-700"><strong class="text-blue-600">How you can access, change or suppress your PII</strong></p>
     <p class="mb-4 text-gray-700">If you would like to review, correct, update, suppress, or delete Personal Information that you have previously provided to us, you may contact us in accordance with the "Contacting Us" section below. In your request, please make clear what Personal Information you would like to have changed, whether you would like to have your Personal Information suppressed from our database, or otherwise let us know what limitations you would like to put on our use of your Personal Information. For your protection, we may only implement requests with respect to the Personal Information associated with the particular email address that you use to send us your request, and we may need to verify your identity before implementing your request. We will try to comply with your request as soon as reasonably practicable. Please note that we may need to retain certain information for recordkeeping purposes and/or to complete any transactions that you began prior to requesting a change or deletion. There may also be residual information that will remain within our databases and other records, which will not be removed.</p>
   </blockquote>`,
@@ -212,7 +211,7 @@ We do not share, sell, rent, or otherwise disclose your mobile (SMS) opt-in info
   {
     title: "Updates to This Privacy Policy",
     content: `<blockquote class="bg-gray-50 border-l-4 border-blue-500 p-6 my-6 rounded-r-lg">
-    <p class="mb-4 text-gray-700">Book-Fly-Drive-Stay reserves the discrete right to change or update this Privacy Policy without sending any prior notification. Your use of the Services following these changes means that you accept the revised Privacy Policy. The "Last Updated" tab at the top of this page mentions the date when the policy was lastly revised. Any changes will become effective when we post the revised Privacy Policy on the Services.</p>
+    <p class="mb-4 text-gray-700">Book-Fly-Drive-Stay reserves the right to change or update this Privacy Policy without sending any prior notification. Your use of the Services following these changes means that you accept the revised Privacy Policy. The "Last Updated" tab at the top of this page mentions the date when the policy was lastly revised. Any changes will become effective when we post the revised Privacy Policy on the Services.</p>
   </blockquote>`,
   },
   {
