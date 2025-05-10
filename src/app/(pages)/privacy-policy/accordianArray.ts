@@ -127,14 +127,51 @@ export const Privacy = [
   },
 
   {
-    title: "SMS Consent",
+    title: "SMS Terms & Conditions",
     content: `<blockquote class="bg-gray-50 border-l-4 border-blue-500 p-6 my-6 rounded-r-lg">
-  <p class="mb-4 pb-1 text-gray-700">By providing your mobile number and opting in to receive SMS messages from Book Fly Drive Stay, you consent to receive text messages regarding booking confirmations, travel updates, promotional offers, and account notifications. Message frequency may vary, and standard message and data rates may apply. You may opt out at any time by replying STOP, and for assistance, reply HELP or visit our Privacy Policy.</p>
-  <p class="mb-4 pb-1 text-gray-700">To complete your booking and verify your identity, we may collect your full name, date of birth, email address, and government-issued ID. This information is used solely to process bookings and authenticate you as a customer. </p>
-  <p class="mb-4 pb-1 text-gray-700">We do not share, sell, rent, or disclose your personal information or SMS opt-in data with third parties or affiliates for marketing.</p>
-  
-</blockquote>`,
-  },
+      <h3 class="text-lg font-semibold text-blue-600">SMS Terms & Conditions</h3>
+
+      <h4 class="text-md font-semibold text-blue-600 mt-4">SMS Consent Communication:</h4>
+      <p class="mb-4 text-gray-700">The information (Phone Numbers) obtained as part of the SMS consent process will not be shared with third parties for marketing purposes.</p>
+
+      <h4 class="text-md font-semibold text-blue-600 mt-4">Types of SMS Communications:</h4>
+      <p class="mb-4 text-gray-700">If you have consented to receive text messages from Book Fly Drive Stay, you may receive messages related to the following:</p>
+      <ul class="list-disc list-inside mb-4 text-gray-700">
+        <li>Customer Care</li>
+        <li>Follow-up messages</li>
+        <li>SMS Auth for booking</li>
+      </ul>
+
+      <h4 class="text-md font-semibold text-blue-600 mt-4">Message Frequency:</h4>
+      <p class="mb-4 text-gray-700">Message frequency may vary depending on the type of communication. For example, you may receive up to 10 SMS messages per week related to your [appointments/billing, etc.].</p>
+
+      <h4 class="text-md font-semibold text-blue-600 mt-4">Opt-in Method:</h4>
+      <p class="mb-4 text-gray-700">You may opt-in to receive SMS messages from Book fly drive stay in the following ways:
+•	Verbally, during a conversation
+</p>
+
+
+
+      <h4 class="text-md font-semibold text-blue-600 mt-4">Opt-Out Method:</h4>
+      <p class="mb-4 text-gray-700">You can opt-out of receiving SMS messages at any time. To do so, simply reply "STOP" to any SMS message you receive. Alternatively, you can contact us directly to request removal from our messaging list.</p>
+
+       <h4 class="text-md font-semibold text-blue-600 mt-4">Potential Fees for SMS Messaging:</h4>
+      <p class="mb-4 text-gray-700">Please note that standard message and data rates may apply, depending on your carrier’s pricing plan. These fees may vary if the message is sent domestically or internationally.</p>
+
+      <h4 class="text-md font-semibold text-blue-600 mt-4">Standard Messaging Disclosures:</h4>
+      <p class="mb-4 text-gray-700">o	Message and data rates may apply.
+o	You can opt out at any time by texting "STOP."
+o	For assistance, text "HELP" or visit our Privacy Policy (https://www.bookflydrivestay.com/privacy-policy) and Terms and Conditions (https://www.bookflydrivestay.com/terms-and-conditions) pages.
+o	Message frequency may vary.
+</p>
+
+ 
+      <h4 class="text-md font-semibold text-blue-600 mt-4">Help:</h4>
+      <p class="mb-4 text-gray-700">If you're experiencing any issues, simply reply with the keyword HELP. You can also reach us directly by calling +1 (844) 954-5425 or by sending a message with the word Help.</p>
+
+    </blockquote>`
+  }
+,
   {
     title: "How We May Collect Non-Personally Identifiable Information",
     content: `<blockquote class="bg-gray-50 border-l-4 border-blue-500 p-6 my-6 rounded-r-lg">
