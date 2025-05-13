@@ -1,24 +1,30 @@
 export const Privacy = [
   {
-    title: "What Information We Collect",
+    title: "What Information We Collect and How We Use It",
     content: `<div class="bg-gray-50 border-l-4 border-blue-500 p-6 my-6 rounded-r-lg">
   <p class="mb-4 text-gray-700">
-    Personally Identifiable Information (PII) or Personal Information What is PII or Personal Information? "PII or Personal Information" is information that identifies you as an individual or relates to an identifiable person, including, for example: 
+  We collect certain Personally Identifiable Information (PII), also referred to as Personal Information, to provide and improve our services, ensure a smooth travel experience, and comply with legal requirements
   </p>
-  
   <ul class="list-disc pl-6 space-y-3">
     <li class="py-1 text-gray-700">Name and Date of Birth</li>
     <li class="py-1 text-gray-700">Postal address (es)</li>
     <li class="py-1 text-gray-700">Telephone number</li>
     <li class="py-1 text-gray-700">Email address</li>
     <li class="py-1 text-gray-700">Credit and debit card number and related information</li>
-    <li class="py-1 text-gray-700">Social media account ID</li>
+    <li class="py-1 text-gray-700">Driving License</li>
     <li class="py-1 text-gray-700">Passport number</li>
     <li class="py-1 text-gray-700">Number assigned by a state or federal transport regulator.</li>
-    <li class="py-1 text-gray-700">Any other information you provide to make your trip convenient. For instance, information regarding dietary choice, points of departure and destinations.</li>
-    <li class="py-1 text-gray-700">If you submit any PII or Personal Information relating to other people to us or to our service providers in connection with the Services, you represent that you have the authority to do so and to permit us to use the information in accordance with this Privacy Policy.</li>
   </ul>
-</div>`,
+   <p class="mb-4 text-gray-700">
+Any other information you provide to make your trip convenient. For instance, information regarding dietary choice, points of departure and destinations.
+</p>
+   <p class="mb-4 text-gray-700">
+If you submit any PII or Personal Information relating to other people to us or to our service providers in connection with the Services, you represent that you have the authority to do so and to permit us to use the information in accordance with this Privacy Policy. 
+</p>
+<p class="mb-4 text-gray-700">
+  <strong>Please note:</strong> SMS opt-in or phone numbers collected for the purpose of SMS communications are not shared with any third party or affiliate company for marketing purposes.
+</p>
+  </div>`,
   },
   {
     title: "How We May Collect Your Personal Information",
