@@ -144,33 +144,42 @@ If you submit any PII or Personal Information relating to other people to us or 
       <p class="mb-4 text-gray-700">If you have consented to receive text messages from Book Fly Drive Stay, you may receive messages related to the following:</p>
       <ul class="list-disc list-inside mb-4 text-gray-700">
         <li>Customer Care</li>
-        <li>Follow-up messages</li>
+        <li>Appointment Reminders</li>
+          <li>Follow-up messages</li>
+            <li>Billing Inqueries</li>
         <li>SMS Auth for booking</li>
+        <li>Promotions or offers (if applicable)</li>
       </ul>
-
+      <p class="mb-4 text-gray-700">Example: Hello, this is a friendly reminder of your upcoming appointment with Dr. [Name] at [Location] on [Date] at [Time]. You can reply STOP to opt out of SMS messaging from Book Fly Drive Stay at any time.</p>
       <h4 class="text-md font-semibold text-blue-600 mt-4">Message Frequency:</h4>
-      <p class="mb-4 text-gray-700">Message frequency may vary depending on the type of communication. For example, you may receive up to 10 SMS messages per week related to your [appointments/billing, etc.].</p>
+      <p class="mb-4 text-gray-700">Message frequency may vary depending on the type of communication. You may receive up to 10 SMS messages per week related to your appointments or billing, etc.].</p>
 
       <h4 class="text-md font-semibold text-blue-600 mt-4">Opt-in Method:</h4>
       <p class="mb-4 text-gray-700">You may opt-in to receive SMS messages from Book fly drive stay in the following ways:
-•	Verbally, during a conversation
 </p>
-
-
-
+ <ul class="list-disc list-inside mb-4 text-gray-700">
+        <li>Verbally, during a conversation</li>
+        <li>By Submitting an online form</li>
+          <li>By filling out a paper form</li>
+      </ul>
       <h4 class="text-md font-semibold text-blue-600 mt-4">Opt-Out Method:</h4>
       <p class="mb-4 text-gray-700">You can opt-out of receiving SMS messages at any time. To do so, simply reply "STOP" to any SMS message you receive. Alternatively, you can contact us directly to request removal from our messaging list.</p>
 
        <h4 class="text-md font-semibold text-blue-600 mt-4">Potential Fees for SMS Messaging:</h4>
       <p class="mb-4 text-gray-700">Please note that standard message and data rates may apply, depending on your carrier’s pricing plan. These fees may vary if the message is sent domestically or internationally.</p>
-
+        
       <h4 class="text-md font-semibold text-blue-600 mt-4">Standard Messaging Disclosures:</h4>
-      <p class="mb-4 text-gray-700">o	Message and data rates may apply.
-o	You can opt out at any time by texting "STOP."
-o	For assistance, text "HELP" or visit our Privacy Policy (https://www.bookflydrivestay.com/privacy-policy) and Terms and Conditions (https://www.bookflydrivestay.com/terms-and-conditions) pages.
-o	Message frequency may vary.
-</p>
-
+      <ul class="list-disc list-inside mb-4 text-gray-700">
+    <li>Message and data rates may apply.</li>
+    <li>You can opt out at any time by texting "STOP."</li>
+    <li>For assistance, text "HELP" or visit our 
+        <a href="https://www.bookflydrivestay.com/privacy-policy" class="text-blue-600 underline">Privacy Policy</a> 
+        and 
+        <a href="https://www.bookflydrivestay.com/terms-and-conditions" class="text-blue-600 underline">Terms and Conditions</a> 
+        pages.
+    </li>
+    <li>Message frequency may vary.</li>
+</ul>
  
       <h4 class="text-md font-semibold text-blue-600 mt-4">Help:</h4>
       <p class="mb-4 text-gray-700">If you're experiencing any issues, simply reply with the keyword HELP. You can also reach us directly by calling +1 (844) 954-5425 or by sending a message with the word Help.</p>
