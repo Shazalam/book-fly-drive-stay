@@ -54,14 +54,58 @@ export const TermsConditions = [
     </blockquote>`,
   },
   {
-    title: " Mobile (SMS) Communications",
+    title: "SMS Terms & Conditions",
     content: `<blockquote class="bg-gray-50 border-l-4 border-blue-500 p-6 my-6 rounded-r-lg">
-  <p class="mb-4 pb-1 text-gray-700">By providing your mobile number and opting in to receive SMS messages, you consent to receive text messages from Book Fly Drive Stay. These messages may include booking confirmations, travel updates, promotional offers, and account notifications.</p>
-  <p class="mb-4 pb-1 text-gray-700">Message frequency may vary. Message and data rates may apply. You can opt out of receiving SMS messages at any time by replying STOP to any message. For assistance, reply HELP or visit <a href="https://www.bookflydrivestay.com">https://www.bookflydrivestay.com.</a></p>
-  <p class="mb-4 pb-1 text-gray-700">
-We do not share, sell, rent, or otherwise disclose your mobile (SMS) opt-in information to third parties for their marketing or promotional purposes. Mobile information will only be used for delivering the services you have explicitly requested.</p>
-  
-</blockquote>`,
+      <h3 class="text-lg font-semibold text-blue-600">SMS Terms & Conditions</h3>
+
+      <h4 class="text-md font-semibold text-blue-600 mt-4">SMS Consent Communication:</h4>
+      <p class="mb-4 text-gray-700">The information (Phone Numbers) obtained as part of the SMS consent process will not be shared with third parties for marketing purposes.</p>
+
+      <h4 class="text-md font-semibold text-blue-600 mt-4">Types of SMS Communications:</h4>
+      <p class="mb-4 text-gray-700">If you have consented to receive text messages from Book Fly Drive Stay, you may receive messages related to the following:</p>
+      <ul class="list-disc list-inside mb-4 text-gray-700">
+        <li>Customer Care</li>
+        <li>Appointment Reminders</li>
+          <li>Follow-up messages</li>
+            <li>Billing Inqueries</li>
+        <li>SMS Auth for booking</li>
+        <li>Promotions or offers (if applicable)</li>
+      </ul>
+      <p class="mb-4 text-gray-700">Example: Hello, this is a friendly reminder of your upcoming appointment with Dr. [Name] at [Location] on [Date] at [Time]. You can reply STOP to opt out of SMS messaging from Book Fly Drive Stay at any time.</p>
+      <h4 class="text-md font-semibold text-blue-600 mt-4">Message Frequency:</h4>
+      <p class="mb-4 text-gray-700">Message frequency may vary depending on the type of communication. You may receive up to 10 SMS messages per week related to your appointments or billing, etc.].</p>
+
+      <h4 class="text-md font-semibold text-blue-600 mt-4">Opt-in Method:</h4>
+      <p class="mb-4 text-gray-700">You may opt-in to receive SMS messages from Book fly drive stay in the following ways:
+</p>
+ <ul class="list-disc list-inside mb-4 text-gray-700">
+        <li>Verbally, during a conversation</li>
+        <li>By Submitting an online form</li>
+          <li>By filling out a paper form</li>
+      </ul>
+      <h4 class="text-md font-semibold text-blue-600 mt-4">Opt-Out Method:</h4>
+      <p class="mb-4 text-gray-700">You can opt-out of receiving SMS messages at any time. To do so, simply reply "STOP" to any SMS message you receive. Alternatively, you can contact us directly to request removal from our messaging list.</p>
+
+       <h4 class="text-md font-semibold text-blue-600 mt-4">Potential Fees for SMS Messaging:</h4>
+      <p class="mb-4 text-gray-700">Please note that standard message and data rates may apply, depending on your carrier’s pricing plan. These fees may vary if the message is sent domestically or internationally.</p>
+        
+      <h4 class="text-md font-semibold text-blue-600 mt-4">Standard Messaging Disclosures:</h4>
+      <ul class="list-disc list-inside mb-4 text-gray-700">
+    <li>Message and data rates may apply.</li>
+    <li>You can opt out at any time by texting "STOP."</li>
+    <li>For assistance, text "HELP" or visit our 
+        <a href="https://www.bookflydrivestay.com/privacy-policy" class="text-blue-600 underline">Privacy Policy</a> 
+        and 
+        <a href="https://www.bookflydrivestay.com/terms-and-conditions" class="text-blue-600 underline">Terms and Conditions</a> 
+        pages.
+    </li>
+    <li>Message frequency may vary.</li>
+</ul>
+ 
+      <h4 class="text-md font-semibold text-blue-600 mt-4">Help:</h4>
+      <p class="mb-4 text-gray-700">If you're experiencing any issues, simply reply with the keyword HELP. You can also reach us directly by calling +1 (844) 954-5425 or by sending a message with the word Help.</p>
+
+    </blockquote>`
   },
   {
     title: "Cancellations, Modifications, and Refunds",
