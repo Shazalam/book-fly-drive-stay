@@ -22,7 +22,7 @@ Any other information you provide to make your trip convenient. For instance, in
 If you submit any PII or Personal Information relating to other people to us or to our service providers in connection with the Services, you represent that you have the authority to do so and to permit us to use the information in accordance with this Privacy Policy. 
 </p>
 <p class="mb-4 text-gray-700">
-  <strong>Please note:</strong> SMS opt-in or phone numbers collected for the purpose of SMS communications are not shared with any third party or affiliate company for marketing purposes.
+  <strong>Please note:</strong>The information (Phone Numbers) obtained as part of the SMS consent process will not be shared with third parties for marketing purposes.
 </p>
   </div>`,
   },
