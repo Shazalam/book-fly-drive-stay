@@ -269,7 +269,8 @@ If you submit any PII or Personal Information relating to other people to us or 
   {
     title: "Contacting Us",
     content: `<blockquote class="bg-gray-50 border-l-4 border-blue-500 p-6 my-6 rounded-r-lg">
-    <p class="mb-4 text-gray-700 font-semibold">For any clarification or concern, feel free to contact us as per the mentioned contact information.</p>
+    <p class="mb-4 text-gray-700 font-semibold">Text or Call Us at: +1 (844) 954-5425 </br>
+By texting [Book Fly Drive Stay] at [They message us first Phone Number], you agree to receive [Customer Care] messages from [Book Fly Drive Stay]. Reply STOP to opt-out; Reply HELP for support; Message & data rates may apply; Messaging frequency may vary. Visit [https://www.bookflydrivestay.com/privacy-policy] to see our privacy policy and [https://www.bookflydrivestay.com/terms-and-conditions] for our Terms of Service.</p>
   </blockquote>`,
   },
 ];
