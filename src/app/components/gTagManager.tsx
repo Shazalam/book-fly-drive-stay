@@ -1,33 +1,24 @@
-
 import React from "react";
 import Script from "next/script";
 
 const GoogleTagManager: React.FC = () => {
   return (
     <>
-      {/* Google Tag Manager - Head */}
+      {/* Google Tag Manager - Load gtag.js */}
       <Script
-        id="gtm-script"
+        src="https://www.googletagmanager.com/gtag/js?id=AW-17130972100"
         strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
-            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','GTM-N8S8JF8K');
-          `,
-        }}
       />
-      {/* Google Tag Manager (noscript) - Body */}
-      <noscript>
-        <iframe
-          src="https://www.googletagmanager.com/ns.html?id=GTM-N8S8JF8K"
-          height="0"
-          width="0"
-          style={{ display: "none", visibility: "hidden" }}
-        ></iframe>
-      </noscript>
+
+      {/* Google Tag Manager - Initialization */}
+      <Script id="gtag-init" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'AW-17130972100');
+        `}
+      </Script>
     </>
   );
 };

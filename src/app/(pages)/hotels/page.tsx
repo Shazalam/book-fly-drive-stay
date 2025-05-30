@@ -1,20 +1,30 @@
 import { Metadata } from "next";
-import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Hotels",
-  description: "Hotles bookings",
+  description: "Hotels bookings",
 };
 
-const Hotels = () => {
+import HotelImagesCarousel from '../../components/hotelImageCarousel';
+import HotelReservationForm from '../../components/hotelReservationForm';
+import CallToReserveButton from '../../components/callToReserve';
+
+export default function Hotels() {
   return (
-    <div className="w-full flex flex-col justify-center items-center h-[75vh] ">
-      <h1 className="text-4xl">work in progess </h1>
-      <Link href={"/"} className="text-2xl text-emerald-700 font-bold">
-        Go to Home
-      </Link>
-    </div>
-  );
-};
+    <main className="min-h-screen bg-gray-100">
+      {/* 🖼️ Top full-width carousel */}
+      <div className="w-full h-[30vh] sm:h-[40vh] lg:h-[50vh]">
+        <HotelImagesCarousel />
+      </div>
 
-export default Hotels;
+      {/* 📋 Reservation Form + Call Button */}
+      <div className="max-w-3xl mx-auto mt-[-4rem] sm:mt-[-6rem] px-4">
+        <div className="bg-white rounded-xl shadow-lg p-6 relative z-10">
+          <h1 className="text-2xl font-bold mb-4 text-center">Book Your Stay</h1>
+          <HotelReservationForm />
+          <CallToReserveButton />
+        </div>
+      </div>
+    </main>
+  );
+}
