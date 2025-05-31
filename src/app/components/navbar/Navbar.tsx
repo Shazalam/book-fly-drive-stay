@@ -26,10 +26,10 @@ const navList = [
     name: "Hotels",
     href: "/hotels",
   },
-  // {
-  //   name: "About us",
-  //   href: "/about-us",
-  // },
+  {
+    name: "Cruise",
+    href: "/cruise",
+  },
   // {
   //   name: "Contact",
   //   href: "/contact",

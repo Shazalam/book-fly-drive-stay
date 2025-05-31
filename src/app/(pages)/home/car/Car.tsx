@@ -6,7 +6,7 @@ import "slick-carousel/slick/slick-theme.css";
 import './car.css'
 import Image1 from "../../../utils/assests/car1.jpg";
 import Image2 from "../../../utils/assests/car2.jpg";
-import Image4 from "../../../utils/assests/car4.jpg";
+import Image5 from "../../../utils/assests/fordCar.avif";
 
 const Car = () => {
   const settings = {
@@ -36,7 +36,7 @@ const Car = () => {
 
   };
   
-  const images = [Image1, Image2,  Image4, Image2];
+  const images = [Image1, Image2, Image2, Image5];
 
   return (
     <div className="container mx-auto px-6 md:px-20">

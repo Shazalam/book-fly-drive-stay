@@ -123,7 +123,7 @@ export default function RootLayout({
         <GoogleTagManager />
         <Navbar />
         <div className="md:pt-[80px] pt-[100px]">{children}</div>
-        <Footer />
+        <Footer />c
       </body>
     </html>
   );
