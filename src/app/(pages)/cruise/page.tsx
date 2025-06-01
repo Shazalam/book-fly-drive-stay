@@ -38,7 +38,7 @@ const CruiseComponent = () => {
 
             <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
                 {/* Hero Section */}
-                <section className="relative h-96 md:h-[500px]">
+                <section className="relative h-100 md:h-[500px]">
                     <div className="absolute inset-0 bg-black/50 z-10"></div>
                     <Image
                         src={Cruise}
@@ -48,7 +48,7 @@ const CruiseComponent = () => {
                         className="absolute"
                     />
                     <div className="relative z-20 h-full flex flex-col justify-center items-center text-center px-4">
-                        <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">Discover Amazing Cruise Deals</h1>
+                        <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 mt-5">Discover Amazing Cruise Deals</h1>
                         <p className="text-xl md:text-2xl text-white mb-8 max-w-3xl">Sail to breathtaking destinations with our exclusive cruise packages</p>
                         <a
                             href="tel:+1 (844) 954-5425"
@@ -60,7 +60,7 @@ const CruiseComponent = () => {
                 </section>
 
                 {/* Search Section */}
-                <section className="container mx-auto px-4 py-12 -mt-16 relative z-30">
+                <section className="container mx-auto px-4 py-12 -mt-26 sm:-mt-30 md:-mt-35 lg:-mt-40 xl:-mt-42 relative z-30">
                     <div className="bg-white rounded-xl shadow-xl p-6 md:p-8">
                         <h2 className="text-2xl font-bold text-gray-800 mb-6">Find Your Perfect Cruise</h2>
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">

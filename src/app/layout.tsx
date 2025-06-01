@@ -72,6 +72,7 @@ import "../app/styles/globals.css";
 import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
 import GoogleTagManager from './components/gTagManager';
+import FloatingContact from "./components/FloatingContact";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -122,7 +123,10 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <GoogleTagManager />
         <Navbar />
-        <div className="md:pt-[80px] pt-[100px]">{children}</div>
+        <div className="sm:pt-[100px]  md:pt-[80px] ">
+          {children}
+          <FloatingContact />
+          </div>
         <Footer />c
       </body>
     </html>
