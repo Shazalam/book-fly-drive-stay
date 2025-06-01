@@ -13,8 +13,6 @@ const FlightSearchSection = () => {
 
     const [originQuery, setOriginQuery] = useState('');
     const [destinationQuery, setDestinationQuery] = useState('');
-    const [selectedOrigin, setSelectedOrigin] = useState('');
-    const [selectedDestination, setSelectedDestination] = useState('');
     const [showOriginSuggestions, setShowOriginSuggestions] = useState(false);
     const [showDestinationSuggestions, setShowDestinationSuggestions] = useState(false);
 
@@ -98,7 +96,6 @@ const FlightSearchSection = () => {
                                                 className="px-4 py-2 hover:bg-blue-50 cursor-pointer"
                                                 onClick={() => {
                                                     setOriginQuery(`${airport.city} (${airport.code})`);
-                                                    setSelectedOrigin(airport.code);
                                                     setShowOriginSuggestions(false);
                                                 }}
                                             >
@@ -146,7 +143,6 @@ const FlightSearchSection = () => {
                                                 className="px-4 py-2 hover:bg-blue-50 cursor-pointer"
                                                 onClick={() => {
                                                     setDestinationQuery(`${airport.city} (${airport.code})`);
-                                                    setSelectedDestination(airport.code);
                                                     setShowDestinationSuggestions(false);
                                                 }}
                                             >

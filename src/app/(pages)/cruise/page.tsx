@@ -2,7 +2,7 @@
 import React from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
-import { FaShip, FaUmbrellaBeach, FaWifi, FaSwimmingPool, FaUtensils, FaStar } from 'react-icons/fa';
+import {FaUmbrellaBeach, FaWifi, FaSwimmingPool, FaStar } from 'react-icons/fa';
 import Cruise from "../../utils/assests/cruiseOne.jpg";
 import CruiseCarousel from '@/app/components/CruiseCarousel';
 
@@ -30,7 +30,7 @@ const CruiseComponent = () => {
         }
     ];
 
-    
+
     return (
         <>
             <Head>

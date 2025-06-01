@@ -8,12 +8,9 @@ import {
   FiMenu, 
   FiX,
   FiHome,
-  FiCalendar,
-  FiMapPin,
-  FiPhone,
-  FiMessageSquare
+  FiPhone
 } from "react-icons/fi";
-import { FaWhatsapp, FaTelegramPlane } from "react-icons/fa";
+import { FaWhatsapp } from "react-icons/fa";
 import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 import { RiCarLine, RiShipLine } from "react-icons/ri";
 import { IoAirplaneOutline } from "react-icons/io5";

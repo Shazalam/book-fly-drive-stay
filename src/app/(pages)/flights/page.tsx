@@ -5,7 +5,7 @@
 import React from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
-import { FaPlane, FaUtensils, FaWifi, FaStar, FaRegClock } from 'react-icons/fa';
+import { FaPlane, FaUtensils, FaStar, FaRegClock } from 'react-icons/fa';
 import FlightHero from "../../utils/assests/flights-hero.jpg";
 import FlightCarousel from '@/app/components/FlightCarousel';
 import FlightSearchSection from '@/app/components/FlightSearchSection';
