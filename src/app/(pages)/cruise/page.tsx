@@ -6,6 +6,7 @@ import { FaShip, FaUmbrellaBeach, FaWifi, FaSwimmingPool, FaUtensils, FaStar } f
 import Cruise from "../../utils/assests/cruiseOne.jpg";
 import CruiseCarousel from '@/app/components/CruiseCarousel';
 
+
 const CruiseComponent = () => {
 
     const testimonials = [
@@ -29,6 +30,7 @@ const CruiseComponent = () => {
         }
     ];
 
+    
     return (
         <>
             <Head>
