@@ -76,8 +76,8 @@ const HeroSection = () => {
   return (
     <div className="px-2 bg-[url('/hero-image-2.jpeg')] bg-no-repeat bg-cover bg-center w-full h-[50vh] relative">
       <div className="absolute inset-0 bg-black/60"></div>
-      <div className="flex flex-col absolute top-10 left-1/2 transform -translate-x-1/2 w-full text-center  text-white  ">
-        <span className="text-4xl ">Convinient Flights, Stays and Car Rentals</span>
+      <div className="flex flex-col absolute top-25 left-1/2 transform -translate-x-1/2 w-full text-center  text-white  ">
+        <span className="text-4xl ">Convenient Flights, Stays and Car Rentals</span>
         <span className="text-2xl ">
          Book your packages with us now!
         </span>

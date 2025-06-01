@@ -75,9 +75,6 @@ const CruiseCarousel = () => {
     ];
 
 
-
-    
-
     // Handle responsiveness
     useEffect(() => {
         const handleResize = () => {

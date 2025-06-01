@@ -21,7 +21,7 @@ const carRentals = () => {
   return (
     <>
       <div className="px-2 bg-[url('/background-large.jpg')] bg-no-repeat bg-cover bg-center w-full h-[50vh] relative">
-        <div className="flex flex-col absolute top-15 left-1/2 transform -translate-x-1/2 w-full text-center  text-white px-3 ">
+        <div className="flex flex-col absolute top-15 left-1/2 transform -translate-x-1/2 w-full text-center  text-white px-3 py-8 ">
           <span className="text-4xl ">Car Hire – Search, Compare & Save</span>
           <span className="text-2xl py-5">
             <span className="px-2">✔️</span>
