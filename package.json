@@ -4,6 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
+    "clean": "rm -rf .next node_modules",
+    "clean:install": "npm run clean && npm install",
+    "clean:build": "npm run clean && npm install && npm run build",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
