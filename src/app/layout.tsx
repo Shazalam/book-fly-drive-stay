@@ -127,7 +127,7 @@ export default function RootLayout({
           {children}
           <FloatingContact />
           </div>
-        <Footer />c
+        <Footer />
       </body>
     </html>
   );
