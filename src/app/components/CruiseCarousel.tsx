@@ -13,7 +13,7 @@ import Image from 'next/image';
 const CruiseCarousel = () => {
     const [slidesToShow, setSlidesToShow] = useState(3);
     const containerRef = useRef<HTMLDivElement>(null);
-    const animationRef = useRef<number>();
+    const animationRef = useRef<number>(0);
     const [isPaused, setIsPaused] = useState(false);
 
 
