@@ -86,8 +86,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Book fly drive free",
-    default: "Book fly drive free",
+    template: "%s | Book fly drive stay",
+    default: "Book fly drive stay",
   },
   description: "Cover your journey in no time with our travel booking service.",
   icons: {
@@ -95,17 +95,17 @@ export const metadata: Metadata = {
   },
   keywords: ["travel", "flight", "booking", "drive", "hotel", "trip"],
   openGraph: {
-    title: "Book fly drive free",
+    title: "Book fly drive stay",
     description:
       "Cover your journey in no time with our travel booking service.",
     url: "https://www.bookflydrivestay.com",
-    siteName: "Book fly drive free",
+    siteName: "Book fly drive stay",
     images: [
       {
         url: "/logo.png",
         width: 1200,
         height: 630,
-        alt: "Book fly drive free",
+        alt: "Book fly drive stay",
       },
     ],
     locale: "en_US",
