@@ -39,6 +39,7 @@ const Car = () => {
     ]
   };
 
+  
   const cars = [
     {
       image: rav4,
