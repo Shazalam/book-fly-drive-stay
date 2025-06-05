@@ -1,0 +1,18 @@
+/* Custom arrow styling */
+.slick-prev:before, 
+.slick-next:before {
+  color: #3b82f6;
+  font-size: 24px;
+}
+
+/* Center slides */
+.slick-slide > div {
+  display: flex;
+  justify-content: center;
+}
+
+/* Active slide highlight */
+.slick-center > div > div {
+  border-color: #3b82f6;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
