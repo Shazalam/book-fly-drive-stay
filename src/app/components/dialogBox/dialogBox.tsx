@@ -80,7 +80,7 @@ const DialogBox = () => {
                       Give Us a Call
                     </p>
                     <p className="text-base sm:text-lg md:text-xl text-gray-600 font-medium">
-                      We're here to assist you with
+                     {` We're here to assist you with`}
                     </p>
                   </div>
                 </div>

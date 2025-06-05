@@ -4,7 +4,7 @@ import Slider from "react-slick";
 import Image from "next/image";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { FaStar, FaGasPump, FaCar, FaUsers } from "react-icons/fa";
+import { FaStar, FaGasPump, FaUsers } from "react-icons/fa";
 import { IoMdSpeedometer } from "react-icons/io";
 import rav4 from "../../../utils/assests/toyota-rav4.avif"
 import Mercedes from "../../../utils/assests/Mercedes.jpg"

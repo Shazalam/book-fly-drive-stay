@@ -56,7 +56,7 @@ const Testimonials = () => {
       <div className="text-center mb-12">
         <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">What Our Customers Say</h2>
         <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-          Don't just take our word for it - hear from travelers like you
+         {`Don't just take our word for it - hear from travelers like you`}
         </p>
       </div>
 
