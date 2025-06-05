@@ -12,7 +12,7 @@ const DialogBox = () => {
   const [isOpen, setIsOpen] = useState(true)
 
   const buttonItems = [
-    { text: 'Rent a Car' },
+    { text: 'New Booking' },
     { text: 'Cancellations' },
     { text: 'Changes' },
     { text: 'Customer Support' }
