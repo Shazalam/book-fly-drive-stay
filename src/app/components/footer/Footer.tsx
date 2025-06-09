@@ -59,12 +59,12 @@ const Footer = () => {
                   Flights
                 </Link>
                 <li>
-                <Link href="/Hotels" className="hover:text-gray-400">
+                <Link href="/hotels" className="hover:text-gray-400">
                   Hotels
                 </Link>
               </li>
                 <li>
-                <Link href="/Cruise" className="hover:text-gray-400">
+                <Link href="/cruise" className="hover:text-gray-400">
                   Cruise
                 </Link>
               </li>
