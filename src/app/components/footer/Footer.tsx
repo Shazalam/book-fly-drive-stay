@@ -58,6 +58,16 @@ const Footer = () => {
                 <Link href="/flights" className="hover:text-gray-400">
                   Flights
                 </Link>
+                <li>
+                <Link href="/Hotels" className="hover:text-gray-400">
+                  Hotels
+                </Link>
+              </li>
+                <li>
+                <Link href="/Cruise" className="hover:text-gray-400">
+                  Cruise
+                </Link>
+              </li>
               </li>
             </ul>
           </div>
