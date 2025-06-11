@@ -17,9 +17,11 @@ const DialogBox = () => {
   useEffect(() => {
     setIsOpen(true)
   }, [])
+
+  
   useEffect(() => {
     if (routeChanged) {
-   
+
       setIsOpen(true)
     }
 
