@@ -1,15 +1,34 @@
 
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Dialog } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import callCenter from "../../utils/assests/callCenter-1.png"
 import callCenterProfile from "../../utils/assests/callCenterProfile.png"
 import Image from 'next/image'
+import useRouteChangeDetector from '@/app/hooks/useRouteChangeDetector'
+
 
 const DialogBox = () => {
-  const [isOpen, setIsOpen] = useState(true)
+  const [isOpen, setIsOpen] = useState(false)
+  const { routeChanged, setRouteChanged } = useRouteChangeDetector()
+
+  useEffect(() => {
+    setIsOpen(true)
+  }, [])
+  useEffect(() => {
+    if (routeChanged) {
+   
+      setIsOpen(true)
+    }
+
+  }, [routeChanged])
+
+  const handleClose = () => {
+    setIsOpen(false)
+    setRouteChanged(false)
+  }
 
   const buttonItems = [
     { text: 'Rent a Car' },
@@ -32,7 +51,7 @@ const DialogBox = () => {
           <Dialog.Panel className="relative w-full md:w-[55vw] max-w-6xl rounded-lg bg-white text-left shadow-xl transition-all sm:my-8">
             {/* Close Button */}
             <button
-              onClick={() => setIsOpen(false)}
+              onClick={handleClose}
               className="absolute -top-2 -right-2 z-10 p-1 bg-white rounded-full shadow-md hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
               aria-label="Close"
             >
@@ -80,7 +99,7 @@ const DialogBox = () => {
                       Give Us a Call
                     </p>
                     <p className="text-base sm:text-lg md:text-xl text-gray-600 font-medium">
-                     {` We're here to assist you with`}
+                      {` We're here to assist you with`}
                     </p>
                   </div>
                 </div>
