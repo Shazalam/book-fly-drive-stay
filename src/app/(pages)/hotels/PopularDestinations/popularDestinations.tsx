@@ -10,40 +10,28 @@ import Image from 'next/image';
 const destinations = [
   {
     name: "Miami Beach",
-    image: "/miami-beach.avif",
-    hotels: 245,
-    fromPrice: 129
+    image: "/miami-beach.avif"
   },
   {
     name: "New York City",
-    image: "/nyc.avif",
-    hotels: 512,
-    fromPrice: 199
+    image: "/nyc.avif"
   },
   {
     name: "Aspen",
-    image: "/aspen-Hotels.jpeg",
-    hotels: 78,
-    fromPrice: 249
+    image: "/aspen-Hotels.jpeg"
   },
   {
     name: "Napa Valley",
-    image: "/napa-hotels.jpeg",
-    hotels: 92,
-    fromPrice: 179
+    image: "/napa-hotels.jpeg"
   },
   {
     name: "Las Vegas",
-    image: "/las-vegas-hotels.webp",
-    hotels: 187,
-    fromPrice: 89
-  },
+    image: "/las-vegas-hotels.webp"
+    },
   {
     name: "San Francisco",
-    image: "/san-francisco.jpg",
-    hotels: 156,
-    fromPrice: 159
-  }
+    image: "/san-francisco.jpg"
+      }
 ];
 
 export default function PopularDestinations() {
@@ -79,21 +67,19 @@ export default function PopularDestinations() {
               viewport={{ once: true }}
               className="relative group overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-shadow"
             >
-              <div className="aspect-w-16 aspect-h-9 relative">
-                <Image
-                  src={destination.image}
-                  alt={destination.name}
-                  className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-              
-              </div>
-              
+              <div className="relative w-full h-64">
+  <Image
+    src={destination.image}
+    alt={destination.name}
+    fill
+    className="object-cover group-hover:scale-105 transition-transform duration-500"
+  />
+</div>
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
               
               <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
                 <h3 className="text-2xl font-bold mb-1">{destination.name}</h3>
-                <p className="text-sm opacity-90 mb-4">{destination.hotels}+ hotels available</p>
-                
+                      
                 <div className="flex justify-between items-center gap-4">
                   
                   <a
