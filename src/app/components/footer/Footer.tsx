@@ -69,7 +69,6 @@ const Footer = () => {
                   Cruise
                 </Link>
               </li>
-              </li>
             </ul>
           </div>
 
