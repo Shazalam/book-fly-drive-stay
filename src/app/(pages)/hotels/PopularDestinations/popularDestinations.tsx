@@ -4,7 +4,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Phone, Hotel } from 'lucide-react';
+import { Phone } from 'lucide-react';
+import Image from 'next/image';
 
 const destinations = [
   {
@@ -79,7 +80,7 @@ export default function PopularDestinations() {
               className="relative group overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-shadow"
             >
               <div className="aspect-w-16 aspect-h-9 relative">
-                <img
+                <Image
                   src={destination.image}
                   alt={destination.name}
                   className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
