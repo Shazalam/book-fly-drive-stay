@@ -226,11 +226,23 @@ export const TermsConditions = [
       <p class="mb-4 text-gray-700">These Terms constitute the entire agreement between you and Book-Fly-Drive-Stay regarding the use of the Site, superseding any prior agreements between you and Book-Fly-Drive-Stay relating to your use of the Site.</p>
     </blockquote>`,
   },
-  {
-    title: "Contact Information",
-    content: `<blockquote class="bg-gray-50 border-l-4 border-blue-500 p-6 my-6 rounded-r-lg">
-      <p class="mb-4 text-gray-700 font-semibold">If you have any questions about these Terms, please contact us as per the mentioned contact information.
-</p>
-    </blockquote>`,
-  },
+ {
+  title: "Contact Information",
+  content: `<blockquote class="bg-gray-50 border-l-4 border-blue-500 p-6 my-6 rounded-r-lg">
+    <p class="mb-4 text-gray-700 font-semibold">
+      If you have any questions about these Terms, please contact us as per the mentioned contact information.
+    </p>
+    <p class="mb-2 text-gray-700">
+      Text or Call Us at: <strong>+1 (844) 954-5425</strong>
+    </p>
+    <p class="text-gray-700 text-sm">
+      By texting Book Fly Drive Stay at +1 (844) 954-5425, you agree to receive Customer Care messages from Book Fly Drive Stay.
+      Reply STOP to opt out, or HELP for assistance. Message & data rates may apply. Messaging frequency may vary.
+      We do not share your mobile information with third parties.
+      View our <a href="/privacy-policy" class="text-blue-600 underline">Privacy Policy</a> and 
+      <a href="/terms-of-service" class="text-blue-600 underline">Terms of Service</a>.
+    </p>
+  </blockquote>`,
+}
+
 ];
