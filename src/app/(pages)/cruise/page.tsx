@@ -35,6 +35,8 @@ const CruiseComponent = () => {
     },
   ];
 
+  
+
   return (
     <>
       <Head>

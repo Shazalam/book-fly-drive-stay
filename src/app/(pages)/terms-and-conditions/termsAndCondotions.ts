@@ -60,13 +60,15 @@ export const TermsConditions = [
 
       <h4 class="text-md font-semibold text-blue-600 mt-4">SMS Consent Communication:</h4>
       <p class="mb-4 text-gray-700">The information (Phone Numbers) obtained as part of the SMS consent process will not be shared with third parties for marketing purposes.</p>
+      <p class="mb-4 text-gray-700">We value your privacy. Your mobile phone number and any opt-in information collected through our platform will never be sold or shared with third-party companies. We use this information solely to provide service updates and respond to your inquiries</p>
+      
 
       <h4 class="text-md font-semibold text-blue-600 mt-4">Types of SMS Communications:</h4>
       <p class="mb-4 text-gray-700">If you have consented to receive text messages from Book Fly Drive Stay, you may receive messages related to the following:</p>
       <ul class="list-disc list-inside mb-4 text-gray-700">
         <li>Customer Care</li>
         <li>Appointment Reminders</li>
-          <li>Follow-up messages</li>
+          <li>Follow-up messages </li>
             <li>Billing Inqueries</li>
         <li>SMS Auth for booking</li>
         <li>Promotions or offers (if applicable)</li>
@@ -80,7 +82,7 @@ export const TermsConditions = [
 </p>
  <ul class="list-disc list-inside mb-4 text-gray-700">
         <li>Verbally, during a conversation</li>
-        <li>By Submitting an online form</li>
+        <li>By Submitting an online form <a href="https://www.bookflydrivestay.com/callback-request" class="text-blue-600 underline">Callback Request</a></li>
           <li>By filling out a paper form</li>
       </ul>
       <h4 class="text-md font-semibold text-blue-600 mt-4">Opt-Out Method:</h4>
@@ -167,6 +169,7 @@ export const TermsConditions = [
     title: "Privacy Policy",
     content: `<blockquote class="bg-gray-50 border-l-4 border-blue-500 p-6 my-6 rounded-r-lg">
       <p class="mb-4 text-gray-700">Your use of the Site is also governed by our Privacy Policy, which can be found [link to Privacy Policy]. By using the Site, you consent to the collection, use, and sharing of your information as described in the Privacy Policy.</p>
+      <p class="mb-4 text-gray-700">We value your privacy. Your mobile phone number and any opt-in information collected through our platform will never be sold or shared with third-party companies. We use this information solely to provide service updates and respond to your inquiries.</p>
     </blockquote>`,
   },
   {

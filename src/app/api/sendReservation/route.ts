@@ -90,7 +90,7 @@ export async function POST(req: NextRequest) {
         <p><strong>Guests:</strong> ${guests}</p>
       `,
     };
-
+    
     await transporter.sendMail(mailOptions);
 
     return NextResponse.json({ message: 'Reservation sent successfully.' }, { status: 200 });

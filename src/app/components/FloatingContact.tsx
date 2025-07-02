@@ -1,12 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { FaPhone, FaTimes, FaWhatsapp, FaComment } from "react-icons/fa";
+import { FaPhone, FaTimes, FaWhatsapp, FaComment, FaHeadset } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 const FloatingContact = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
+  const router = useRouter();
 
   // Hide on scroll down, show on scroll up
   useEffect(() => {
@@ -39,6 +41,21 @@ const FloatingContact = () => {
             transition={{ type: "spring", damping: 20 }}
             className="flex flex-col items-end gap-4"
           >
+            {/* Persistent Callback Request Button */}
+            <motion.button
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0, opacity: 0 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => router.push('/callback-request')}
+              className="flex items-center justify-center w-14 h-14 rounded-full bg-purple-600 text-white shadow-lg hover:bg-purple-700 transition-colors"
+              aria-label="Request a callback"
+            >
+              <FaHeadset className="text-xl" />
+            </motion.button>
+
+            {/* Other Contact Options (shown when expanded) */}
             {isOpen && (
               <>
                 <motion.a
@@ -79,6 +96,7 @@ const FloatingContact = () => {
               </>
             )}
 
+            {/* Main Toggle Button */}
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}

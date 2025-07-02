@@ -139,6 +139,7 @@ If you submit any PII or Personal Information relating to other people to us or 
 
       <h4 class="text-md font-semibold text-blue-600 mt-4">SMS Consent Communication:</h4>
       <p class="mb-4 text-gray-700">The information (Phone Numbers) obtained as part of the SMS consent process will not be shared with third parties for marketing purposes.</p>
+      <p class="mb-4 text-gray-700">We value your privacy. Your mobile phone number and any opt-in information collected through our platform will never be sold or shared with third-party companies. We use this information solely to provide service updates and respond to your inquiries</p>
 
       <h4 class="text-md font-semibold text-blue-600 mt-4">Types of SMS Communications:</h4>
       <p class="mb-4 text-gray-700">If you have consented to receive text messages from Book Fly Drive Stay, you may receive messages related to the following:</p>
@@ -159,7 +160,8 @@ If you submit any PII or Personal Information relating to other people to us or 
 </p>
  <ul class="list-disc list-inside mb-4 text-gray-700">
         <li>Verbally, during a conversation</li>
-        <li>By Submitting an online form</li>
+        <li>By Submitting an online form <a href="https://www.bookflydrivestay.com/callback-request" class="text-blue-600 underline">Callback Request</a> 
+</li>
           <li>By filling out a paper form</li>
       </ul>
       <h4 class="text-md font-semibold text-blue-600 mt-4">Opt-Out Method:</h4>
@@ -184,9 +186,8 @@ If you submit any PII or Personal Information relating to other people to us or 
       <h4 class="text-md font-semibold text-blue-600 mt-4">Help:</h4>
       <p class="mb-4 text-gray-700">If you're experiencing any issues, simply reply with the keyword HELP. You can also reach us directly by calling +1 (844) 954-5425 or by sending a message with the word Help.</p>
 
-    </blockquote>`
-  }
-,
+    </blockquote>`,
+  },
   {
     title: "How We May Collect Non-Personally Identifiable Information",
     content: `<blockquote class="bg-gray-50 border-l-4 border-blue-500 p-6 my-6 rounded-r-lg">
@@ -270,7 +271,8 @@ If you submit any PII or Personal Information relating to other people to us or 
     title: "Contacting Us",
     content: `<blockquote class="bg-gray-50 border-l-4 border-blue-500 p-6 my-6 rounded-r-lg">
     <p class="mb-4 text-gray-700 font-semibold">Text or Call Us at: +1 (844) 954-5425 </br>
-By texting [Book Fly Drive Stay] at [They message us first Phone Number], you agree to receive [Customer Care] messages from [Book Fly Drive Stay]. Reply STOP to opt-out; Reply HELP for support; Message & data rates may apply; Messaging frequency may vary. Visit [https://www.bookflydrivestay.com/privacy-policy] to see our privacy policy and [https://www.bookflydrivestay.com/terms-and-conditions] for our Terms of Service.</p>
+By texting [Book Fly Drive Stay] at [They message us first Phone Number], you agree to receive [Customer Care] messages from [Book Fly Drive Stay]. Reply STOP to opt-out; Reply HELP for support; Message & data rates may apply; Messaging frequency may vary. Visit  <a href="https://www.bookflydrivestay.com/privacy-policy" class="text-blue-600 underline">Privacy Policy</a>  to see our privacy policy and  <a href="https://www.bookflydrivestay.com/terms-and-conditions" class="text-blue-600 underline">Terms and Conditions</a> 
+ for our Terms of Service.</p>
   </blockquote>`,
   },
 ];
