@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { PhoneIcon, UserIcon, EnvelopeIcon, GlobeAmericasIcon } from '@heroicons/react/24/outline';
+import Link from 'next/link';
 
 export default function CallbackRequest() {
     const [formData, setFormData] = useState({
@@ -135,8 +136,17 @@ export default function CallbackRequest() {
                                     I agree to receive communications from Book-Fly-Drive-Stay
                                 </label>
 
-                                <p className="text-xs text-gray-500 mt-1">
-                                    We value your privacy. Your mobile phone number and any opt-in information collected through our platform will never be sold or shared with third-party companies. We use this information solely to provide service updates and respond to your inquiries </p>
+<p className="text-xs text-gray-500 mt-1">
+  By checking this box, you agree to receive SMS messages from BookFlyDriveStay related to (SMS Use Case). You may reply STOP to opt out at any time. Reply to HELP to (844) 954-5425 for assistance. Messages and data rates may apply. Message frequency will vary. Learn more on our{' '}
+  <Link href="/privacy-policy" className="underline text-blue-600 hover:text-blue-800">
+    Privacy Policy
+  </Link>{' '}
+  page and{' '}
+  <Link href="/terms-and-conditions" className="underline text-blue-600 hover:text-blue-800">
+    Terms & Conditions
+  </Link>.
+</p>
+                                
                                 <p className="text-xs text-gray-500 mt-1">
                                     By submitting this form, you consent to our Terms of Service and Privacy Policy
                                 </p>
