@@ -41,19 +41,17 @@ If you submit any PII or Personal Information relating to other people to us or 
 
 
 <blockquote class="bg-gray-50 border-l-4 border-blue-500 p-6 my-6 rounded-r-lg">
+<p class="mb-4 text-gray-700">
+Mobile Opt in, SMS Consent,  and phone numbers collected for SMS communication purposes will not be shared with any third party or affiliates for marketing purposes.
+</p>
   <p class="mb-4 pb-1 text-gray-700"><strong class="text-blue-600">We may use Personal Information:</strong></p>
   <ul class="list-disc pl-6 space-y-3 mb-4">	
     <li class="py-1 text-gray-700">(1) To process and accomplish your booking or purchase request, which includes processing your payment, communicate with you regarding your booking or purchase, and provide you with related customer service. We use passport information for the purpose of travel bookings</li>
     <li class="py-1 text-gray-700">(2) To respond to your inquiries and fulfill your requests, such as to send you newsletters.</li>
     <li class="py-1 text-gray-700">(3) To send administrative information to you, such as information regarding the Services and changes to our terms, conditions, and policies.</li>
-    <li class="py-1 text-gray-700">(4) To send you marketing communications that we believe may be of interest to you, to the extent permitted by law.</li>
-    <li class="py-1 text-gray-700">(5) To personalize your experience on the Services by presenting products and offers tailored to you.</li>
-    <li class="py-1 text-gray-700">(6) To allow you to participate in sweepstakes, contests, and similar promotions and to administer these activities. Some of these activities have additional rules, which may contain additional information about how we use and disclose your Personal Information. We suggest that you read any such rules carefully, as you will be bound by them if you choose to participate</li>
-    <li class="py-1 text-gray-700">(7) To facilitate social sharing functionality</li>
-    <li class="py-1 text-gray-700">(8) To allow you to send messages to another person through the Services. By using this functionality, you are telling us that you are entitled to provide us with your friend's name and email address.</li>
-    <li class="py-1 text-gray-700">(9) For our business purposes, such as data analysis, audits, fraud monitoring and prevention, developing new products, enhancing, improving, or modifying our Services, identifying usage trends, determining the effectiveness of our promotional campaigns, and operating and expanding our business activities</li>
+    <li class="py-1 text-gray-700">(4) To personalize your experience on the Services by presenting products and offers tailored to you.</li>
     <li class="py-1 text-gray-700">
-      (10) <strong class="text-blue-600">As we believe to be necessary or appropriate:</strong><br>
+      (6) <strong class="text-blue-600">As we believe to be necessary or appropriate:</strong><br>
       <ul class="list-[circle] pl-6 mt-2 space-y-2">							 
         <li class="py-1 text-gray-700">under applicable law, including laws outside your state or country of residence;</li>
         <li class="py-1 text-gray-700">to comply with legal process and to prevent, detect, or suppress abuse, fraud, or criminal activity;</li>
@@ -149,7 +147,6 @@ If you submit any PII or Personal Information relating to other people to us or 
           <li>Follow-up messages</li>
             <li>Billing Inqueries</li>
         <li>SMS Auth for booking</li>
-        <li>Promotions or offers (if applicable)</li>
       </ul>
       <p class="mb-4 text-gray-700">Example: Hello, this is a friendly reminder of your upcoming appointment with Dr. [Name] at [Location] on [Date] at [Time]. You can reply STOP to opt out of SMS messaging from Book Fly Drive Stay at any time.</p>
       <h4 class="text-md font-semibold text-blue-600 mt-4">Message Frequency:</h4>
@@ -159,10 +156,8 @@ If you submit any PII or Personal Information relating to other people to us or 
       <p class="mb-4 text-gray-700">You may opt-in to receive SMS messages from Book fly drive stay in the following ways:
 </p>
  <ul class="list-disc list-inside mb-4 text-gray-700">
-        <li>Verbally, during a conversation</li>
         <li>By Submitting an online form <a href="https://www.bookflydrivestay.com/callback-request" class="text-blue-600 underline">Callback Request</a> 
 </li>
-          <li>By filling out a paper form</li>
       </ul>
       <h4 class="text-md font-semibold text-blue-600 mt-4">Opt-Out Method:</h4>
       <p class="mb-4 text-gray-700">You can opt-out of receiving SMS messages at any time. To do so, simply reply "STOP" to any SMS message you receive. Alternatively, you can contact us directly to request removal from our messaging list.</p>
