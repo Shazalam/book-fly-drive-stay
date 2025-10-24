@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../app/styles/globals.css";
-import Navbar from "./components/navbar/Navbar";
-import Footer from "./components/footer/Footer";
-import GoogleTagManager from './components/gTagManager';
-import FloatingContact from "./components/FloatingContact";
-import DialogBox from './components/dialogBox/dialogBox';
+import Navbar from "./(components)/common/Navbar";
+import Footer from "./(components)/common/Footer";
+import GoogleTagManager from './(components)/gTagManager';
+import FloatingContact from "./(components)/FloatingContact";
+import DialogBox from './(components)/dialogBox/dialogBox';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -60,7 +60,7 @@ export default function RootLayout({
         <Navbar />
         <div className="sm:pt-[100px] md:pt-[80px]">
           {children}
-          <DialogBox />
+          {/* <DialogBox /> */}
           <FloatingContact />
         </div>
         <Footer />

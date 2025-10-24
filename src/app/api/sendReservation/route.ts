@@ -48,11 +48,11 @@
 //   }
 // }
 // Force Node.js runtime
+
 export const runtime = 'nodejs';
 
 import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
-
 export async function POST(req: NextRequest) {
   try {
     const data = await req.json();
