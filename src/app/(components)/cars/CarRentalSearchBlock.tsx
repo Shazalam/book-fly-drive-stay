@@ -1,14 +1,12 @@
-// components/blocks/CarRentalSearchBlock.tsx
-
 "use client";
 
 import React, { useState } from "react";
-import { FaSearch } from "react-icons/fa";
+import { FaSearch, FaCar } from "react-icons/fa";
 import Button from "../common/Button";
 import MobileDrawer from "../common/MobileDrawer";
 import { CoreRentalForm } from "../forms/CarRentalForm";
 import { CarRentalFormValues } from "@/app/(types)/CarRentalSchema";
-
+import { motion } from "framer-motion";
 const CarRentalSearchBlock = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
@@ -22,49 +20,45 @@ const CarRentalSearchBlock = () => {
     }
   };
 
-  // The styling is updated to match the image's clean white card look
   return (
-    <div className="max-w-6xl mb-8 px-4 sm:px-6 ">
-
+    <div className="w-full">
       {/* Desktop/Tablet View */}
-      <div
-        className="hidden md:block "
-        style={{
-          borderRadius: 'var(--radius-xl)',
-          // boxShadow: 'var(--shadow-xl)' 
-        }}
-      >
-        {/* <h2 className="text-3xl font-heading font-bold mb-1" style={{ color: 'var(--primary-blue-dark)' }}>
-          Search car rentals
-        </h2>
-        <p className="text-lg text-gray-600 mb-6">
-          Find the best car rental deals
-        </p> */}
-
+      <div className="hidden md:block">
+  
         {/* Core Form for Desktop */}
-        <CoreRentalForm onFormSubmit={handleFormSubmit} />
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-200/60">
+          <CoreRentalForm onFormSubmit={handleFormSubmit} />
+        </div>
       </div>
 
-      {/* Mobile View: Button to open the Drawer */}
+      {/* Mobile View: Enhanced Button */}
       <div className="md:hidden">
-        <Button
-          label="Search Car Rentals"
-          iconLeft={<FaSearch />}
-          onClick={() => setIsDrawerOpen(true)}
-          className="w-full !py-3 !text-lg !rounded-lg !shadow-lg"
-          style={{ borderRadius: 'var(--radius-lg)' }}
-        />
+        <motion.div
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+        >
+          <Button
+            label="Search Car Rentals"
+            iconLeft={<FaCar className="text-white" />}
+            onClick={() => setIsDrawerOpen(true)}
+            className="w-full !py-4 !text-lg font-semibold !rounded-2xl !shadow-lg hover:shadow-xl transition-all duration-300"
+            style={{
+              background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+              border: 'none'
+            }}
+          />
+        </motion.div>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Enhanced Mobile Drawer */}
       <MobileDrawer
         isOpen={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}
-        title="Booking Details"
-  
+        position="bottom"
+        size="full"
+        className="rounded-t-3xl"
       >
-        <div className="space-y-4">
-          {/* Core Form inside the Drawer (with isMobile prop) */}
+        <div className="p-4 pb-8">
           <CoreRentalForm onFormSubmit={handleFormSubmit} isMobile={true} />
         </div>
       </MobileDrawer>

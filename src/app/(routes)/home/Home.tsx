@@ -12,22 +12,22 @@ const Home = () => {
     <>
       <div className="bg-gray-50">
         <HeroSection />
-        <div className="py-12">
+        <div className="px-4 sm:px-6 lg:px-15 xl:px-20 space-y-16">
           <CarRentalCompanies />
         </div>
-        <div className="py-12 bg-white">
+        <div className="px-4 sm:px-6 lg:px-14 xl:px-20 space-y-16 bg-white">
           <FlightDestinations />
         </div>
-        <div className="py-12">
+        <div className="px-4 sm:px-6 lg:px-12 xl:px-20 space-y-16">
           <CarDeals />
         </div>
-        <div className="py-12">
+        <div className="px-4 sm:px-6 lg:px-12 xl:px-20 space-y-16">
           <ServicesGrid />
         </div>
-        <div className="py-12 bg-white">
+        <div className="px-4 sm:px-6 lg:px-14 xl:px-20 space-y-16">
           <Testimonials />
         </div>
-        <div className="py-12 bg-gradient-to-r from-blue-500 to-indigo-600">
+        <div className="px-4 sm:px-6 lg:px-12 xl:px-20 space-y-16 bg-gradient-to-r from-emerald-500 to-teal-500">
           <Newsletter />
         </div>
       </div>

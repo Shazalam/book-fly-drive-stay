@@ -1,42 +1,24 @@
-
-/* Tailwind CSS Configuration (tailwind.config.js) */
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    './pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './components/**/*.{js,ts,jsx,tsx,mdx}',
+    './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     extend: {
       colors: {
-        primary: {
-          50: '#eff6ff',
-          500: '#3b82f6',
-          600: '#2563eb',
-          700: '#1d4ed8',
-        },
-        accent: {
-          amber: '#f59e0b',
-          emerald: '#10b981',
-          orange: '#f97316',
-        }
-      },
-      fontFamily: {
-        'sans': ['Inter', 'system-ui', 'sans-serif'],
-        'heading': ['Cal Sans', 'system-ui', 'sans-serif'],
-      },
-      animation: {
-        'fade-in-up': 'fadeInUp 0.6s ease-out',
-        'float': 'float 6s ease-in-out infinite',
-        'pulse-slow': 'pulse 3s ease-in-out infinite',
-      },
-      backdropBlur: {
-        xs: '2px',
+        primary: "#155dfd",
+        primaryLight: "#4d7dff",  // lighter tint
+        primaryDark: "#003ccc",   // darker shade
       },
       backgroundImage: {
-        'gradient-premium': 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-        'gradient-ocean': 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-      }
+        "gradient-primary": "linear-gradient(to right, #155dfd, #4d7dff)",
+        "gradient-accent": "linear-gradient(to right, #155dfd, #00c6ff)",
+        "gradient-deep": "linear-gradient(to right, #003ccc, #155dfd)",
+        "gradient-soft": "linear-gradient(to right, #4d7dff, #b3ccff)",
+        "gradient-vibrant": "linear-gradient(to right, #155dfd, #14b8a6)", // blue to teal
+      },
     },
   },
   plugins: [],

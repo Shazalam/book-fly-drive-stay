@@ -21,7 +21,7 @@ const Newsletter = () => {
               className="w-full pl-10 pr-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300  text-zinc-50"
             />
           </div>
-          <button className="bg-white text-blue-600 hover:bg-blue-50 font-semibold py-3 px-6 rounded-lg transition duration-300">
+          <button className="bg-white text-teal-500 hover:bg-blue-50 font-semibold py-3 px-6 rounded-lg transition duration-300">
             Subscribe
           </button>
         </div>

@@ -55,6 +55,10 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           className
         )}
         {...props}
+        style={{
+          background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+          border: 'none'
+        }}
       >
         {loading ? (
           <>

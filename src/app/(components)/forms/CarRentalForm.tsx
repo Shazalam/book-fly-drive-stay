@@ -11,15 +11,10 @@ import Button from "../common/Button";
 import { carRentalSchema, CarRentalFormValues, TIME_SLOTS } from "../../(types)/CarRentalSchema";
 import TimeSelect from "../common/TimeSelect";
 
-
 // Enhanced BundleOptions
 const BundleOptions = ({ control }: { control: UseFormReturn<CarRentalFormValues>['control'] }) => (
   <div
-    className="flex items-center p-4 rounded-2xl space-x-6 h-full border-2 border-emerald-200 transition-all duration-300 hover:shadow-md"
-    style={{
-      backgroundColor: 'rgba(209, 250, 229, 0.3)',
-      backdropFilter: 'blur(8px)'
-    }}
+    className="flex flex-col sm:flex-row items-start sm:items-center p-4 sm:p-6 rounded-2xl space-y-4 sm:space-y-0 sm:space-x-6 h-full border-2 border-emerald-200 transition-all duration-300 hover:shadow-md bg-emerald-50/30 backdrop-blur-sm"
   >
     <div className="flex items-center space-x-3 min-w-max">
       <div className="p-2 bg-emerald-100 rounded-lg">
@@ -28,36 +23,40 @@ const BundleOptions = ({ control }: { control: UseFormReturn<CarRentalFormValues
       <span className="text-base font-bold text-gray-800 whitespace-nowrap">Bundle & Save</span>
     </div>
 
-    <Controller
-      name="addHotel"
-      control={control}
-      render={({ field }) => (
-        <label className="flex items-center text-sm font-semibold text-gray-800 cursor-pointer whitespace-nowrap transition-opacity duration-200 hover:opacity-80">
-          <input
-            type="checkbox"
-            {...field}
-            checked={field.value}
-            className="h-5 w-5 rounded border-2 border-gray-300 text-emerald-600 focus:ring-2 focus:ring-emerald-200 transition-colors duration-200"
-          />
-          <span className="ml-3">Add a hotel</span>
-        </label>
-      )}
-    />
-    <Controller
-      name="addFlight"
-      control={control}
-      render={({ field }) => (
-        <label className="flex items-center text-sm font-semibold text-gray-800 cursor-pointer whitespace-nowrap transition-opacity duration-200 hover:opacity-80">
-          <input
-            type="checkbox"
-            {...field}
-            checked={field.value}
-            className="h-5 w-5 rounded border-2 border-gray-300 text-emerald-600 focus:ring-2 focus:ring-emerald-200 transition-colors duration-200"
-          />
-          <span className="ml-3">Add a flight</span>
-        </label>
-      )}
-    />
+    <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
+      <Controller
+        name="addHotel"
+        control={control}
+        render={({ field }) => (
+          <label className="flex items-center text-sm font-semibold text-gray-800 cursor-pointer whitespace-nowrap transition-all duration-200 hover:opacity-80">
+            <input
+              type="checkbox"
+              {...field}
+              checked={field.value}
+              value={field.value?.toString()}
+              className="h-5 w-5 rounded border-2 border-gray-300 text-emerald-600 focus:ring-2 focus:ring-emerald-200 transition-colors duration-200"
+            />
+            <span className="ml-3">Add a hotel</span>
+          </label>
+        )}
+      />
+      <Controller
+        name="addFlight"
+        control={control}
+        render={({ field }) => (
+          <label className="flex items-center text-sm font-semibold text-gray-800 cursor-pointer whitespace-nowrap transition-all duration-200 hover:opacity-80">
+            <input
+              type="checkbox"
+              {...field}
+              checked={field.value}
+              value={field.value?.toString()}
+              className="h-5 w-5 rounded border-2 border-gray-300 text-emerald-600 focus:ring-2 focus:ring-emerald-200 transition-colors duration-200"
+            />
+            <span className="ml-3">Add a flight</span>
+          </label>
+        )}
+      />
+    </div>
   </div>
 );
 
@@ -73,7 +72,8 @@ export const CoreRentalForm: React.FC<CoreRentalFormProps> = ({ onFormSubmit, is
     watch,
     setValue,
     control,
-    formState: { errors },
+    formState: { errors, isSubmitting },
+    trigger
   } = useForm<CarRentalFormValues>({
     resolver: zodResolver(carRentalSchema),
     defaultValues: {
@@ -87,26 +87,29 @@ export const CoreRentalForm: React.FC<CoreRentalFormProps> = ({ onFormSubmit, is
       addHotel: false,
       addFlight: false,
     },
+    mode: "onChange"
   });
 
   const isDropoffSame = watch("isDropoffSame");
+  const pickupLocation = watch("pickupLocation");
 
   useEffect(() => {
-    if (isDropoffSame) {
-      setValue("dropoffLocation", watch("pickupLocation"));
-    } else {
+    if (isDropoffSame && pickupLocation) {
+      setValue("dropoffLocation", pickupLocation);
+      trigger("dropoffLocation");
+    } else if (isDropoffSame) {
       setValue("dropoffLocation", "");
     }
-  }, [isDropoffSame, watch, setValue]);
+  }, [isDropoffSame, pickupLocation, setValue, trigger]);
 
-  const onSubmit = (data: CarRentalFormValues) => {
+  const onSubmit = async (data: CarRentalFormValues) => {
     if (data.isDropoffSame) {
       data.dropoffLocation = data.pickupLocation;
     }
-    onFormSubmit(data);
+    await onFormSubmit(data);
   };
 
-  // Enhanced input style props
+  // Enhanced responsive input style props
   const inputStyleProps = {
     variant: "priceline" as const,
     size: "md" as const,
@@ -115,124 +118,146 @@ export const CoreRentalForm: React.FC<CoreRentalFormProps> = ({ onFormSubmit, is
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full">
-      {/* Enhanced Checkbox */}
-      <div className="mb-6">
-        <Controller
-          name="isDropoffSame"
-          control={control}
-          render={({ field }) => (
-            <label className="flex items-center text-gray-800 text-base font-semibold cursor-pointer group">
-              <div className={clsx(
-                "w-5 h-5 border-2 rounded mr-3 flex items-center justify-center transition-all duration-200",
-                field.value
-                  ? "bg-blue-600 border-blue-600"
-                  : "bg-white border-gray-300 group-hover:border-blue-500"
-              )}>
-                {field.value && (
-                  <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                  </svg>
-                )}
-              </div>
-              <input type="checkbox" {...field} className="hidden" />
-              <span className="transition-colors duration-200 group-hover:text-blue-700">
-                Drop-off location is the same
-              </span>
-            </label>
-          )}
-        />
-      </div>
+ 
+      {/* Enhanced Responsive Grid Layout */}
+      <div className="grid grid-cols-1 gap-4 sm:gap-6">
 
-      {/* Enhanced Grid Layout */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {/* Pick-up Location */}
-        <div className="lg:col-span-2">
-          <InputField
-            // label="Pick-up Location"
-            placeholder="City, Airport or Address"
-            icon={<FaMapMarkerAlt className="text-blue-600" />}
-            {...register("pickupLocation")}
-            error={errors.pickupLocation?.message}
-            {...inputStyleProps}
-          />
-        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+          {/* Pick-up Location - Full Width */}
+          <div className="col-span-1">
+            <InputField
+              // label="Pick-up Location"
+              placeholder="City, Airport or Address"
+              icon={<FaMapMarkerAlt />}
+              {...register("pickupLocation")}
+              error={errors.pickupLocation?.message}
+              required
+              {...inputStyleProps}
+            />
+          </div>
 
-
-        {/* Drop-off Location */}
-        {
-          !isDropoffSame && (
-            <div className={`lg:col-span-2 transition-all duration-300`}>
+          {/* Drop-off Location - Full Width with Conditional Rendering */}
+          <div className={clsx(
+            "col-span-1 transition-all duration-300 overflow-hidden",
+            isDropoffSame ? "max-h-0 opacity-0" : "max-h-32 opacity-100"
+          )}>
+            {!isDropoffSame && (
               <InputField
                 // label="Drop-off Location"
                 placeholder="City, Airport or Address"
-                icon={<FaMapMarkerAlt className="text-blue-600" />}
+                icon={<FaMapMarkerAlt />}
                 {...register("dropoffLocation")}
                 error={errors.dropoffLocation?.message}
+                required
                 {...inputStyleProps}
               />
-            </div>
-          )
-        }
-
-
-        {/* Pick-up Date */}
-        <div>
-          <DatePicker
-            // label="Pick-up Date"
-            icon={<FaCalendarAlt className="text-gray-600" />}
-            {...register("pickupDate")}
-            error={errors.pickupDate?.message}
-            {...inputStyleProps}
-          />
+            )}
+          </div>
         </div>
 
-        {/* Pick-up Time */}
-        <div>
-          <TimeSelect
-            label="Pick-up Time"
-            name="pickupTime"
-            icon={<FaClock className="text-gray-600" />}
-            options={TIME_SLOTS}
-            register={register}
-            error={errors.pickupTime}
-          />
+
+        {/* Pick-up Date & Time Row */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
+          {/* Pick-up Date */}
+          <div className="col-span-1">
+            <Controller
+              name="pickupDate"
+              control={control}
+              render={({ field }) => (
+                <DatePicker
+                  // label="Pick-up Date"
+                  placeholder="Pick-up Date"
+                  icon={<FaCalendarAlt className="text-gray-600" />}
+                  value={field.value}
+                  onChange={field.onChange}
+                  onBlur={field.onBlur}
+                  error={errors.pickupDate?.message}
+                  required
+                  {...inputStyleProps}
+                />
+              )}
+            />
+          </div>
+
+          {/* Pick-up Time */}
+          <div className="col-span-1">
+            <Controller
+              name="pickupTime"
+              control={control}
+              render={({ field }) => (
+                <TimeSelect
+                  label="Pick-up Time"
+                  name="pickupTime"
+                  icon={<FaClock />}
+                  options={TIME_SLOTS}
+                  value={field.value}
+                  onChange={field.onChange}
+                  onBlur={field.onBlur}
+                  error={errors.pickupTime}
+                  required
+                />
+              )}
+            />
+          </div>
+
+           {/* Drop-off Date */}
+          <div className="col-span-1">
+            <Controller
+              name="dropoffDate"
+              control={control}
+              render={({ field }) => (
+                <DatePicker
+                  // label="Drop-off Date"
+                  placeholder="Drop-off Date"
+                  icon={<FaCalendarAlt className="text-gray-600" />}
+                  value={field.value}
+                  onChange={field.onChange}
+                  onBlur={field.onBlur}
+                  error={errors.dropoffDate?.message}
+                  required
+                  {...inputStyleProps}
+                />
+              )}
+            />
+          </div>
+
+          {/* Drop-off Time */}
+          <div className="col-span-1">
+            <Controller
+              name="dropoffTime"
+              control={control}
+              render={({ field }) => (
+                <TimeSelect
+                  label="Drop-off Time"
+                  name="dropoffTime"
+                  icon={<FaClock />}
+                  options={TIME_SLOTS}
+                  value={field.value}
+                  onChange={field.onChange}
+                  onBlur={field.onBlur}
+                  error={errors.dropoffTime}
+                  required
+                />
+              )}
+            />
+          </div>
         </div>
 
-        {/* Drop-off Date */}
-        <div>
-          <DatePicker
-            // label="Drop-off Date"
-            icon={<FaCalendarAlt className="text-gray-600" />}
-            {...register("dropoffDate")}
-            error={errors.dropoffDate?.message}
-            {...inputStyleProps}
-          />
-        </div>
-
-        {/* Drop-off Time */}
-        <div>
-          <TimeSelect
-            label="Drop-off Time"
-            name="dropoffTime"
-            icon={<FaClock className="text-gray-600" />}
-            options={TIME_SLOTS}
-            register={register}
-            error={errors.dropoffTime}
-          />
-        </div>
+ 
 
         {/* Bundle & Save Options */}
-        <div className="md:col-span-2">
+        <div className="col-span-1">
           <BundleOptions control={control} />
         </div>
 
         {/* Enhanced Submit Button */}
-        <div className="md:col-span-2">
+        <div className="col-span-1">
           <Button
-            label="Find Your Perfect Car"
+            label={isSubmitting ? "Searching..." : "Find Your Perfect Car"}
             type="submit"
+            disabled={isSubmitting}
             iconLeft={<FaCar className="text-white" />}
-            className="w-full h-14 font-bold text-lg transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl active:translate-y-0"
+            className="w-full h-14 font-bold text-lg transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl active:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
             style={{
               background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
               borderRadius: '16px',
@@ -241,16 +266,6 @@ export const CoreRentalForm: React.FC<CoreRentalFormProps> = ({ onFormSubmit, is
             }}
           />
         </div>
-
-        {/* Enhanced Footer Note */}
-        {/* <div className="lg:col-span-4 text-center mt-4">
-          <p className="text-sm text-gray-600 font-medium flex items-center justify-center">
-            <svg className="w-4 h-4 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-            </svg>
-            Book with free cancellation for maximum flexibility
-          </p>
-        </div> */}
       </div>
     </form>
   );
