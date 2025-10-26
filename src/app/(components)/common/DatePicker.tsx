@@ -276,7 +276,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
   };
 
   return (
-    <div className={clsx("w-full group", className)}>
+    <div className={clsx("", className)}>
       {/* Label */}
       {label && (
         <label
@@ -293,7 +293,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
       )}
 
       <div
-        className="relative w-full cursor-pointer"
+        className="relative w-full cursor-pointer border-amber-400"
         onClick={() => !disabled && inputRef.current?.showPicker?.()}
       >
         {/* 📅 Left Icon */}

@@ -73,70 +73,84 @@ import React, { useState } from 'react';
 import BookingTabs from '@/app/(components)/BookingTabs';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaShieldAlt, FaCheck, FaClock, FaHeadset } from 'react-icons/fa';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const HeroSection = () => {
-  const [activeTab, setActiveTab] = useState("cars");
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const defaultTab = searchParams.get('tab') || 'cars';
+  const [activeTab, setActiveTab] = useState(defaultTab);
+
+  const handleTabChange = (newTab: string) => {
+    setActiveTab(newTab);
+    const params = new URLSearchParams(window.location.search);
+    params.set('tab', newTab);
+    router.replace(`${window.location.pathname}?${params.toString()}`);
+  }
+
 
   const tabContent = {
-  hotels: {
-    heading: "Discover Handpicked Hotels for Every Journey",
-    subheading: "Experience world-class stays, from cozy escapes to five-star luxury — all at unbeatable prices.",
-   gradient: "from-emerald-500 to-teal-500",
-    bgGradient: "from-emerald-50/20 via-white to-teal-50/10"
-  },
-  flights: {
-    heading: "Fly Smarter with the Best Flight Deals",
-    subheading: "Compare, book, and save big on domestic and international flights — wherever your wanderlust takes you.",
-   gradient: "from-emerald-500 to-teal-500",
-     bgGradient: "from-emerald-50/20 via-white to-teal-50/10"
-  },
-  cars: {
-    heading: "Drive in Style with Premium Car Rentals",
-    subheading: "Choose from top-rated vehicles and flexible plans — explore your destination with comfort and confidence.",
-    gradient: "from-emerald-500 to-teal-500",
-    bgGradient: "from-emerald-50/20 via-white to-teal-50/10"
-  },
-  cruises: {
-    heading: "Embark on Unforgettable Cruise Adventures",
-    subheading: "Sail across breathtaking oceans and exotic ports with exclusive luxury cruise deals made for you.",
-   gradient: "from-emerald-500 to-teal-500",
-    bgGradient: "from-emerald-50/20 via-white to-teal-50/10"
-  },
-};
+    hotels: {
+      heading: "Discover Handpicked Hotels for Every Journey",
+      subheading: "Experience world-class stays, from cozy escapes to five-star luxury — all at unbeatable prices.",
+      gradient: "from-emerald-500 to-teal-500",
+      bgGradient: "from-emerald-50/20 via-white to-teal-50/10"
+    },
+    flights: {
+      heading: "Fly Smarter with the Best Flight Deals",
+      subheading: "Compare, book, and save big on domestic and international flights — wherever your wanderlust takes you.",
+      gradient: "from-emerald-500 to-teal-500",
+      bgGradient: "from-emerald-50/20 via-white to-teal-50/10"
+    },
+    cars: {
+      heading: "Drive in Style with Premium Car Rentals",
+      subheading: "Choose from top-rated vehicles and flexible plans — explore your destination with comfort and confidence.",
+      gradient: "from-emerald-500 to-teal-500",
+      bgGradient: "from-emerald-50/20 via-white to-teal-50/10"
+    },
+    cruises: {
+      heading: "Embark on Unforgettable Cruise Adventures",
+      subheading: "Sail across breathtaking oceans and exotic ports with exclusive luxury cruise deals made for you.",
+      gradient: "from-emerald-500 to-teal-500",
+      bgGradient: "from-emerald-50/20 via-white to-teal-50/10"
+    },
+  };
 
 
   const content = tabContent[activeTab as keyof typeof tabContent] || tabContent.cars;
 
   return (
     <div className={`min-h-screen bg-gradient-to-br ${content.bgGradient} relative overflow-hidden transition-all duration-1000`}>
-      
+
       {/* Enhanced Background Elements */}
       <div className="absolute inset-0">
         {/* Dynamic Gradient Overlay */}
         <div className={`absolute inset-0 bg-gradient-to-br ${content.bgGradient} transition-all duration-1000`} />
-        
+
         {/* Animated Gradient Orbs */}
-        <motion.div 
-          animate={{ 
+        <motion.div
+          animate={{
             x: [0, 100, 0],
             y: [0, -50, 0],
             scale: [1, 1.1, 1],
           }}
-          transition={{ 
+          transition={{
             duration: 20,
             repeat: Infinity,
             ease: "easeInOut"
           }}
           className="absolute top-1/4 right-1/4 w-96 h-96 bg-gradient-to-r from-blue-200/30 to-cyan-200/20 rounded-full blur-3xl"
         />
-        
-        <motion.div 
-          animate={{ 
+
+        <motion.div
+          animate={{
             x: [0, -80, 0],
             y: [0, 60, 0],
             scale: [1, 1.2, 1],
           }}
-          transition={{ 
+          transition={{
             duration: 25,
             repeat: Infinity,
             ease: "easeInOut",
@@ -156,7 +170,7 @@ const HeroSection = () => {
 
       {/* Main Content */}
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 lg:pt-20">
-        
+
         {/* Minimal Header */}
         <div className="text-center mb-8 hidden md:block">
           <AnimatePresence mode="wait">
@@ -167,12 +181,12 @@ const HeroSection = () => {
               exit={{ opacity: 0, y: -20 }}
               className="space-y-3 mb-6"
             >
-              <motion.h1 
+              <motion.h1
                 className={`text-3xl sm:text-4xl lg:text-5xl font-black bg-gradient-to-r ${content.gradient} bg-clip-text text-transparent`}
               >
                 {content.heading}
               </motion.h1>
-    
+
             </motion.div>
           </AnimatePresence>
 
@@ -183,7 +197,7 @@ const HeroSection = () => {
         <motion.div
           initial={{ opacity: 0, y: 40, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ 
+          transition={{
             duration: 0.6,
             delay: 0.3,
             type: "spring",
@@ -192,22 +206,22 @@ const HeroSection = () => {
           className="flex justify-center relative mt-15 md:mt-5 "
         >
           <div className="w-full max-w-8xl relative z-30 ">
-            <motion.div 
+            <motion.div
               whileHover={{ scale: 1.01 }}
               transition={{ type: "spring", stiffness: 300 }}
               className="bg-white/80 rounded-3xl shadow-2xl border border-white/60 hover:shadow-3xl transition-all duration-500 overflow-visible"
             >
               {/* Glow Effect */}
               <div className={`absolute inset-0 bg-gradient-to-r ${content.gradient} opacity-5 blur-lg -z-10`} />
-              
+
               {/* Animated Header Bar */}
               <div className={`h-2 bg-gradient-to-r ${content.gradient}`} />
-              
+
               {/* BookingTabs with proper z-index for bottom drawer */}
               <div className="relative z-30">
                 <BookingTabs
                   activeTab={activeTab}
-                  setActiveTab={setActiveTab}
+                  setActiveTab={handleTabChange}
                 />
               </div>
             </motion.div>

@@ -318,7 +318,7 @@ const InputField: React.FC<InputFieldProps> = ({
           type={type}
           disabled={disabled}
           className={clsx(
-            "w-full outline-none text-gray-900 placeholder-gray-500 bg-transparent",
+            "w-full outline-none text-gray-900 placeholder-gray-500 bg-amber-600",
             "px-4 font-medium transition-all duration-300",
             sizeClasses[size],
             variantClasses[variant],

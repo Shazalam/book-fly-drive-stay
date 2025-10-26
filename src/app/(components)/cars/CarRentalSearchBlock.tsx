@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { FaSearch, FaCar } from "react-icons/fa";
+import { FaCar } from "react-icons/fa";
 import Button from "../common/Button";
 import MobileDrawer from "../common/MobileDrawer";
 import { CoreRentalForm } from "../forms/CarRentalForm";

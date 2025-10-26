@@ -22,7 +22,7 @@ const BaseInputWrapper: React.FC<BaseInputWrapperProps> = ({
   children
 }) => {
   return (
-    <div className={clsx("w-full group", className)}>
+    <div className={clsx("w-full group border-amber-500", className)}>
       {label && (
         <label 
           htmlFor={name}
