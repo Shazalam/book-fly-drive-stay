@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import clsx from "clsx";
 import { useForm, Controller, UseFormReturn } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -10,6 +10,8 @@ import DatePicker from "../common/DatePicker";
 import Button from "../common/Button";
 import { carRentalSchema, CarRentalFormValues, TIME_SLOTS } from "../../(types)/CarRentalSchema";
 import TimeSelect from "../common/TimeSelect";
+import Link from "next/link";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 // Enhanced BundleOptions
 const BundleOptions = ({ control }: { control: UseFormReturn<CarRentalFormValues>['control'] }) => (
@@ -92,6 +94,36 @@ export const CoreRentalForm: React.FC<CoreRentalFormProps> = ({ onFormSubmit, is
 
   const isDropoffSame = watch("isDropoffSame");
   const pickupLocation = watch("pickupLocation");
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+
+  useEffect(() => {
+    if (!query) return;
+    const timeout = setTimeout(() => {
+      fetchLocations(query);
+    }, 400); // debounce 400ms
+
+    return () => clearTimeout(timeout);
+  }, [query]);
+
+  useEffect(() => {
+    if (!query) {
+      setResults([]);
+    } 
+  }, [query]);
+
+  console.log("result =>", results);
+
+  const fetchLocations = async (term: string) => {
+    setLoading(true);
+    const res = await fetch(`/api/locations?search=${term}`);
+    const data = await res.json();
+    console.log(data);
+    setResults(data?.data);
+    setLoading(false);
+  };
 
   useEffect(() => {
     if (isDropoffSame && pickupLocation) {
@@ -118,14 +150,14 @@ export const CoreRentalForm: React.FC<CoreRentalFormProps> = ({ onFormSubmit, is
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full">
- 
+
       {/* Enhanced Responsive Grid Layout */}
       <div className="grid grid-cols-1 gap-4 sm:gap-6">
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
           {/* Pick-up Location - Full Width */}
-          <div className="col-span-1">
-            <InputField
+          <div className="col-span-1 relative z-50">
+            {/* <InputField
               // label="Pick-up Location"
               placeholder="City, Airport or Address"
               icon={<FaMapMarkerAlt />}
@@ -133,7 +165,32 @@ export const CoreRentalForm: React.FC<CoreRentalFormProps> = ({ onFormSubmit, is
               error={errors.pickupLocation?.message}
               required
               {...inputStyleProps}
+            /> */}
+            <input
+              type="text"
+              placeholder="Enter city or airport..."
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              className="w-full rounded-xl border p-3"
             />
+            {loading && <p className="absolute top-full left-0 bg-white p-2">Loading...</p>}
+            {results?.length > 0 && (
+              <ul className="absolute top-full left-0 bg-white border w-full rounded-xl mt-1 shadow-lg scrollable max-h-60 overflow-y-auto">
+                {results?.map((place) => (
+                  <li
+                    key={place.id}
+                    onClick={() => onSelect(place)}
+                    className="p-3 cursor-pointer hover:bg-gray-100 flex gap-2 items-center"
+                  >
+                    <MagnifyingGlassIcon className="w-4 h-4 text-gray-500" />
+                    <div>
+                      <p className="font-medium">{place.name}</p>
+                      <p className="text-xs text-gray-500">{place.address}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
 
           {/* Drop-off Location - Full Width with Conditional Rendering */}
@@ -200,7 +257,7 @@ export const CoreRentalForm: React.FC<CoreRentalFormProps> = ({ onFormSubmit, is
             />
           </div>
 
-           {/* Drop-off Date */}
+          {/* Drop-off Date */}
           <div className="col-span-1">
             <Controller
               name="dropoffDate"
@@ -243,7 +300,7 @@ export const CoreRentalForm: React.FC<CoreRentalFormProps> = ({ onFormSubmit, is
           </div>
         </div>
 
- 
+
 
         {/* Bundle & Save Options */}
         <div className="col-span-1">
@@ -251,21 +308,24 @@ export const CoreRentalForm: React.FC<CoreRentalFormProps> = ({ onFormSubmit, is
         </div>
 
         {/* Enhanced Submit Button */}
-        <div className="col-span-1">
-          <Button
-            label={isSubmitting ? "Searching..." : "Find Your Perfect Car"}
-            type="submit"
-            disabled={isSubmitting}
-            iconLeft={<FaCar className="text-white" />}
-            className="w-full h-14 font-bold text-lg transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl active:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
-            style={{
-              background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
-              borderRadius: '16px',
-              border: '2px solid transparent',
-              backgroundClip: 'padding-box'
-            }}
-          />
-        </div>
+        <Link href="/search/cars" className="w-full">
+          <div className="col-span-1">
+            <Button
+              label={isSubmitting ? "Searching..." : "Find Your Perfect Car"}
+              type="submit"
+              disabled={isSubmitting}
+              iconLeft={<FaCar className="text-white" />}
+              className="w-full h-14 font-bold text-lg transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl active:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+              style={{
+                background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+                borderRadius: '16px',
+                border: '2px solid transparent',
+                backgroundClip: 'padding-box'
+              }}
+            />
+
+          </div>
+        </Link>
       </div>
     </form>
   );

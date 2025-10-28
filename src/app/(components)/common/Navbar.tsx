@@ -15,7 +15,7 @@
 // import { RiCarLine, RiShipLine } from "react-icons/ri";
 // import { IoAirplaneOutline } from "react-icons/io5";
 // import "../../styles/globals.css";
-// import logo from '../../../../public/logo.png';
+// import logo from '../../../../public/icons/logo.png';
 // import Image from "next/image";
 
 // const navList = [
