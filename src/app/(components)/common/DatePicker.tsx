@@ -206,6 +206,11 @@
 
 
 
+
+
+
+
+
 "use client";
 import React, { useRef } from "react";
 import clsx from "clsx";
@@ -223,7 +228,7 @@ interface DatePickerProps {
   required?: boolean;
   className?: string;
   disabled?: boolean;
-  variant?: "default" | "priceline" | "modern";
+  variant?: "default" | "modern";
   size?: "sm" | "md" | "lg";
 }
 
@@ -239,7 +244,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
   required = false,
   className = "",
   disabled = false,
-  variant = "priceline",
+  variant = "modern",
   size = "md",
 }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -251,32 +256,25 @@ const DatePicker: React.FC<DatePickerProps> = ({
     lg: "h-14 text-lg",
   };
 
-  // 🎨 Theme and variants (same as InputField)
+  // 🎨 Theme variants (now using your clean blue gradient + subtle tones)
   const variantClasses = {
     default: clsx(
-      "border border-gray-300 bg-white rounded-lg",
-      "focus:border-emerald-500 focus:ring-2 focus:ring-teal-200/50",
-      "transition-all duration-200",
-      error && "border-red-500 focus:border-red-500 focus:ring-red-200"
-    ),
-    priceline: clsx(
-      "border-2 border-gray-200 bg-white rounded-xl",
-      "focus:border-transparent focus:ring-4 focus:ring-emerald-500/20",
+      "border-2 border-gray-200 bg-[#f9fafb] rounded-xl",
+      "hover:border-blue-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-100",
       "shadow-sm hover:shadow-md transition-all duration-300",
-      "hover:border-emerald-300 group",
-      "focus:bg-gradient-to-r focus:from-white focus:to-emerald-50",
+      "text-blue-900 font-medium",
       error && "border-red-400 focus:border-red-500 focus:ring-red-100"
     ),
     modern: clsx(
-      "border-b-2 border-gray-300 bg-gray-50 rounded-t-lg",
-      "focus:border-emerald-500 focus:bg-white focus:ring-0",
-      "transition-colors duration-200",
+      "border-b-2 border-blue-100 bg-[#f9fafb] rounded-t-lg",
+      "focus:border-blue-500 focus:ring-0",
+      "text-blue-900 font-medium transition-colors duration-300",
       error && "border-red-500 focus:border-red-500"
     ),
   };
 
   return (
-    <div className={clsx("", className)}>
+    <div className={clsx("w-full", className)}>
       {/* Label */}
       {label && (
         <label
@@ -293,20 +291,20 @@ const DatePicker: React.FC<DatePickerProps> = ({
       )}
 
       <div
-        className="relative w-full cursor-pointer border-amber-400"
+        className="relative w-full cursor-pointer"
         onClick={() => !disabled && inputRef.current?.showPicker?.()}
       >
         {/* 📅 Left Icon */}
-        <div
+        {/* <div
           className={clsx(
-            "absolute left-1 top-0 bottom-0 flex items-center justify-start",
-            size === "sm" ? "w-10" : "w-12"
+            "absolute top-0 bottom-0 flex items-center justify-center left-3",
+            "pointer-events-none"
           )}
         >
-          <div className="bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg p-1.5">
+          <div className="bg-gradient-to-r from-blue-700 via-indigo-600 to-sky-500 rounded-lg p-1.5 shadow-md">
             <FaCalendarAlt className="text-white w-4 h-4" />
           </div>
-        </div>
+        </div> */}
 
         {/* 📆 Date Input */}
         <input
@@ -321,53 +319,24 @@ const DatePicker: React.FC<DatePickerProps> = ({
           max={max}
           disabled={disabled}
           className={clsx(
-            "w-full outline-none text-gray-900 bg-transparent cursor-pointer font-medium transition-all duration-300",
+            "w-full outline-none cursor-pointer bg-transparent transition-all duration-300",
+            "text-gray-900 font-medium appearance-none",
+            "pl-14 pr-4", // ✅ Fixed padding for better text spacing
             sizeClasses[size],
             variantClasses[variant],
-            "pl-7.5", // ensures space for the icon even on small screens
-            "sm:pl-12", // maintain spacing on all devices
-            disabled && "opacity-50 cursor-not-allowed bg-gray-100"
+            disabled && "opacity-60 cursor-not-allowed bg-gray-100"
           )}
           style={{
-            accentColor: "#10b981", // Slightly match emerald-green theme
+            accentColor: "#3b82f6",
           }}
         />
-
-        {/* 🌈 Priceline Focus Bar */}
-        {variant === "priceline" && (
-          <div className="absolute inset-x-0 -bottom-1 flex justify-center opacity-0 transition-all duration-300 group-focus-within:opacity-100">
-            <div
-              className={clsx(
-                "w-12 h-1 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500",
-                "shadow-lg shadow-emerald-500/25",
-                error &&
-                  "bg-gradient-to-r from-red-500 to-red-400 shadow-red-500/25"
-              )}
-            />
-          </div>
-        )}
-
-        {/* 💚 Modern underline animation */}
-        {variant === "modern" && (
-          <div
-            className={clsx(
-              "absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-emerald-500 to-teal-500 transform scale-x-0 transition-transform duration-300",
-              "group-focus-within:scale-x-100",
-              error && "bg-gradient-to-r from-red-500 to-red-400"
-            )}
-          />
-        )}
       </div>
 
       {/* ❌ Error Message */}
       {error && (
-        <p
-          className={clsx(
-            "mt-2 text-sm font-medium flex items-center animate-fadeIn text-red-600 transition-all duration-200"
-          )}
-        >
+        <p className="mt-2 text-sm text-red-600 flex items-center gap-1 animate-fadeIn">
           <svg
-            className="w-4 h-4 mr-1 flex-shrink-0"
+            className="w-4 h-4 flex-shrink-0"
             fill="currentColor"
             viewBox="0 0 20 20"
           >

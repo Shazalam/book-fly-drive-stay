@@ -73,7 +73,7 @@ const CarSearchFilters: React.FC<CarSearchFiltersProps> = ({
         <h3 className="font-medium text-gray-900 mb-3">Car Type</h3>
         <div className="space-y-2">
           {carTypes.map(type => (
-            <label key={type} className="flex items-center">
+            <label key={type} className="flex items-center"> 
               <input
                 type="checkbox"
                 checked={filters.carType.includes(type)}

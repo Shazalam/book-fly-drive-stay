@@ -340,14 +340,14 @@ const tabs = [
     label: "Cars",
     icon: FaCar,
     description: "Premium Rentals",
-    gradient: "from-emerald-500 to-teal-500",
+    gradient: "from-white via-gray-50 to-gray-100",
   },
   {
     id: "hotels",
     label: "Hotels",
     icon: FaHotel,
     description: "Luxury Stays",
-    gradient: "from-emerald-500 to-teal-500",
+    gradient: "from-white via-gray-50 to-gray-100",
 
   },
   {
@@ -355,14 +355,14 @@ const tabs = [
     label: "Flights",
     icon: FaPlane,
     description: "Best Fares",
-    gradient: "from-emerald-500 to-teal-500",
+    gradient: "from-white via-gray-50 to-gray-100",
   },
   {
     id: "cruises",
     label: "Cruises",
     icon: FaShip,
     description: "Luxury Voyages",
-    gradient: "from-emerald-500 to-teal-500",
+    gradient: "from-white via-gray-50 to-gray-100"
   },
 ];
 
@@ -415,7 +415,7 @@ const BookingTabs: React.FC<BookingTabsProps> = ({ activeTab, setActiveTab }) =>
                 >
                   {/* Icon Container */}
                   <div className={`flex items-center justify-center w-10 h-8 sm:w-12 sm:h-10 rounded-full transition-all duration-300 ${isActive
-                    ? `bg-gradient-to-r ${tab.gradient} text-white shadow-lg`
+                    ? `bg-gradient-to-r from-sky-200 via-indigo-300 to-blue-500  text-white shadow-lg`
                     : 'bg-gray-100 text-gray-600 group-hover:bg-gray-200 group-hover:text-gray-700'
                     }`}>
                     <IconComponent className="text-lg sm:text-xl" />
@@ -453,7 +453,7 @@ const BookingTabs: React.FC<BookingTabsProps> = ({ activeTab, setActiveTab }) =>
                   {/* Active Pulse Effect */}
                   {isActive && (
                     <motion.div
-                      className={`absolute -top-1 -right-1 w-3 h-3 rounded-full bg-gradient-to-r ${tab.gradient} border-2 border-white shadow-lg`}
+                      className={`absolute -top-1 -right-1 w-3 h-3 rounded-full bg-gradient-to-r from-blue-700 via-indigo-600 to-sky-500 border-2 border-white shadow-lg`}
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       transition={{ duration: 0.3 }}

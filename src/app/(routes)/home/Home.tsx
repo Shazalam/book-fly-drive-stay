@@ -27,7 +27,7 @@ const Home = () => {
         <div className="px-4 sm:px-6 lg:px-14 xl:px-20 space-y-16">
           <Testimonials />
         </div>
-        <div className="px-4 sm:px-6 lg:px-12 xl:px-20 space-y-16 bg-gradient-to-r from-emerald-500 to-teal-500">
+        <div className="px-4 sm:px-6 lg:px-12 xl:px-20 space-y-16 bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-500">
           <Newsletter />
         </div>
       </div>

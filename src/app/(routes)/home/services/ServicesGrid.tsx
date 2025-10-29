@@ -4,22 +4,22 @@ import { FaHeadset, FaShieldAlt, FaWallet, FaGlobe } from 'react-icons/fa';
 const ServicesGrid = () => {
   const services = [
     {
-      icon: <FaHeadset size={32} className="text-teal-500" />,
+      icon: <FaHeadset size={32} className="text-indigo-500" />,
       title: "24/7 Customer Support",
       description: "Our team is always ready to help you with any questions or issues."
     },
     {
-      icon: <FaShieldAlt size={32} className="text-teal-500" />,
+      icon: <FaShieldAlt size={32} className="text-indigo-500" />,
       title: "Secure Booking",
       description: "Your information is protected with our advanced security measures."
     },
     {
-      icon: <FaWallet size={32} className="text-teal-500" />,
+      icon: <FaWallet size={32} className="text-indigo-500" />,
       title: "Best Price Guarantee",
       description: "Found a better price? We'll match it and give you credit."
     },
     {
-      icon: <FaGlobe size={32} className="text-teal-500" />,
+      icon: <FaGlobe size={32} className="text-indigo-500" />,
       title: "Worldwide Coverage",
       description: "Book travel services in thousands of destinations worldwide."
     }

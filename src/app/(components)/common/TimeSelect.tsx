@@ -119,6 +119,12 @@
 // export default TimeSelect;
 
 
+
+
+
+
+
+
 "use client";
 import React, { useState } from "react";
 import clsx from "clsx";
@@ -128,7 +134,7 @@ import { FaClock } from "react-icons/fa";
 interface TimeSelectProps {
   label: string;
   name: string;
-  register?: any; // react-hook-form register
+  register?: any;
   error?: FieldError;
   options: string[];
   placeholder?: string;
@@ -157,9 +163,7 @@ const TimeSelect: React.FC<TimeSelectProps> = ({
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setInternalValue(e.target.value);
-    if (onChange) {
-      onChange(e);
-    }
+    if (onChange) onChange(e);
   };
 
   const handleFocus = () => setFocused(true);
@@ -172,14 +176,14 @@ const TimeSelect: React.FC<TimeSelectProps> = ({
 
   return (
     <div className={clsx("relative w-full group", className)}>
-      {/* Floating Label - Responsive */}
+      {/* Floating Label */}
       <label
         htmlFor={name}
         className={clsx(
-          "absolute left-4 sm:left-3 text-gray-500 transition-all duration-200 pointer-events-none bg-white px-1 z-10",
-          "text-xs sm:text-sm", // Responsive text size
+          "absolute left-4 text-gray-500 transition-all duration-200 pointer-events-none bg-white px-1 z-10",
+          "text-xs sm:text-sm",
           focused || hasValue
-            ? "top-0 transform -translate-y-1/2 text-emerald-600 font-medium scale-90 origin-left"
+            ? "top-0 transform -translate-y-1/2 text-blue-600 font-medium scale-90 origin-left"
             : "top-1/2 transform -translate-y-1/2"
         )}
       >
@@ -187,25 +191,26 @@ const TimeSelect: React.FC<TimeSelectProps> = ({
         {required && <span className="text-red-500 ml-0.5">*</span>}
       </label>
 
-      {/* Icon + Select Container - Responsive */}
+      {/* Select Wrapper */}
       <div
         className={clsx(
           "flex items-center border-2 rounded-lg sm:rounded-xl bg-white w-full transition-all duration-300 shadow-sm",
-          "hover:shadow-md hover:border-emerald-300",
-          "min-h-[56px] sm:min-h-[60px]", // Responsive height
+          "hover:shadow-md hover:border-blue-300",
+          "min-h-[56px] sm:min-h-[60px]",
           focused
-            ? "border-transparent ring-2 sm:ring-4 ring-emerald-500/20 bg-gradient-to-r from-white to-emerald-50"
+            ? "border-transparent ring-2 sm:ring-4 ring-blue-500/30 bg-gradient-to-r from-blue-50 via-sky-50 to-blue-100"
             : "border-gray-200",
           error && "border-red-400 ring-red-100"
         )}
       >
-        {/* Gradient Icon Container - Responsive */}
-        <div className="absolute left-3 flex items-center justify-center">
-          <div className="bg-gradient-to-r from-emerald-500 to-teal-500 rounded sm:rounded-lg p-1.5 sm:p-2">
-            <FaClock className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
+        {/* Icon */}
+        {/* <div className="absolute left-3 flex items-center justify-center">
+          <div className="bg-gradient-to-r from-blue-700 via-indigo-600 to-sky-500 rounded-md p-1.5 sm:p-2 shadow-md">
+            <FaClock className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
           </div>
-        </div>
+        </div> */}
 
+        {/* Select Input */}
         <select
           id={name}
           {...(register ? register(name) : {})}
@@ -215,26 +220,25 @@ const TimeSelect: React.FC<TimeSelectProps> = ({
           onBlur={handleBlur}
           className={clsx(
             "appearance-none w-full bg-transparent outline-none text-gray-800 cursor-pointer font-medium",
-            "py-3.5 sm:py-4 pr-8 sm:pr-10 pl-11 sm:pl-12", // Responsive padding
-            "text-sm sm:text-base", // Responsive text size
-            "transition-colors duration-200"
+            "py-3.5 sm:py-4 pr-8 sm:pr-10 pl-12 sm:pl-14",
+            "text-sm sm:text-base transition-all duration-200"
           )}
         >
           <option value="" className="text-gray-400 text-sm sm:text-base">
             {placeholder}
           </option>
           {options.map((time, i) => (
-            <option key={i} value={time} className="text-gray-800 text-sm sm:text-base">
+            <option key={i} value={time} className="text-gray-800">
               {time}
             </option>
           ))}
         </select>
 
-        {/* Gradient Dropdown Arrow - Responsive */}
-        <div className="absolute right-2 sm:right-3 pointer-events-none">
-          <div className="bg-gradient-to-r from-emerald-500 to-teal-500 rounded p-1 sm:p-1.5">
+        {/* Dropdown Arrow */}
+        {/* <div className="absolute right-3 pointer-events-none">
+          <div className="bg-gradient-to-r from-blue-700 via-indigo-600 to-sky-500 rounded p-1 sm:p-1.5 shadow-sm">
             <svg
-              className="w-2 h-2 sm:w-3 sm:h-3 text-white"
+              className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-white"
               fill="none"
               stroke="currentColor"
               strokeWidth={3}
@@ -243,21 +247,22 @@ const TimeSelect: React.FC<TimeSelectProps> = ({
               <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
             </svg>
           </div>
-        </div>
+        </div> */}
       </div>
 
-      {/* Focus Indicator - Responsive */}
+      {/* Focus Indicator */}
       {focused && (
-        <div className="absolute inset-x-0 -bottom-1 flex justify-center opacity-0 transition-all duration-300 group-focus-within:opacity-100">
-          <div className={clsx(
-            "w-8 sm:w-12 h-0.5 sm:h-1 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500",
-            "shadow-lg shadow-emerald-500/25",
-            error && "bg-gradient-to-r from-red-500 to-red-400 shadow-red-500/25"
-          )} />
+        <div className="absolute inset-x-0 -bottom-1 flex justify-center opacity-100 transition-all duration-300">
+          <div
+            className={clsx(
+              "w-10 sm:w-14 h-0.5 sm:h-1 rounded-full bg-gradient-to-r from-blue-700 via-indigo-600 to-sky-500 shadow-md",
+              error && "bg-gradient-to-r from-red-500 to-red-400 shadow-red-500/25"
+            )}
+          />
         </div>
       )}
 
-      {/* Error message - Responsive */}
+      {/* Error Message */}
       {error && (
         <p className="text-xs text-red-500 flex items-center gap-1 mt-1 sm:mt-2 ml-2 sm:ml-3">
           <svg

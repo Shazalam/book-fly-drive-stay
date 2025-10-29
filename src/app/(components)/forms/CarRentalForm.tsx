@@ -224,7 +224,7 @@ export const CoreRentalForm: React.FC<CoreRentalFormProps> = ({ onFormSubmit, is
                 <DatePicker
                   // label="Pick-up Date"
                   placeholder="Pick-up Date"
-                  icon={<FaCalendarAlt className="text-gray-600" />}
+                  // icon={<FaCalendarAlt className="text-gray-600" />}
                   value={field.value}
                   onChange={field.onChange}
                   onBlur={field.onBlur}
@@ -237,7 +237,7 @@ export const CoreRentalForm: React.FC<CoreRentalFormProps> = ({ onFormSubmit, is
           </div>
 
           {/* Pick-up Time */}
-          <div className="col-span-1">
+          <div className="">
             <Controller
               name="pickupTime"
               control={control}
@@ -245,7 +245,7 @@ export const CoreRentalForm: React.FC<CoreRentalFormProps> = ({ onFormSubmit, is
                 <TimeSelect
                   label="Pick-up Time"
                   name="pickupTime"
-                  icon={<FaClock />}
+                  // icon={<FaClock />}
                   options={TIME_SLOTS}
                   value={field.value}
                   onChange={field.onChange}
@@ -266,7 +266,7 @@ export const CoreRentalForm: React.FC<CoreRentalFormProps> = ({ onFormSubmit, is
                 <DatePicker
                   // label="Drop-off Date"
                   placeholder="Drop-off Date"
-                  icon={<FaCalendarAlt className="text-gray-600" />}
+                  // icon={<FaCalendarAlt className="text-gray-600" />}
                   value={field.value}
                   onChange={field.onChange}
                   onBlur={field.onBlur}
@@ -287,7 +287,7 @@ export const CoreRentalForm: React.FC<CoreRentalFormProps> = ({ onFormSubmit, is
                 <TimeSelect
                   label="Drop-off Time"
                   name="dropoffTime"
-                  icon={<FaClock />}
+                  // icon={<FaClock />}
                   options={TIME_SLOTS}
                   value={field.value}
                   onChange={field.onChange}

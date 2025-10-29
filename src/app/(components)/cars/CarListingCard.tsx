@@ -14,6 +14,7 @@ import {
   FaUserFriends,
   FaRoad
 } from 'react-icons/fa';
+import Link from 'next/link';
 
 interface CarListingCardProps {
   car: Car;
@@ -187,9 +188,11 @@ const CarListingCard: React.FC<CarListingCardProps> = ({ car }) => {
             </div>
 
             {/* Book Button */}
-            <button className="w-full lg:w-auto bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 mt-4">
-              Book Today
-            </button>
+            <Link href={`/search/cars/${car._id}`} >
+              <button className="w-full lg:w-auto bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 mt-4">
+                Book Today
+              </button>
+            </Link>
           </div>
         </div>
       </div>

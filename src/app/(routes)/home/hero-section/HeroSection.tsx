@@ -95,25 +95,25 @@ const HeroSection = () => {
     hotels: {
       heading: "Discover Handpicked Hotels for Every Journey",
       subheading: "Experience world-class stays, from cozy escapes to five-star luxury — all at unbeatable prices.",
-      gradient: "from-emerald-500 to-teal-500",
+     gradient: "from-blue-500 via-sky-500 to-cyan-400",
       bgGradient: "from-emerald-50/20 via-white to-teal-50/10"
     },
     flights: {
       heading: "Fly Smarter with the Best Flight Deals",
       subheading: "Compare, book, and save big on domestic and international flights — wherever your wanderlust takes you.",
-      gradient: "from-emerald-500 to-teal-500",
+      gradient: "from-blue-500 via-sky-500 to-cyan-400",
       bgGradient: "from-emerald-50/20 via-white to-teal-50/10"
     },
     cars: {
       heading: "Drive in Style with Premium Car Rentals",
       subheading: "Choose from top-rated vehicles and flexible plans — explore your destination with comfort and confidence.",
-      gradient: "from-emerald-500 to-teal-500",
+      gradient: "from-blue-500 via-sky-500 to-cyan-400",
       bgGradient: "from-emerald-50/20 via-white to-teal-50/10"
     },
     cruises: {
       heading: "Embark on Unforgettable Cruise Adventures",
       subheading: "Sail across breathtaking oceans and exotic ports with exclusive luxury cruise deals made for you.",
-      gradient: "from-emerald-500 to-teal-500",
+      gradient: "from-blue-500 via-sky-500 to-cyan-400",
       bgGradient: "from-emerald-50/20 via-white to-teal-50/10"
     },
   };
