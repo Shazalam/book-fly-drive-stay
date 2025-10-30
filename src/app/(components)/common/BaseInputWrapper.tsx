@@ -1,12 +1,12 @@
+// BaseInputWrapper should be simple and not modify input props
 "use client";
 import React from "react";
-import clsx from "clsx";
 
 interface BaseInputWrapperProps {
   label?: string;
   name: string;
   icon?: React.ReactNode;
-  error?: string;
+  error?: string | undefined;
   required?: boolean;
   className?: string;
   children: React.ReactNode;
@@ -19,18 +19,14 @@ const BaseInputWrapper: React.FC<BaseInputWrapperProps> = ({
   error,
   required = false,
   className = "",
-  children
+  children,
 }) => {
   return (
-    <div className={clsx("w-full group border-amber-500", className)}>
+    <div className={`w-full space-y-2 ${className}`}>
       {label && (
-        <label 
+        <label
           htmlFor={name}
-          className={clsx(
-            "block font-semibold mb-2 transition-colors duration-200",
-            error ? "text-red-600" : "text-gray-700",
-            "text-sm md:text-base"
-          )}
+          className="block text-sm font-medium text-gray-700"
         >
           {label}
           {required && <span className="text-red-500 ml-1">*</span>}
@@ -42,12 +38,7 @@ const BaseInputWrapper: React.FC<BaseInputWrapperProps> = ({
       </div>
 
       {error && (
-        <p className={clsx(
-          "mt-2 text-sm font-medium flex items-center",
-          "transition-all duration-200 animate-fadeIn"
-        )}>
-          <span className="text-red-600">⚠ {error}</span>
-        </p>
+        <p className="text-red-600 text-sm mt-1">{error}</p>
       )}
     </div>
   );

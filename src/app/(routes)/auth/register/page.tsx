@@ -1,191 +1,215 @@
 "use client";
 
-import { useState, FormEvent, ChangeEvent } from "react";
+import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { FiUser, FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
-
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { registerUser } from "@/app/(lib)/auth-actions";
-import Button from "@/app/(components)/common/Button";
+import { useAppDispatch, useAppSelector } from "@/app/(hooks)/redux";
+import { RegisterFormData, registerSchema } from "@/app/(lib)/validators/userValidator";
 import InputField from "@/app/(components)/common/InputField";
-
-interface FormData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
+import Button from "@/app/(components)/common/Button";
+import { clearError, registerUser } from "@/app/(store)/slices/authSlice";
 
 export default function RegisterPage() {
-  const [formData, setFormData] = useState<FormData>({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
-  });
   const [showPassword, setShowPassword] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState('');
+
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get('redirect') || '/search/cars';
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-    setError('');
-  };
+  const dispatch = useAppDispatch();
+  const { isLoading, error, requiresVerification, registeredEmail } = useAppSelector(
+    (state) => state.auth
+  );
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setError('');
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isDirty, isValid },
+    watch, // 👈 Add watch to get field values
+  } = useForm<RegisterFormData>({
+    resolver: zodResolver(registerSchema),
+    mode: "onChange",
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      termsAccepted: false,
+    },
+  });
 
-    // Basic validation
-    if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
-      setIsSubmitting(false);
-      return;
+  // Watch form values to see what's being entered
+  const formValues = watch();
+  console.log('Form values:', formValues);
+
+  // Clear errors when component unmounts
+  useEffect(() => {
+    return () => {
+      dispatch(clearError());
+    };
+  }, [dispatch]);
+
+  // Redirect when verification is required
+  useEffect(() => {
+    if (requiresVerification && registeredEmail) {
+      const verifyUrl = new URL('/auth/verify-email', window.location.origin);
+      verifyUrl.searchParams.set('email', encodeURIComponent(registeredEmail));
+      verifyUrl.searchParams.set('redirect', redirectTo);
+
+      router.push(verifyUrl.toString());
     }
+  }, [requiresVerification, registeredEmail, redirectTo, router]);
 
-    if (formData.password.length < 6) {
-      setError('Password must be at least 6 characters long');
-      setIsSubmitting(false);
-      return;
-    }
+  const onSubmit = async (data: RegisterFormData) => {
+    console.log('Form submitted with data:', data);
+    
+    // Transform form data for API
+    const apiData = {
+      firstName: data.firstName.trim(),
+      lastName: data.lastName.trim(),
+      email: data.email.toLowerCase().trim(),
+      password: data.password,
+    };
 
-    try {
-      const result = await registerUser({
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        email: formData.email,
-        password: formData.password
-      });
-
-      if (result.error) {
-        setError(result.error);
-      } else {
-        // Redirect to OTP verification page
-        router.push(`/auth/verify-email?email=${encodeURIComponent(formData.email)}`);
-      }
-    } catch (error) {
-      setError('Something went wrong. Please try again.');
-    } finally {
-      setIsSubmitting(false);
-    }
+    dispatch(registerUser(apiData));
   };
 
   return (
-    <div className="space-y-6">
+    <div className="max-w-md mx-auto space-y-6">
+      {/* Header */}
       <div className="text-center">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">
-          Create Your Account
-        </h2>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          Create Account
+        </h1>
         <p className="text-gray-600">
-          Join 10 crore+ happy travellers
+          Join millions of travelers worldwide
         </p>
       </div>
 
+      {/* Error Alert */}
       {error && (
-        <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
+        <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
           <p className="text-red-600 text-sm text-center">{error}</p>
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="grid grid-cols-2 gap-4">
+      {/* Registration Form */}
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 bg-white p-6 rounded-xl shadow-sm border">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <InputField
             label="First Name"
-            name="firstName"
             type="text"
-            required
-            value={formData.firstName}
-            onChange={handleInputChange}
+            placeholder="John"
             icon={<FiUser className="w-4 h-4" />}
-            placeholder="First name"
-            variant="priceline"
-            size="md"
+            error={errors.firstName}
+            disabled={isLoading}
+            {...register("firstName")}
           />
 
           <InputField
             label="Last Name"
-            name="lastName"
             type="text"
-            required
-            value={formData.lastName}
-            onChange={handleInputChange}
+            placeholder="Doe"
             icon={<FiUser className="w-4 h-4" />}
-            placeholder="Last name"
-            variant="priceline"
-            size="md"
+            error={errors.lastName}
+            disabled={isLoading}
+            {...register("lastName")}
           />
         </div>
 
         <InputField
           label="Email Address"
-          name="email"
           type="email"
-          required
-          value={formData.email}
-          onChange={handleInputChange}
+          placeholder="john.doe@example.com"
           icon={<FiMail className="w-4 h-4" />}
-          placeholder="Enter your email"
-          variant="priceline"
-          size="md"
+          error={errors.email}
+          disabled={isLoading}
+          {...register("email")}
         />
 
         <InputField
           label="Password"
-          name="password"
           type={showPassword ? "text" : "password"}
-          required
-          value={formData.password}
-          onChange={handleInputChange}
+          placeholder="Create a strong password"
           icon={<FiLock className="w-4 h-4" />}
-          placeholder="Create a password"
-          variant="priceline"
-          size="md"
+          error={errors.password}
+          disabled={isLoading}
           iconRight={
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="text-gray-400 hover:text-gray-600"
+              className="text-gray-400 hover:text-gray-600 transition-colors"
+              disabled={isLoading}
             >
               {showPassword ? <FiEyeOff className="w-4 h-4" /> : <FiEye className="w-4 h-4" />}
             </button>
           }
+          {...register("password")}
         />
 
         <InputField
           label="Confirm Password"
-          name="confirmPassword"
           type={showPassword ? "text" : "password"}
-          required
-          value={formData.confirmPassword}
-          onChange={handleInputChange}
-          icon={<FiLock className="w-4 h-4" />}
           placeholder="Confirm your password"
-          variant="priceline"
-          size="md"
+          icon={<FiLock className="w-4 h-4" />}
+          error={errors.confirmPassword}
+          disabled={isLoading}
+          {...register("confirmPassword")}
         />
+
+        {/* Terms and Conditions */}
+        <div className="flex items-start space-x-3">
+          <div className="flex items-center h-5">
+            <input
+              id="termsAccepted"
+              type="checkbox"
+              className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+              disabled={isLoading}
+              {...register("termsAccepted")}
+            />
+          </div>
+          <div className="text-sm">
+            <label htmlFor="termsAccepted" className="font-medium text-gray-700">
+              I agree to the{" "}
+              <Link href="/terms" className="text-blue-600 hover:text-blue-500">
+                Terms of Service
+              </Link>{" "}
+              and{" "}
+              <Link href="/privacy" className="text-blue-600 hover:text-blue-500">
+                Privacy Policy
+              </Link>
+            </label>
+            {errors.termsAccepted && (
+              <p className="text-red-600 text-sm mt-1">{errors.termsAccepted.message}</p>
+            )}
+          </div>
+        </div>
 
         <Button
           type="submit"
-          loading={isSubmitting}
+          loading={isLoading}
           variant="primary"
           fullWidth
+          size="lg"
+          disabled={!isDirty || !isValid || isLoading}
+          className="mt-6"
         >
-          {isSubmitting ? "Creating Account..." : "Create Account"}
+          {isLoading ? "Creating Account..." : "Create Account"}
         </Button>
       </form>
 
-      <div className="text-center">
+      {/* Login Link */}
+      <div className="text-center pt-4">
         <p className="text-gray-600">
           Already have an account?{" "}
-          <Link href="/auth/login" className="text-blue-600 hover:text-blue-700 font-medium">
+          <Link
+            href={`/auth/login${redirectTo ? `?redirect=${encodeURIComponent(redirectTo)}` : ''}`}
+            className="text-blue-600 hover:text-blue-700 font-semibold transition-colors"
+          >
             Sign in
           </Link>
         </p>

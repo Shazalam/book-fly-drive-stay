@@ -10,6 +10,8 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   loading?: boolean;
   variant?: "primary" | "secondary" | "success" | "danger" | "outline";
   fullWidth?: boolean;
+  size?: "lg" | "md" | "sm";
+
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -23,6 +25,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       className = "",
       fullWidth = true,
       disabled,
+      size = "md",
       children,
       ...props
     },

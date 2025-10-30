@@ -4,8 +4,7 @@ import "../app/styles/globals.css";
 import Navbar from "./(components)/common/Navbar";
 import Footer from "./(components)/common/Footer";
 import GoogleTagManager from './(components)/gTagManager';
-import FloatingContact from "./(components)/FloatingContact";
-import DialogBox from './(components)/dialogBox/dialogBox';
+import Providers from "./ReduxProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -51,19 +50,19 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-   
-  
+
+
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <GoogleTagManager />
-        <Navbar />
-        <div className="sm:pt-[100px] md:pt-[80px]">
-          {children}
-          {/* <DialogBox /> */}
-          <FloatingContact />
-        </div>
-        <Footer />
+        <Providers>
+          <GoogleTagManager />
+          <Navbar />
+          <div className="sm:pt-[100px] md:pt-[80px]">
+            {children}
+          </div>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

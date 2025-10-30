@@ -255,8 +255,6 @@
 
 
 
-
-
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
@@ -274,21 +272,21 @@ import {
   FiHeart,
   FiStar,
   FiBriefcase,
+  FiChevronRight,
 } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa";
 import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 import { RiCarLine, RiShipLine } from "react-icons/ri";
 import { IoAirplaneOutline } from "react-icons/io5";
-import AuthModals from "../AuthModal/AuthModal";
 import Image from "next/image";
 import logo from '../../../../public/icons/logo.png';
 
 const navList = [
-  { name: "Home", href: "/", icon: <FiHome className="w-5 h-5" /> },
-  { name: "Cars", href: "/car-rentals", icon: <RiCarLine className="w-5 h-5" /> },
-  { name: "Flights", href: "/flights", icon: <IoAirplaneOutline className="w-5 h-5" /> },
-  { name: "Hotels", href: "/hotels", icon: <HiOutlineBuildingOffice2 className="w-5 h-5" /> },
-  { name: "Cruise", href: "/cruise", icon: <RiShipLine className="w-5 h-5" /> },
+  { name: "Home", href: "/", icon: <FiHome className="w-4 h-4" /> },
+  { name: "Cars", href: "/car-rentals", icon: <RiCarLine className="w-4 h-4" /> },
+  { name: "Flights", href: "/flights", icon: <IoAirplaneOutline className="w-4 h-4" /> },
+  { name: "Hotels", href: "/hotels", icon: <HiOutlineBuildingOffice2 className="w-4 h-4" /> },
+  { name: "Cruise", href: "/cruise", icon: <RiShipLine className="w-4 h-4" /> },
 ];
 
 export default function Navbar() {
@@ -338,37 +336,94 @@ export default function Navbar() {
     setAuthModalType(null);
   };
 
-  const NavLink = ({ item }: { item: typeof navList[0] }) => {
+  // Professional Desktop NavLink Component
+  const DesktopNavLink = ({ item }: { item: typeof navList[0] }) => {
     const active = pathname === item.href;
+    
+    return (
+      <Link
+        href={item.href}
+        className={`
+          group relative flex items-center gap-2 px-4 py-2 
+          font-medium transition-all duration-200
+          ${active 
+            ? "text-blue-600" 
+            : "text-gray-600 hover:text-blue-600"
+          }
+        `}
+        aria-current={active ? "page" : undefined}
+      >
+        {/* Icon */}
+        <span className={`
+          transition-colors duration-200
+          ${active ? "text-blue-600" : "text-gray-500 group-hover:text-blue-600"}
+        `}>
+          {item.icon}
+        </span>
+
+        {/* Text */}
+        <span className="relative">
+          {item.name}
+          
+          {/* Active underline indicator */}
+          {active && (
+            <motion.div
+              className="absolute -bottom-8 left-0 w-full h-0.5 bg-blue-600"
+              layoutId="desktopActiveIndicator"
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            />
+          )}
+          
+          {/* Hover underline effect */}
+          {!active && (
+            <div className="absolute -bottom-8 left-0 w-0 h-0.5 bg-blue-400 transition-all duration-200 group-hover:w-full" />
+          )}
+        </span>
+
+        {/* Subtle background on hover */}
+        <div className={`
+          absolute inset-0 rounded-lg transition-all duration-200 -z-10
+          ${active 
+            ? "bg-blue-50" 
+            : "group-hover:bg-gray-50"
+          }
+        `} />
+      </Link>
+    );
+  };
+
+  // Mobile NavLink Component - Professional Style
+  const MobileNavLink = ({ item }: { item: typeof navList[0] }) => {
+    const active = pathname === item.href;
+    
     return (
       <Link
         href={item.href}
         onClick={() => setIsOpen(false)}
-        className={`flex items-center gap-2 px-4 py-3 rounded-xl font-medium transition-all duration-300 relative group ${active
-          ? "text-white"
-          : "text-gray-700 hover:text-blue-600"
-          }`}
+        className={`
+          flex items-center justify-between w-full p-4 transition-all duration-200
+          ${active 
+            ? "text-blue-600 bg-blue-50 border-r-4 border-blue-600" 
+            : "text-gray-700 hover:text-blue-600 hover:bg-gray-50"
+          }
+        `}
         aria-current={active ? "page" : undefined}
       >
-        {/* Background for active state */}
-        {active && (
-          <motion.div
-            className="absolute inset-0 bg-gradient-to-r from-blue-500 via-blue-400 to-cyan-500 rounded-xl shadow-lg"
-            layoutId="activeNav"
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
-          />
-        )}
-
-        <span className={`relative z-10 transition-colors duration-300 ${active ? "text-white" : "text-blue-600 group-hover:text-blue-700"
-          }`}>
-          {item.icon}
-        </span>
-        <span className="hidden md:inline relative z-10">{item.name}</span>
-
-        {/* Hover effect */}
-        {!active && (
-          <div className="absolute inset-0 bg-blue-50 opacity-0 group-hover:opacity-100 rounded-xl transition-opacity duration-300 -z-10" />
-        )}
+        <div className="flex items-center gap-4">
+          <span className={`
+            transition-colors duration-200
+            ${active ? "text-blue-600" : "text-gray-500"}
+          `}>
+            {item.icon}
+          </span>
+          <span className="font-medium text-base">{item.name}</span>
+        </div>
+        
+        {/* Chevron indicator */}
+        <FiChevronRight className={`
+          w-4 h-4 transition-transform duration-200
+          ${active ? "text-blue-600" : "text-gray-400"}
+        `} />
       </Link>
     );
   };
@@ -376,10 +431,11 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled
-          ? "bg-white/95 backdrop-blur-lg shadow-lg border-b border-blue-100/30 py-3"
-          : "bg-white/90 backdrop-blur-sm py-4"
-          }`}
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+          scrolled
+            ? "bg-white/95 backdrop-blur-lg shadow-sm border-b border-gray-200 py-3"
+            : "bg-white/90 backdrop-blur-sm py-4"
+        }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
@@ -397,42 +453,42 @@ export default function Navbar() {
               </motion.div>
             </Link>
 
-            {/* Desktop Navigation */}
+            {/* Desktop Navigation - Professional Style */}
             <div className="hidden lg:flex items-center space-x-1">
               {navList.map((item) => (
-                <NavLink key={item.href} item={item} />
+                <DesktopNavLink key={item.href} item={item} />
               ))}
             </div>
 
             {/* Right Actions */}
             <div className="flex items-center space-x-4">
-              {/* Login & Register Buttons - Visible on All Screens */}
+              {/* Login & Register Buttons - Professional Style */}
               {!isLoggedIn && (
                 <div className="hidden lg:flex items-center gap-3">
                   <Link href={"/auth/login"}>
                     <button
-                      className="px-4 py-2.5 rounded-xl border-2 border-blue-500 text-blue-600 hover:bg-blue-50 hover:border-blue-600 transition-all duration-300 font-semibold"
+                      className="px-4 py-2 text-blue-600 hover:text-blue-700 font-medium transition-colors duration-200"
                     >
-                      Login
-                  </button>
+                     Login
+                    </button>
                   </Link>
                   <Link href={"/auth/register"}>
                     <button
-                      className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-blue-500 via-blue-400 to-cyan-500 text-white shadow-lg hover:shadow-xl hover:from-blue-600 hover:via-blue-500 hover:to-cyan-600 transition-all duration-300 font-semibold"
+                      className="px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-all duration-200 shadow-sm"
                     >
                       Register
-                  </button>
+                    </button>
                   </Link>
                 </div>
               )}
 
-              {/* User Menu - Always Visible */}
+              {/* User Menu - Professional Style */}
               <div className="relative">
                 {isLoggedIn ? (
                   <>
                     <button
                       onClick={() => setUserMenuOpen(!userMenuOpen)}
-                      className="flex items-center gap-2 p-2 rounded-xl border border-blue-200 bg-white text-blue-600 hover:bg-blue-50 transition-all duration-300"
+                      className="flex items-center gap-2 p-2 rounded-lg text-gray-600 hover:text-blue-600 hover:bg-gray-50 transition-all duration-200"
                     >
                       <FiUser className="w-5 h-5" />
                     </button>
@@ -444,45 +500,46 @@ export default function Navbar() {
                           animate={{ opacity: 1, y: 0, scale: 1 }}
                           exit={{ opacity: 0, y: 10, scale: 0.95 }}
                           transition={{ duration: 0.15 }}
-                          className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg border border-blue-100 z-50"
+                          className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 z-50"
                         >
                           <div className="p-2 space-y-1">
-                            <button className="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 rounded-lg">
-                              <FiUser className="w-4 h-4 text-blue-600" />
+                            <div className="px-3 py-2 border-b border-gray-100">
+                              <p className="text-sm font-medium text-gray-900">Welcome back!</p>
+                              <p className="text-xs text-gray-500">Manage your account</p>
+                            </div>
+                            
+                            <button className="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-md">
+                              <FiUser className="w-4 h-4 text-gray-500" />
                               <span>Profile</span>
                             </button>
-                            <button className="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 rounded-lg">
+                            <button className="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-md">
                               <FiHeart className="w-4 h-4 text-pink-500" />
                               <span>Wishlists</span>
                             </button>
-                            <button className="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 rounded-lg">
+                            <button className="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-md">
                               <FiStar className="w-4 h-4 text-amber-500" />
                               <span>Rewards</span>
                             </button>
-                            <button className="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 rounded-lg">
-                              <FiSettings className="w-4 h-4 text-gray-500" />
-                              <span>Settings</span>
-                            </button>
 
-                            {/* 🧳 My Trip moved here */}
+                            {/* 🧳 My Trip */}
                             <button
                               onClick={() => {
                                 setUserMenuOpen(false);
                                 openAuthModal("find-my-trip");
                               }}
-                              className="w-full flex items-center gap-3 px-3 py-2 text-sm text-blue-600 hover:bg-blue-50 rounded-lg"
+                              className="w-full flex items-center gap-3 px-3 py-2 text-sm text-blue-600 hover:bg-blue-50 rounded-md"
                             >
-                              <FiBriefcase className="w-4 h-4 text-blue-600" />
+                              <FiBriefcase className="w-4 h-4" />
                               <span>My Trip</span>
                             </button>
 
-                            <div className="border-t border-blue-100 pt-1">
+                            <div className="border-t border-gray-100 pt-1">
                               <button
                                 onClick={handleLogout}
-                                className="w-full flex items-center gap-3 px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                                className="w-full flex items-center gap-3 px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-md transition-colors"
                               >
                                 <FiLogOut className="w-4 h-4" />
-                                <span>Sign Out</span>
+                                <span>Log Out</span>
                               </button>
                             </div>
                           </div>
@@ -498,17 +555,16 @@ export default function Navbar() {
               {/* Mobile Hamburger */}
               <button
                 onClick={() => setIsOpen(true)}
-                className="lg:hidden p-2 rounded-xl border border-blue-200 bg-white text-blue-600 hover:bg-blue-50 transition-colors"
+                className="lg:hidden p-2 rounded-lg text-gray-600 hover:text-blue-600 hover:bg-gray-50 transition-colors"
               >
                 <FiMenu className="w-5 h-5" />
               </button>
             </div>
-
           </div>
         </div>
       </nav>
 
-      {/* Mobile Drawer */}
+      {/* Mobile Drawer - Professional Style */}
       <AnimatePresence>
         {isOpen && (
           <>
@@ -526,11 +582,11 @@ export default function Navbar() {
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={{ type: "tween", duration: 0.3 }}
-              className="fixed right-0 top-0 h-full w-80 bg-white shadow-2xl z-50 border-l border-blue-100"
+              transition={{ type: "tween", duration: 0.3, ease: "easeOut" }}
+              className="fixed right-0 top-0 h-full w-80 bg-white shadow-2xl z-50 border-l border-gray-200"
             >
               {/* Header */}
-              <div className="flex items-center justify-between p-6 border-b border-blue-100 bg-white">
+              <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-white">
                 <Link href="/" onClick={() => setIsOpen(false)}>
                   <Image
                     src={logo}
@@ -542,103 +598,73 @@ export default function Navbar() {
                 </Link>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="p-2 rounded-xl bg-blue-100 text-blue-600 hover:bg-blue-200 transition-colors"
+                  className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 transition-colors"
                 >
                   <FiX className="w-5 h-5" />
                 </button>
               </div>
 
-              {/* Content */}
-              <div className="p-6 h-full overflow-y-auto">
-
-
-                {/* Navigation */}
-                <nav className="space-y-2 mb-8">
-                  {navList.map((item) => {
-                    const active = pathname === item.href;
-                    return (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        onClick={() => setIsOpen(false)}
-                        className={`flex items-center gap-3 p-3 rounded-xl transition-all duration-200 ${active
-                          ? "bg-gradient-to-r from-blue-500 via-blue-400 to-cyan-500 text-white shadow-lg"
-                          : "text-gray-700 hover:bg-blue-50"
-                          }`}
-                      >
-                        <span className={active ? "text-white" : "text-blue-600"}>
-                          {item.icon}
-                        </span>
-                        <span className="font-medium">{item.name}</span>
-                      </Link>
-                    );
-                  })}
+              {/* Navigation Section */}
+              <div className="p-4 border-b border-gray-200">
+                <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider px-4 py-2">
+                  Navigation
+                </h3>
+                <nav className="space-y-1">
+                  {navList.map((item) => (
+                    <MobileNavLink key={item.href} item={item} />
+                  ))}
                 </nav>
+              </div>
 
-                {/* Contact Section */}
-                <div className="space-y-4 pt-6 border-t border-blue-100">
-                  <a
-                    href="tel:+18449545425"
-                    className="flex items-center gap-3 p-3 text-gray-700 hover:bg-blue-50 rounded-xl transition-colors"
-                  >
-                    <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center">
-                      <FiPhone className="w-4 h-4 text-blue-600" />
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-500">24/7 Support</div>
-                      <div className="font-semibold">+1 (844) 954-5425</div>
-                    </div>
-                  </a>
-
-                  <a
-                    href="https://wa.me/18449545425"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-3 p-3 text-gray-700 hover:bg-blue-50 rounded-xl transition-colors"
-                  >
-                    <div className="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center">
-                      <FaWhatsapp className="w-4 h-4 text-green-600" />
-                    </div>
-                    <div className="font-semibold">WhatsApp</div>
-                  </a>
-                </div>
-
-                {/* Auth Section (Login + Register in Drawer) */}
-                {!isLoggedIn && (
-                  <div className="pt-6 border-t border-blue-100">
-                    <div className="text-sm text-gray-600 mb-4">Welcome! Please log in or register.</div>
-
-                    <div className="space-y-3">
-                      <Link href={"/auth/login`"}>
-                        <button
-                          className="w-full py-3 border-2 border-blue-500 text-blue-600 rounded-xl font-semibold hover:bg-blue-50 transition-colors"
-                        >
-                          Login
-                        </button>
-                      </Link>
-                      <Link href={"/auth/register"}>
-                        <button
-                          className="w-full py-3 bg-gradient-to-r from-blue-500 via-blue-400 to-cyan-500 text-white rounded-xl font-semibold hover:from-blue-600 hover:via-blue-500 hover:to-cyan-600 transition-all"
-                        >
-                          Register
-                        </button>
-                      </Link>
-                    </div>
+              {/* User Section */}
+              <div className="p-4 border-b border-gray-200">
+                <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider px-4 py-2">
+                  Account
+                </h3>
+                
+                {isLoggedIn ? (
+                  <div className="space-y-1">
+                    <button className="w-full flex items-center justify-between p-4 text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-all duration-200">
+                      <div className="flex items-center gap-4">
+                        <FiUser className="w-5 h-5 text-gray-500" />
+                        <span className="font-medium">Profile</span>
+                      </div>
+                      <FiChevronRight className="w-4 h-4 text-gray-400" />
+                    </button>
+                    
+                    <button 
+                      onClick={handleLogout}
+                      className="w-full flex items-center justify-between p-4 text-red-600 hover:bg-red-50 transition-all duration-200"
+                    >
+                      <div className="flex items-center gap-4">
+                        <FiLogOut className="w-5 h-5" />
+                        <span className="font-medium">Log Out</span>
+                      </div>
+                    </button>
+                  </div>
+                ) : (
+                  <div className="space-y-3 px-4 py-2">
+                    <Link 
+                      href="/auth/login" 
+                      onClick={() => setIsOpen(false)}
+                      className="block w-full text-center py-3 border border-blue-600 text-blue-600 rounded-lg font-medium hover:bg-blue-50 transition-colors"
+                    >
+                     Login
+                    </Link>
+                    <Link 
+                      href="/auth/register" 
+                      onClick={() => setIsOpen(false)}
+                      className="block w-full text-center py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                    >
+                     Register
+                    </Link>
                   </div>
                 )}
-
               </div>
             </motion.aside>
           </>
         )}
       </AnimatePresence>
-
-      {/* Auth Modal */}
-      <AuthModals
-        isOpen={authModalOpen}
-        defaultModal={authModalType}
-        onClose={closeAuthModal}
-      />
     </>
   );
 }

@@ -12,10 +12,10 @@ const Home = () => {
     <>
       <div className="bg-gray-50">
         <HeroSection />
-        <div className="px-4 sm:px-6 lg:px-15 xl:px-20 space-y-16">
+        <div className="px-4 sm:px-6 lg:px-15 xl:px-20 space-y-16 mt-20">
           <CarRentalCompanies />
         </div>
-        <div className="px-4 sm:px-6 lg:px-14 xl:px-20 space-y-16 bg-white">
+        {/* <div className="px-4 sm:px-6 lg:px-14 xl:px-20 space-y-16 bg-white">
           <FlightDestinations />
         </div>
         <div className="px-4 sm:px-6 lg:px-12 xl:px-20 space-y-16">
@@ -29,7 +29,7 @@ const Home = () => {
         </div>
         <div className="px-4 sm:px-6 lg:px-12 xl:px-20 space-y-16 bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-500">
           <Newsletter />
-        </div>
+        </div> */}
       </div>
     </>
 

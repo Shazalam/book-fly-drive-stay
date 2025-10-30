@@ -393,7 +393,7 @@ const BookingTabs: React.FC<BookingTabsProps> = ({ activeTab, setActiveTab }) =>
       >
         {/* Enhanced Tabs Navigation */}
         <div className="relative bg-gradient-to-r from-gray-50 to-white border-b border-gray-200/60 px-2 sm:px-6 pt-4 pb-2">
-          <div className="flex flex-nowrap overflow-x-auto scrollbar-hide gap-1 sm:gap-3 pb-2 pt-2 ">
+          <div className="flex flex-nowrap overflow-x-auto scrollbar-hide gap-1 sm:gap-3 pb-1 pt-2 ">
             {tabs.map((tab) => {
               const IconComponent = tab.icon;
               const isActive = activeTab === tab.id;
