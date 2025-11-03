@@ -1,4 +1,4 @@
-import { z } from "zod";
+// import { z } from "zod";
 
 // // ✅ Generate 12-hour time slots with 30-min intervals + “Midnight” & “Noon”
 // export const TIME_SLOTS = (() => {
@@ -50,18 +50,48 @@ import { z } from "zod";
 // app/(types)/CarRentalSchema.ts
 
 
-export interface CarRentalFormValues {
-  pickupLocation: string;
-  dropoffLocation: string;
-  pickupDate: string;
-  pickupTime: string;
-  dropoffDate: string;
-  dropoffTime: string;
-  isDropoffSame: boolean;
-  addHotel: boolean;
-  addFlight: boolean;
-}
 
+
+import { z } from "zod";
+
+// -----------------------------
+// 🧩 Schema Definition
+// -----------------------------
+
+export const carRentalSchema = z.object({
+  pickupLocation: z.string().min(1, "Pickup location is required"),
+  dropoffLocation: z.string().min(1, "Dropoff location is required"),
+  pickupDate: z.string().min(1, "Pickup date is required"),
+  pickupTime: z.string().min(1, "Pickup time is required"),
+  dropoffDate: z.string().min(1, "Dropoff date is required"),
+  dropoffTime: z.string().min(1, "Dropoff time is required"),
+  isDropoffSame: z.boolean(),
+  addHotel: z.boolean(),
+  addFlight: z.boolean()
+});
+
+// -----------------------------
+// 🧾 Type Inference
+// -----------------------------
+export type CarRentalFormValues = z.infer<typeof carRentalSchema>;
+
+// -----------------------------
+// ⏰ Time Slot Constants
+// -----------------------------
+export const TIME_SLOTS: string[] = [
+  "12:00 AM", "12:30 AM", "1:00 AM", "1:30 AM", "2:00 AM", "2:30 AM",
+  "3:00 AM", "3:30 AM", "4:00 AM", "4:30 AM", "5:00 AM", "5:30 AM",
+  "6:00 AM", "6:30 AM", "7:00 AM", "7:30 AM", "8:00 AM", "8:30 AM",
+  "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM",
+  "12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM", "2:00 PM", "2:30 PM",
+  "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM", "5:00 PM", "5:30 PM",
+  "6:00 PM", "6:30 PM", "7:00 PM", "7:30 PM", "8:00 PM", "8:30 PM",
+  "9:00 PM", "9:30 PM", "10:00 PM", "10:30 PM", "11:00 PM", "11:30 PM",
+];
+
+// -----------------------------
+// 🚗 Car Type Interface
+// -----------------------------
 export interface Car {
   _id: string;
   company: string;
@@ -86,26 +116,3 @@ export interface Car {
   createdAt: string;
   updatedAt: string;
 }
-
-export const TIME_SLOTS = [
-  "12:00 AM", "12:30 AM", "1:00 AM", "1:30 AM", "2:00 AM", "2:30 AM", 
-  "3:00 AM", "3:30 AM", "4:00 AM", "4:30 AM", "5:00 AM", "5:30 AM", 
-  "6:00 AM", "6:30 AM", "7:00 AM", "7:30 AM", "8:00 AM", "8:30 AM", 
-  "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM",
-  "12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM", "2:00 PM", "2:30 PM", 
-  "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM", "5:00 PM", "5:30 PM", 
-  "6:00 PM", "6:30 PM", "7:00 PM", "7:30 PM", "8:00 PM", "8:30 PM", 
-  "9:00 PM", "9:30 PM", "10:00 PM", "10:30 PM", "11:00 PM", "11:30 PM"
-];
-
-export const carRentalSchema = z.object({
-  pickupLocation: z.string().min(1, "Pick-up location is required"),
-  dropoffLocation: z.string().min(1, "Drop-off location is required"),
-  pickupDate: z.string().min(1, "Pick-up date is required"),
-  pickupTime: z.string().min(1, "Pick-up time is required"),
-  dropoffDate: z.string().min(1, "Drop-off date is required"),
-  dropoffTime: z.string().min(1, "Drop-off time is required"),
-  isDropoffSame: z.boolean().default(false),
-  addHotel: z.boolean().default(false),
-  addFlight: z.boolean().default(false),
-});

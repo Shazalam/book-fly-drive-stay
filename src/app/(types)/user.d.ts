@@ -32,13 +32,13 @@ export interface LoginResponseData {
   token: string;
 }
 
-export interface AuthApiResponse<T = any> {
+export interface AuthApiResponse<T = unknown> {
   status: 'success' | 'error';
   message: string;
   data?: T;
   error?: {
     code: string;
-    details?: any;
+    details?: unknown;
   };
   meta?: {
     timestamp: string;

@@ -4,13 +4,13 @@ import { NextResponse } from "next/server";
 export type ApiStatus = 'success' | 'error' | 'validation_error' | 'authentication_error' | 'authorization_error' | 'not_found' | 'rate_limited' | 'server_error';
 
 // Standard API response interface
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = unknown> {
   status: ApiStatus;
   message: string;
   data?: T;
   error?: {
     code: string;
-    details?: any;
+    details?: unknown;
     stack?: string;
   };
   meta?: {
@@ -127,7 +127,7 @@ function createErrorResponse(
   message: string,
   statusCode: number,
   errorCode: string,
-  details?: any,
+  details?: unknown,
   context?: RequestContext
 ): NextResponse {
   const response: ApiResponse = {
@@ -190,7 +190,7 @@ export const ApiResponse = {
   badRequest(
     message: string = 'Bad request',
     errorCode: string = ErrorCode.VALIDATION_ERROR,
-    details?: any,
+    details?: unknown,
     context?: RequestContext
   ): NextResponse {
     return createErrorResponse('validation_error', message, HttpStatus.BAD_REQUEST, errorCode, details, context);
@@ -199,7 +199,7 @@ export const ApiResponse = {
   unauthorized(
     message: string = 'Authentication required',
     errorCode: string = ErrorCode.UNAUTHENTICATED,
-    details?: any,
+    details?: unknown,
     context?: RequestContext
   ): NextResponse {
     return createErrorResponse('authentication_error', message, HttpStatus.UNAUTHORIZED, errorCode, details, context);
@@ -208,7 +208,7 @@ export const ApiResponse = {
   forbidden(
     message: string = 'Insufficient permissions',
     errorCode: string = ErrorCode.UNAUTHORIZED,
-    details?: any,
+    details?: unknown,
     context?: RequestContext
   ): NextResponse {
     return createErrorResponse('authorization_error', message, HttpStatus.FORBIDDEN, errorCode, details, context);
@@ -217,7 +217,7 @@ export const ApiResponse = {
   notFound(
     message: string = 'Resource not found',
     errorCode: string = ErrorCode.NOT_FOUND,
-    details?: any,
+    details?: unknown,
     context?: RequestContext
   ): NextResponse {
     return createErrorResponse('not_found', message, HttpStatus.NOT_FOUND, errorCode, details, context);
@@ -226,7 +226,7 @@ export const ApiResponse = {
   conflict(
     message: string = 'Resource conflict',
     errorCode: string = ErrorCode.CONFLICT,
-    details?: any,
+    details?: unknown,
     context?: RequestContext
   ): NextResponse {
     return createErrorResponse('error', message, HttpStatus.CONFLICT, errorCode, details, context);
@@ -235,7 +235,7 @@ export const ApiResponse = {
   unprocessableEntity(
     message: string = 'Unprocessable entity',
     errorCode: string = ErrorCode.VALIDATION_ERROR,
-    details?: any,
+    details?: unknown,
     context?: RequestContext
   ): NextResponse {
     return createErrorResponse('validation_error', message, HttpStatus.UNPROCESSABLE_ENTITY, errorCode, details, context);
@@ -244,7 +244,7 @@ export const ApiResponse = {
   tooManyRequests(
     message: string = 'Too many requests',
     errorCode: string = ErrorCode.RATE_LIMITED,
-    details?: any,
+    details?: unknown,
     context?: RequestContext
   ): NextResponse {
     return createErrorResponse('rate_limited', message, HttpStatus.TOO_MANY_REQUESTS, errorCode, details, context);
@@ -253,7 +253,7 @@ export const ApiResponse = {
   internalError(
     message: string = 'Internal server error',
     errorCode: string = ErrorCode.INTERNAL_ERROR,
-    details?: any,
+    details?: unknown,
     context?: RequestContext
   ): NextResponse {
     return createErrorResponse('server_error', message, HttpStatus.INTERNAL_SERVER_ERROR, errorCode, details, context);
@@ -265,7 +265,7 @@ export const ApiResponse = {
     message: string,
     statusCode: number,
     errorCode: string,
-    details?: any,
+    details?: unknown,
     context?: RequestContext
   ): NextResponse {
     return createErrorResponse(status, message, statusCode, errorCode, details, context);
@@ -319,7 +319,7 @@ export function getErrorMessage(response: ApiResponse): string {
   return response.message || 'An unexpected error occurred';
 }
 
-export function getErrorDetails(response: ApiResponse): any {
+export function getErrorDetails(response: ApiResponse): unknown {
   return response.error?.details;
 }
 
@@ -335,7 +335,7 @@ export const ApiResponseFactory = {
   },
   
   // Quick error responses
-  badRequest(message: string, details?: any) {
+  badRequest(message: string, details?: unknown) {
     return ApiResponse.badRequest(message, ErrorCode.VALIDATION_ERROR, details);
   },
   

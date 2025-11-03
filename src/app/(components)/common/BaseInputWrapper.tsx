@@ -15,7 +15,6 @@ interface BaseInputWrapperProps {
 const BaseInputWrapper: React.FC<BaseInputWrapperProps> = ({
   label,
   name,
-  icon,
   error,
   required = false,
   className = "",

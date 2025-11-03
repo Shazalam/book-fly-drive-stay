@@ -77,7 +77,10 @@ interface DrawerProps {
   isOpen: boolean;
   onClose: () => void;
   children: ReactNode;
-  title: string;
+  title?: string;
+  position?: 'bottom' | 'top' | 'left' | 'right';
+  size?: 'full' | 'half' | 'custom';
+  className?: string;
 }
 
 const MobileDrawer: React.FC<DrawerProps> = ({ isOpen, onClose, children, title }) => {

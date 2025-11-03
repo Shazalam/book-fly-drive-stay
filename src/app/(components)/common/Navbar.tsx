@@ -265,16 +265,13 @@ import {
   FiMenu,
   FiX,
   FiHome,
-  FiPhone,
   FiUser,
   FiLogOut,
-  FiSettings,
   FiHeart,
   FiStar,
   FiBriefcase,
   FiChevronRight,
 } from "react-icons/fi";
-import { FaWhatsapp } from "react-icons/fa";
 import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 import { RiCarLine, RiShipLine } from "react-icons/ri";
 import { IoAirplaneOutline } from "react-icons/io5";
@@ -295,20 +292,12 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [authModalOpen, setAuthModalOpen] = useState(false);
-  const [authModalType, setAuthModalType] = useState<"auth" | "find-my-trip" | null>(null);
 
   useEffect(() => {
     const loggedIn =
       typeof window !== "undefined" && localStorage.getItem("isLoggedIn") === "true";
     setIsLoggedIn(Boolean(loggedIn));
   }, []);
-
-  const handleLogin = () => {
-    localStorage.setItem("isLoggedIn", "true");
-    setIsLoggedIn(true);
-    setUserMenuOpen(false);
-  };
 
   const handleLogout = () => {
     localStorage.setItem("isLoggedIn", "false");
@@ -325,16 +314,6 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
-  const openAuthModal = (type: "auth" | "find-my-trip") => {
-    setAuthModalType(type);
-    setAuthModalOpen(true);
-    setIsOpen(false);
-  };
-
-  const closeAuthModal = () => {
-    setAuthModalOpen(false);
-    setAuthModalType(null);
-  };
 
   // Professional Desktop NavLink Component
   const DesktopNavLink = ({ item }: { item: typeof navList[0] }) => {
@@ -525,7 +504,6 @@ export default function Navbar() {
                             <button
                               onClick={() => {
                                 setUserMenuOpen(false);
-                                openAuthModal("find-my-trip");
                               }}
                               className="w-full flex items-center gap-3 px-3 py-2 text-sm text-blue-600 hover:bg-blue-50 rounded-md"
                             >

@@ -1,9 +1,63 @@
-import mongoose from 'mongoose';
+// import mongoose from 'mongoose';
+
+// const MONGODB_URI = process.env.MONGODB_URI!;
+
+// if (!MONGODB_URI) {
+//   throw new Error('Please define the MONGODB_URI environment variable inside .env.local');
+// }
+
+// interface MongooseCache {
+//   conn: typeof mongoose | null;
+//   promise: Promise<typeof mongoose> | null;
+// }
+
+// declare global {
+//   var mongoose: MongooseCache | undefined;
+// }
+
+// const cached: MongooseCache = global.mongoose || {
+//   conn: null,
+//   promise: null,
+// };
+
+// if (!global.mongoose) {
+//   global.mongoose = cached;
+// }
+
+// async function dbConnect(): Promise<typeof mongoose> {
+//   if (cached.conn) {
+//     return cached.conn;
+//   }
+
+//   if (!cached.promise) {
+//     const opts = {
+//       bufferCommands: false,
+//     };
+
+//     cached.promise = mongoose.connect(MONGODB_URI, opts);
+//   }
+
+//   try {
+//     cached.conn = await cached.promise;
+//   } catch (e) {
+//     cached.promise = null;
+//     throw e;
+//   }
+
+//   return cached.conn;
+// }
+
+// export default dbConnect;
+
+
+
+
+import mongoose from "mongoose";
 
 const MONGODB_URI = process.env.MONGODB_URI!;
 
 if (!MONGODB_URI) {
-  throw new Error('Please define the MONGODB_URI environment variable inside .env.local');
+  throw new Error("Please define the MONGODB_URI environment variable inside .env.local");
 }
 
 interface MongooseCache {
@@ -11,29 +65,23 @@ interface MongooseCache {
   promise: Promise<typeof mongoose> | null;
 }
 
-declare global {
-  var mongoose: MongooseCache | undefined;
-}
+// ✅ Correct and ESLint-friendly global type declaration
+const globalForMongoose = globalThis as unknown as {
+  mongoose?: MongooseCache;
+};
 
-let cached: MongooseCache = global.mongoose || {
+const cached = globalForMongoose.mongoose || {
   conn: null,
   promise: null,
 };
 
-if (!global.mongoose) {
-  global.mongoose = cached;
-}
+globalForMongoose.mongoose = cached;
 
 async function dbConnect(): Promise<typeof mongoose> {
-  if (cached.conn) {
-    return cached.conn;
-  }
+  if (cached.conn) return cached.conn;
 
   if (!cached.promise) {
-    const opts = {
-      bufferCommands: false,
-    };
-
+    const opts = { bufferCommands: false };
     cached.promise = mongoose.connect(MONGODB_URI, opts);
   }
 

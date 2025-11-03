@@ -1,31 +1,31 @@
-// components/forms/HotelForm.tsx
-
 "use client";
 
-import React, { useState, useCallback, useMemo } from "react";
-import { useForm, Controller } from "react-hook-form";
-import { z } from "zod";
+import React, { useState, useCallback } from "react";
+import { useForm, Controller, Control } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FaSearch, FaCalendarAlt, FaUsers, FaDollarSign } from "react-icons/fa";
-import Button from "../common/Button"; // Assume this exists
-import { GuestRoomPopover } from "../hotels/GuestRoomPopover"; // New component
-import { hotelSchema, HotelFormValues, GuestRoomDetails } from "../../(types)/HotelSchema"; // New schema
+import Button from "../common/Button";
+import { GuestRoomPopover } from "../hotels/GuestRoomPopover";
+import { hotelSchema, HotelFormValues, GuestRoomDetails } from "../../(types)/HotelSchema";
 import InputField from "../common/InputField";
-// NOTE: DatePicker is omitted to simplify the visual layout, using a text input or a custom field styled like the image.
+
+interface CustomFieldProps {
+  icon?: React.ReactNode;
+  label?: string;
+  children?: React.ReactNode;
+  className?: string;
+  onClick?: () => void;
+  hasError?: boolean;
+}
 
 // Helper to format the guest summary
 const formatGuestSummary = (details: GuestRoomDetails) => {
-  const parts = [];
-  if (details.adults > 0) parts.push(`${details.adults} Adult${details.adults > 1 ? 's' : ''}`);
-  if (details.children > 0) parts.push(`${details.children} Child${details.children > 1 ? 'ren' : ''}`);
-  parts.push(`${details.rooms} Room${details.rooms > 1 ? 's' : ''}`);
-
-  return `${details.adults} Adults, ${details.rooms} Rooms`; // Match image format
+  return `${details.adults} Adults, ${details.rooms} Rooms`;
 };
 
 const HotelForm = () => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-  const [isMobileView, setIsMobileView] = useState(false); // State for responsive detection
+  const [isMobileView, setIsMobileView] = useState(false);
 
   // --- Form Setup ---
   const {
@@ -41,8 +41,8 @@ const HotelForm = () => {
     defaultValues: {
       searchType: "single",
       destination: "",
-      checkIn: "10/23/2025", // Hardcoded date to match image
-      checkOut: "10/24/2025", // Hardcoded date to match image
+      checkIn: "10/23/2025",
+      checkOut: "10/24/2025",
       rooms: 1,
       adults: 2,
       children: 0,
@@ -52,12 +52,17 @@ const HotelForm = () => {
   });
 
   // Watch values for the guest summary display
+  // Watch values for the guest summary display - convert to object
   const guestDetails = watch(['rooms', 'adults', 'children']);
+  const guestDetailsObject: GuestRoomDetails = {
+    rooms: guestDetails[0],
+    adults: guestDetails[1],
+    children: guestDetails[2],
+  };
 
-  // --- Responsive Logic (Simple breakpoint check) ---
+  // --- Responsive Logic ---
   React.useEffect(() => {
     const checkMobile = () => {
-      // Assuming 'md' breakpoint is 768px in Tailwind config
       setIsMobileView(window.innerWidth < 768);
     };
     checkMobile();
@@ -80,9 +85,10 @@ const HotelForm = () => {
 
   // --- Render Components ---
 
-  // Custom Field Component to match the border/icon styling of the image
-  const CustomField = ({ icon, label, children, className, onClick, hasError }: any) => (
-    <div className={`flex items-center bg-white border border-gray-200 rounded-lg p-3 h-full ${className} ${hasError ? 'border-error-red' : ''}`}
+  // Custom Field Component
+  const CustomField = ({ icon, label, children, className, onClick, hasError }: CustomFieldProps) => (
+    <div
+      className={`flex items-center bg-white border border-gray-200 rounded-lg p-3 h-full ${className} ${hasError ? 'border-error-red' : ''}`}
       style={{ borderRadius: 'var(--radius-lg)' }}
       onClick={onClick}
     >
@@ -94,11 +100,11 @@ const HotelForm = () => {
     </div>
   );
 
-  const BundleOptions = ({ control }: { control: any }) => (
+  const BundleOptions = ({ control }: { control: Control<HotelFormValues> }) => (
     <div
       className="flex items-center p-4 rounded-xl space-x-4 h-full min-h-[56px]"
       style={{
-        backgroundColor: 'var(--success-emerald, #10b981)', // Use base color
+        backgroundColor: 'var(--success-emerald, #10b981)',
         borderRadius: 'var(--radius-lg)'
       }}
     >
@@ -112,7 +118,16 @@ const HotelForm = () => {
         control={control}
         render={({ field }) => (
           <label className="flex items-center text-sm font-medium text-white cursor-pointer whitespace-nowrap">
-            <input type="checkbox" {...field} checked={field.value} className="h-4 w-4 rounded text-white bg-transparent border-white" style={{ backgroundColor: 'transparent' }} />
+            <input
+              type="checkbox"
+              checked={field.value}
+              onChange={field.onChange}
+              onBlur={field.onBlur}
+              ref={field.ref}
+              name={field.name}
+              className="h-4 w-4 rounded text-white bg-transparent border-white"
+              style={{ backgroundColor: 'transparent' }}
+            />
             <span className="ml-2">Add a car</span>
           </label>
         )}
@@ -122,7 +137,16 @@ const HotelForm = () => {
         control={control}
         render={({ field }) => (
           <label className="flex items-center text-sm font-medium text-white cursor-pointer whitespace-nowrap">
-            <input type="checkbox" {...field} checked={field.value} className="h-4 w-4 rounded text-white bg-transparent border-white" style={{ backgroundColor: 'transparent' }} />
+            <input
+              type="checkbox"
+              checked={field.value}
+              onChange={field.onChange}
+              onBlur={field.onBlur}
+              ref={field.ref}
+              name={field.name}
+              className="h-4 w-4 rounded text-white bg-transparent border-white"
+              style={{ backgroundColor: 'transparent' }}
+            />
             <span className="ml-2">Add a flight</span>
           </label>
         )}
@@ -132,19 +156,7 @@ const HotelForm = () => {
 
   return (
     <div className="max-w-6xl md:mt-5 relative z-10 p-4 md:p-0 bg-amber-600">
-
-      {/* Header Text - Styled for the image's vibrant look */}
-      {/* <h1 className="text-4xl sm:text-5xl font-heading font-bold mb-1 text-white">
-        Save big on your next hotel
-      </h1>
-      <p className="text-xl text-gray-100 mb-6">
-        Great deals on hotels, resorts and private homes
-      </p> */}
-
-      {/* Main Search Block (White Card) */}
-
       <div className="bg-blue-800 p-6" style={{ borderRadius: 'var(--radius-xl)' }}>
-
         {/* Search Type Radio Buttons */}
         <div className="flex space-x-4 mb-6">
           <label className="flex items-center cursor-pointer">
@@ -171,7 +183,6 @@ const HotelForm = () => {
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
-
             {/* 1. Destination Input */}
             <div className="md:col-span-1">
               <CustomField icon={<FaSearch />} hasError={!!errors.destination}>
@@ -191,12 +202,11 @@ const HotelForm = () => {
             {/* 2. Check-in / Check-out Dates */}
             <div className="md:col-span-2">
               <CustomField icon={<FaCalendarAlt />} label="Check-in - Check-out">
-                {/* Simplified date display to match the image's single field */}
                 <p className="text-base font-semibold text-gray-800">{watch('checkIn')} – {watch('checkOut')}</p>
-                {/* Note: In a real app, this would trigger a date picker modal */}
               </CustomField>
             </div>
 
+            {/* 3. Guests/Rooms Popover Trigger */}
             {/* 3. Guests/Rooms Popover Trigger */}
             <div className="md:col-span-1 relative">
               <CustomField
@@ -205,26 +215,24 @@ const HotelForm = () => {
                 onClick={() => setIsPopoverOpen(true)}
               >
                 <p className="text-base font-semibold text-gray-800">
-                  {formatGuestSummary(guestDetails as GuestRoomDetails)}
+                  {formatGuestSummary(guestDetailsObject)}
                 </p>
               </CustomField>
 
-              {/* GuestRoom Popover/Drawer */}
               <GuestRoomPopover
-                initialValues={guestDetails as GuestRoomDetails}
+                initialValues={guestDetailsObject}
                 onApply={handleGuestApply}
                 isOpen={isPopoverOpen}
                 setIsOpen={setIsPopoverOpen}
                 isMobile={isMobileView}
               />
             </div>
-
-            {/* 4. Bundle & Save Options (spans two columns) */}
+            {/* 4. Bundle & Save Options */}
             <div className="md:col-span-2 mt-2">
               <BundleOptions control={control} />
             </div>
 
-            {/* 5. Find Your Hotel Button (spans two columns) */}
+            {/* 5. Find Your Hotel Button */}
             <div className="md:col-span-2 mt-2">
               <Button
                 label="Find Your Hotel"
@@ -233,7 +241,6 @@ const HotelForm = () => {
                 style={{ backgroundColor: 'var(--primary-blue)', borderRadius: 'var(--radius-lg)' }}
               />
             </div>
-
           </div>
         </form>
       </div>

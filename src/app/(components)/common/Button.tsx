@@ -8,10 +8,9 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   iconLeft?: React.ReactNode;
   iconRight?: React.ReactNode;
   loading?: boolean;
-  variant?: "primary" | "secondary" | "success" | "danger" | "outline";
+  variant?: "primary" | "secondary" | "success" | "danger" | "outline" | "ghost";
   fullWidth?: boolean;
   size?: "lg" | "md" | "sm";
-
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -25,7 +24,6 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       className = "",
       fullWidth = true,
       disabled,
-      size = "md",
       children,
       ...props
     },
@@ -45,6 +43,8 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         "bg-red-500 text-white hover:bg-red-600 focus:ring-red-300 disabled:bg-red-300",
       outline:
         "border border-gray-300 text-gray-700 hover:bg-gray-100 focus:ring-gray-200 disabled:opacity-60",
+      ghost:
+        "bg-transparent text-gray-700 hover:bg-gray-100 focus:ring-gray-200 disabled:opacity-60",
     };
 
     return (

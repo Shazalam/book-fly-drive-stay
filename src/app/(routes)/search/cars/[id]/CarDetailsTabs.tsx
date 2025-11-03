@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 
-const CarDetailsTabs = ({ onTabClick }: { onTabClick: (tab: any) => void }) => {
+const CarDetailsTabs = ({ onTabClick }: { onTabClick: (tab: unknown) => void }) => {
   const [activeTab, setActiveTab] = useState("Overview");
   const tabs = ["Overview", "Location", "Policies", "Extras"];
 

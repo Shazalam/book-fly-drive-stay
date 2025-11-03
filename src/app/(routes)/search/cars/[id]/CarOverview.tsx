@@ -1,7 +1,22 @@
 import React from "react";
-import Image from "next/image";
+// import Image from "next/image";
 
-export default function CarOverview({ data }: any) {
+interface CarData {
+  name: string;
+  model: string;
+  features: string[];
+  company: string;
+  rating: number;
+  reviews: number;
+  pricePerDay: number;
+  totalPrice: number;
+}
+
+interface CarOverviewProps {
+  data: CarData;
+} 
+
+export default function CarOverview({ data }: CarOverviewProps) {
   return (
     <div className="flex flex-col lg:flex-row justify-between gap-6 bg-white rounded-2xl shadow-md p-6">
       {/* Left: Car Info */}
@@ -36,4 +51,5 @@ export default function CarOverview({ data }: any) {
       </div>
     </div>
   );
+  
 }

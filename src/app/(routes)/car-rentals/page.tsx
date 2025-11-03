@@ -205,7 +205,7 @@ const CarRentals = () => {
               Why Choose Our Rental Service
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              We're committed to providing an exceptional rental experience with transparent pricing and premium service.
+             {` We're committed to providing an exceptional rental experience with transparent pricing and premium service.`}
             </p>
           </div>
 
@@ -237,7 +237,7 @@ const CarRentals = () => {
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-3">Transparent Pricing</h3>
               <p className="text-gray-600">
-                No hidden fees or surprises. Know exactly what you're paying with our all-inclusive pricing.
+               {` No hidden fees or surprises. Know exactly what you're paying with our all-inclusive pricing.`}
               </p>
             </div>
 
@@ -252,7 +252,7 @@ const CarRentals = () => {
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-3">Best Price Guarantee</h3>
               <p className="text-gray-600">
-                Found the same deal for less? We'll match the price plus give you 10% off the difference.
+               {` Found the same deal for less? We'll match the price plus give you 10% off the difference.`}
               </p>
             </div>
           </div>
@@ -277,7 +277,7 @@ const CarRentals = () => {
                 Your Safety is Our Priority
               </h2>
               <p className="text-lg text-gray-600 mb-6">
-                We've enhanced our cleaning procedures and implemented contactless rental options to ensure your peace of mind.
+                {`We've enhanced our cleaning procedures and implemented contactless rental options to ensure your peace of mind.`}
               </p>
               <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <li className="flex items-start">

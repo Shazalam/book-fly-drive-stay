@@ -3,7 +3,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from 'react';
-import { FaMinus, FaPlus, FaUsers } from 'react-icons/fa';
+import { FaMinus, FaPlus } from 'react-icons/fa';
 import Button from '../common/Button'; // Assuming Button component
 
 interface GuestRoomPopoverProps {
@@ -17,7 +17,7 @@ interface GuestRoomPopoverProps {
 // Counter Utility Component
 const Counter: React.FC<{ label: string; count: number; onUpdate: (newCount: number) => void; min: number }> = ({ label, count, onUpdate, min }) => {
   const primaryBlue = 'var(--primary-blue)';
-  const primaryBlueDark = 'var(--primary-blue-dark)';
+  // const primaryBlueDark = 'var(--primary-blue-dark)';
 
   const decrement = () => onUpdate(Math.max(min, count - 1));
   const increment = () => onUpdate(count + 1);
@@ -117,7 +117,7 @@ export const GuestRoomPopover: React.FC<GuestRoomPopoverProps> = ({ initialValue
       />
       
       <p className="text-xs text-gray-500 mt-4 mb-3">
-        Add your child's age at check-in for the best deals and assistance. Each hotel has unique policies.
+        {`Add your child's age at check-in for the best deals and assistance. Each hotel has unique policies.`}
       </p>
 
       <Button 

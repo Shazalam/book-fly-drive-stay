@@ -127,13 +127,16 @@ export async function POST(request: NextRequest) {
       'Account created successfully. Please check your email for verification code.'
     );
 
-  } catch (error: any) {
+  } catch (error:unknown) {
     console.error('Registration error:', error);
+    
+    // Safe way to get error message from unknown type
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
     
     return ApiResponse.internalError(
       'Unable to create account. Please try again.',
       ErrorCode.DATABASE_ERROR,
-      process.env.NODE_ENV === 'development' ? { error: error.message } : undefined
+      process.env.NODE_ENV === 'development' ? { error: errorMessage } : undefined
     );
   }
 }

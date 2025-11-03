@@ -1,57 +1,7 @@
-// "use client";
-// import React, { useRef } from "react";
-// import CarDetailsTabs from "./CarDetailsTabs";
-// import CarOverview from "./CarOverview";
-// import CarLocation from "./CarLocation";
-// import CarPolicies from "./CarPolicies";
-// import CarExtras from "./CarExtras";
-// import { carData } from "./carData";
-
-// const CarDetailsPage = () => {
-//   const overviewRef = useRef<HTMLDivElement>(null);
-//   const locationRef = useRef<HTMLDivElement>(null);
-//   const policiesRef = useRef<HTMLDivElement>(null);
-//   const extrasRef = useRef<HTMLDivElement>(null);
-
-//   const sections = {
-//     Overview: overviewRef,
-//     Location: locationRef,
-//     Policies: policiesRef,
-//     Extras: extrasRef,
-//   };
-
-//   const handleScroll = (section: keyof typeof sections) => {
-//     sections[section]?.current?.scrollIntoView({ behavior: "smooth" });
-//   };
-
-//   return (
-//     <div className="max-w-6xl mx-auto px-4 py-6 space-y-8">
-//       <CarDetailsTabs onTabClick={handleScroll} />
-//       <section ref={overviewRef}>
-//         <CarOverview data={carData} />
-//       </section>
-//       <section ref={locationRef}>
-//         <CarLocation data={carData} />
-//       </section>
-//       <section ref={policiesRef}>
-//         <CarPolicies />
-//       </section>
-//       <section ref={extrasRef}>
-//         <CarExtras data={carData} />
-//       </section>
-//     </div>
-//   );
-// };
-
-// export default CarDetailsPage;
-
-
-
-
 "use client";
 import React, { useRef } from "react";
 import Image from "next/image";
-import { FaUsers, FaCar, FaCogs, FaGasPump, FaStar } from "react-icons/fa";
+import { FaUsers, FaCogs, FaGasPump, FaStar } from "react-icons/fa";
 import { MdLocationOn, MdDateRange } from "react-icons/md";
 
 const CarDetailsPage = () => {
@@ -86,20 +36,24 @@ const CarDetailsPage = () => {
   const policiesRef = useRef<HTMLDivElement>(null);
   const extrasRef = useRef<HTMLDivElement>(null);
 
-  const scrollToSection = (ref: React.RefObject<HTMLDivElement>) => {
+  // Fix: Update the function to accept the correct ref type
+  const scrollToSection = (ref: React.RefObject<HTMLDivElement | null>) => {
     ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
+
+  // Fix: Define tabs with proper typing
+  const tabs = [
+    { name: "Overview", ref: overviewRef },
+    { name: "Location", ref: locationRef },
+    { name: "Policies", ref: policiesRef },
+    { name: "Extras", ref: extrasRef },
+  ] as const;
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       {/* Tabs */}
       <div className="flex flex-wrap justify-center gap-6 border-b pb-3 sticky top-0 bg-white z-20 mt-17 md:mt-0">
-        {[
-          { name: "Overview", ref: overviewRef },
-          { name: "Location", ref: locationRef },
-          { name: "Policies", ref: policiesRef },
-          { name: "Extras", ref: extrasRef },
-        ].map((tab) => (
+        {tabs.map((tab) => (
           <button
             key={tab.name}
             onClick={() => scrollToSection(tab.ref)}
@@ -219,7 +173,6 @@ const CarDetailsPage = () => {
             </button>
           </div>
         </div>
-
       </div>
     </div>
   );

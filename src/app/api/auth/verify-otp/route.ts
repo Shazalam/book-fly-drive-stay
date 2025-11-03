@@ -105,16 +105,18 @@ export async function POST(request: NextRequest) {
 
     return response;
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('OTP verification error:', error);
-    
-    return ApiResponse.internalError(
-      'Failed to verify OTP',
-      ErrorCode.INTERNAL_ERROR,
-      {
-        systemError: process.env.NODE_ENV === 'development' ? error.message : undefined,
-        action: 'Please try again or contact support'
-      }
-    );
+  
+  return ApiResponse.internalError(
+    'Failed to verify OTP',
+    ErrorCode.INTERNAL_ERROR,
+    {
+      systemError: process.env.NODE_ENV === 'development' 
+        ? (error instanceof Error ? error.message : String(error))
+        : undefined,
+      action: 'Please try again or contact support'
+    }
+  );
   }
 }

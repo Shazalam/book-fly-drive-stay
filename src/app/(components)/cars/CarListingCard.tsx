@@ -8,13 +8,13 @@ import {
   FaStar, 
   FaShieldAlt, 
   FaCheck, 
-  FaTimes, 
   FaGasPump, 
   FaCog,
   FaUserFriends,
   FaRoad
 } from 'react-icons/fa';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface CarListingCardProps {
   car: Car;
@@ -61,10 +61,12 @@ const CarListingCard: React.FC<CarListingCardProps> = ({ car }) => {
           {/* Car Image */}
           <div className="lg:w-1/4">
             <div className="relative aspect-video rounded-lg overflow-hidden bg-gray-100">
-              <img
+              <Image
                 src={car.imageUrl}
                 alt={car.carName}
                 className="w-full h-full object-cover"
+                layout="fill"
+                objectFit="cover"
               />
               {/* Company Badge */}
               <div className="absolute top-3 left-3">

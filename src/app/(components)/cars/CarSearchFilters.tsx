@@ -5,7 +5,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 interface Filters {
-  priceRange: [number, number];
+  priceRange: number[];
   carType: string[];
   company: string[];
   transmission: string[];
@@ -25,7 +25,7 @@ const CarSearchFilters: React.FC<CarSearchFiltersProps> = ({
   const companies = ['Dollar', 'Hertz', 'Avis', 'Budget', 'Thrifty', 'National'];
   const transmissions = ['Automatic', 'Manual'];
 
-  const updateFilter = (key: keyof Filters, value: any) => {
+  const updateFilter = (key: keyof Filters, value: unknown) => {
     onFiltersChange({
       ...filters,
       [key]: value

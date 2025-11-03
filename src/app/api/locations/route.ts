@@ -2,6 +2,42 @@
 import { NextResponse } from "next/server";
 import axios from "axios";
 
+// Define interfaces for API responses
+interface GooglePrediction {
+  place_id: string;
+  structured_formatting: {
+    main_text: string;
+    secondary_text?: string;
+  };
+}
+
+interface GoogleApiResponse {
+  predictions?: GooglePrediction[];
+}
+
+interface AmadeusAddress {
+  cityName?: string;
+  countryCode?: string;
+}
+
+interface AmadeusLocation {
+  iataCode?: string;
+  id?: string;
+  name: string;
+  address?: AmadeusAddress;
+}
+
+interface AmadeusApiResponse {
+  data?: AmadeusLocation[];
+}
+
+interface NormalizedLocation {
+  id: string;
+  name: string;
+  address: string;
+  source: "google" | "amadeus";
+}
+
 // 🟢 STEP 1: Get Amadeus Access Token
 const getAmadeusAccessToken = async () => {
   try {
@@ -20,8 +56,22 @@ const getAmadeusAccessToken = async () => {
     );
 
     return response.data.access_token;
-  } catch (error: any) {
-    console.error("❌ Amadeus token error:", error.response?.data || error.message);
+  } catch (error: unknown) {
+    // Safe error handling for unknown type
+    let errorMessage = "Unknown error occurred";
+    
+    if (axios.isAxiosError(error)) {
+      // Axios error with response data
+      errorMessage = error.response?.data ? JSON.stringify(error.response.data) : error.message;
+    } else if (error instanceof Error) {
+      // Standard Error object
+      errorMessage = error.message;
+    } else {
+      // Fallback for other error types
+      errorMessage = String(error);
+    }
+    
+    console.error("❌ Amadeus token error:", errorMessage);
     throw new Error("Failed to authenticate Amadeus");
   }
 };
@@ -44,7 +94,7 @@ export async function GET(req: Request) {
 
     // 3️⃣ Make both API requests concurrently
     const [amadeusRes, googleRes] = await Promise.all([
-      axios.get("https://test.api.amadeus.com/v1/reference-data/locations", {
+      axios.get<AmadeusApiResponse>("https://test.api.amadeus.com/v1/reference-data/locations", {
         headers: { Authorization: `Bearer ${amadeusToken}` },
         params: {
           subType: "AIRPORT,CITY",
@@ -52,7 +102,7 @@ export async function GET(req: Request) {
           "page[limit]": 5,
         },
       }),
-      axios.get("https://maps.googleapis.com/maps/api/place/autocomplete/json", {
+      axios.get<GoogleApiResponse>("https://maps.googleapis.com/maps/api/place/autocomplete/json", {
         params: {
           input: query,
           key: apiKey,
@@ -63,20 +113,20 @@ export async function GET(req: Request) {
     ]);
 
     // 4️⃣ Normalize and combine data into SAME FORMAT
-    const googleData =
-      googleRes.data?.predictions?.map((pred: any) => ({
+    const googleData: NormalizedLocation[] =
+      googleRes.data?.predictions?.map((pred: GooglePrediction) => ({
         id: pred.place_id,
         name: pred.structured_formatting.main_text,
         address: pred.structured_formatting.secondary_text || "",
-        source: "google",
+        source: "google" as const,
       })) || [];
 
-    const amadeusData =
-      amadeusRes.data?.data?.map((item: any) => ({
+    const amadeusData: NormalizedLocation[] =
+      amadeusRes.data?.data?.map((item: AmadeusLocation) => ({
         id: item.iataCode || item.id || "",
         name: item.name,
-        address: `${item.address?.cityName || ""}, ${item.address?.countryCode || ""}`,
-        source: "amadeus",
+        address: `${item.address?.cityName || ""}, ${item.address?.countryCode || ""}`.trim().replace(/^,\s*|,\s*$/g, ''),
+        source: "amadeus" as const,
       })) || [];
 
     // 5️⃣ Combine both datasets
@@ -89,8 +139,22 @@ export async function GET(req: Request) {
       count: combined.length,
       data: combined,
     });
-  } catch (error: any) {
-    console.error("❌ Combined search error:", error.response?.data || error.message);
+  } catch (error: unknown) {
+    // Safe error handling for unknown type
+    let errorMessage = "Unknown error occurred";
+    
+    if (axios.isAxiosError(error)) {
+      // Axios error with response data
+      errorMessage = error.response?.data ? JSON.stringify(error.response.data) : error.message;
+    } else if (error instanceof Error) {
+      // Standard Error object
+      errorMessage = error.message;
+    } else {
+      // Fallback for other error types
+      errorMessage = String(error);
+    }
+    
+    console.error("❌ Combined search error:", errorMessage);
     return NextResponse.json(
       { success: false, message: "Failed to fetch combined data" },
       { status: 500 }

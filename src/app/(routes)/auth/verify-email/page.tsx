@@ -1,24 +1,23 @@
 "use client";
 
 import { useState, Suspense } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { FiMail, FiArrowLeft } from "react-icons/fi";
 
 import Link from "next/link";
-import Button from "@/app/(components)/common/Button";
+// import Button from "@/app/(components)/common/Button";
 import InputField from "@/app/(components)/common/InputField";
-import { resendOtp, verifyEmail } from "@/app/(lib)/auth-actions";
 
 
 function VerifyEmailContent() {
   const searchParams = useSearchParams();
-  const router = useRouter();
+  // const router = useRouter();
   const email = searchParams.get('email');
   const [otp, setOtp] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isResending, setIsResending] = useState(false);
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  // const [isSubmitting, setIsSubmitting] = useState(false);
+  // const [isResending, setIsResending] = useState(false);
+  // const [error, setError] = useState('');
+  // const [success, setSuccess] = useState('');
 
   if (!email) {
     return (
@@ -32,48 +31,48 @@ function VerifyEmailContent() {
     );
   }
 
-  const handleVerify = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setError('');
+  // const handleVerify = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   setIsSubmitting(true);
+  //   setError('');
 
-    try {
-      const result = await verifyEmail(email, otp);
+  //   try {
+  //     const result = await verifyEmail(email, otp);
       
-      if (result.error) {
-        setError(result.error);
-      } else {
-        setSuccess('Email verified successfully! Redirecting to login...');
-        setTimeout(() => {
-          router.push('/auth/login');
-        }, 2000);
-      }
-    } catch (error) {
-      setError('Something went wrong. Please try again.');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  //     if (result.error) {
+  //       setError(result.error);
+  //     } else {
+  //       setSuccess('Email verified successfully! Redirecting to login...');
+  //       setTimeout(() => {
+  //         router.push('/auth/login');
+  //       }, 2000);
+  //     }
+  //   } catch (error) {
+  //     setError('Something went wrong. Please try again.');
+  //   } finally {
+  //     setIsSubmitting(false);
+  //   }
+  // };
 
-  const handleResendOtp = async () => {
-    setIsResending(true);
-    setError('');
-    setSuccess('');
+  // const handleResendOtp = async () => {
+  //   setIsResending(true);
+  //   setError('');
+  //   setSuccess('');
 
-    try {
-      const result = await resendOtp(email);
+  //   try {
+  //     const result = await resendOtp(email);
       
-      if (result.error) {
-        setError(result.error);
-      } else {
-        setSuccess('New OTP sent to your email!');
-      }
-    } catch (error) {
-      setError('Failed to resend OTP. Please try again.');
-    } finally {
-      setIsResending(false);
-    }
-  };
+  //     if (result.error) {
+  //       setError(result.error);
+  //     } else {
+  //       setSuccess('New OTP sent to your email!');
+  //     }
+  //   } catch () {
+  //     setError('Failed to resend OTP. Please try again.');
+  //   } finally {
+  //     setIsResending(false);
+  //   }
+  // };
 
   return (
     <div className="space-y-6">
@@ -85,24 +84,24 @@ function VerifyEmailContent() {
           Verify Your Email
         </h2>
         <p className="text-gray-600">
-          We've sent a verification code to
+         {` We've sent a verification code to`}
         </p>
         <p className="text-gray-900 font-semibold mt-1">{email}</p>
       </div>
 
-      {error && (
+      {/* {error && (
         <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
           <p className="text-red-600 text-sm text-center">{error}</p>
         </div>
-      )}
+      )} */}
 
-      {success && (
+      {/* {success && (
         <div className="p-3 bg-green-50 border border-green-200 rounded-lg">
           <p className="text-green-600 text-sm text-center">{success}</p>
         </div>
-      )}
+      )} */}
 
-      <form onSubmit={handleVerify} className="space-y-4">
+      <form onSubmit={() => console.log("work in progress")} className="space-y-4">
         <InputField
           label="Verification Code"
           name="otp"
@@ -117,23 +116,23 @@ function VerifyEmailContent() {
           maxLength={6}
         />
 
-        <Button
+        {/* <Button
           type="submit"
           loading={isSubmitting}
           variant="primary"
           fullWidth
         >
           {isSubmitting ? "Verifying..." : "Verify Email"}
-        </Button>
+        </Button> */}
       </form>
 
       <div className="text-center space-y-3">
         <button
-          onClick={handleResendOtp}
-          disabled={isResending}
+          // onClick={handleResendOtp}
+          // disabled={isResending}
           className="text-blue-600 hover:text-blue-700 font-medium disabled:opacity-50"
         >
-          {isResending ? "Sending..." : "Resend OTP"}
+          {false ? "Sending..." : "Resend OTP"}
         </button>
         
         <div className="pt-2">

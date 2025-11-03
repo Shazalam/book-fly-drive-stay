@@ -214,11 +214,10 @@
 "use client";
 import React, { useRef } from "react";
 import clsx from "clsx";
-import { FaCalendarAlt } from "react-icons/fa";
 
 interface DatePickerProps {
   label?: string;
-  name: string;
+  name?: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
@@ -230,6 +229,7 @@ interface DatePickerProps {
   disabled?: boolean;
   variant?: "default" | "modern";
   size?: "sm" | "md" | "lg";
+  placeholder?:string
 }
 
 const DatePicker: React.FC<DatePickerProps> = ({
@@ -246,6 +246,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
   disabled = false,
   variant = "modern",
   size = "md",
+  placeholder
 }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -309,6 +310,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
         {/* 📆 Date Input */}
         <input
           ref={inputRef}
+          placeholder={placeholder}
           type="date"
           id={name}
           name={name}

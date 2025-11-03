@@ -3,30 +3,30 @@
 import { z } from "zod";
 
 // Define the room schema
-const roomSchema = z.object({
-  adults: z.number().min(1, "Must have at least one adult per room"),
-  children: z.number().min(0),
-  // In a real app, you'd add an array for child ages here
-});
+// const roomSchema = z.object({
+//   adults: z.number().min(1, "Must have at least one adult per room"),
+//   children: z.number().min(0),
+//   // In a real app, you'd add an array for child ages here
+// });
 
 // ✅ 1. Zod Schema
 export const hotelSchema = z.object({
-  // Radio buttons for search type
-  searchType: z.enum(["single", "multi"]).default("single"), 
+  // Remove .default() to make it consistently required
+  searchType: z.enum(["single", "multi"]),
   
   // Primary inputs
   destination: z.string().min(3, "Destination is required"),
   checkIn: z.string().min(1, "Check-in date is required"),
   checkOut: z.string().min(1, "Check-out date is required"),
   
-  // Guest/Room Details (handled by the popover)
+  // Guest/Room Details
   rooms: z.number().min(1, "Need at least one room"),
   adults: z.number().min(1, "Need at least one adult"),
   children: z.number().min(0),
   
-  // Bundle options
-  addCar: z.boolean().default(false),
-  addFlight: z.boolean().default(false),
+  // Bundle options - remove .default() here too
+  addCar: z.boolean(),
+  addFlight: z.boolean(),
 });
 
 // ✅ 2. Type

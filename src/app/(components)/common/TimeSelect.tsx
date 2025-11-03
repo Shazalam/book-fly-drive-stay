@@ -128,13 +128,12 @@
 "use client";
 import React, { useState } from "react";
 import clsx from "clsx";
-import { FieldError } from "react-hook-form";
-import { FaClock } from "react-icons/fa";
+import { FieldError, FieldValues, Path, UseFormRegister } from "react-hook-form";
 
-interface TimeSelectProps {
+interface TimeSelectProps<T extends FieldValues> {
   label: string;
-  name: string;
-  register?: any;
+  name: Path<T>;
+  register?: UseFormRegister<T>;
   error?: FieldError;
   options: string[];
   placeholder?: string;
@@ -145,7 +144,7 @@ interface TimeSelectProps {
   onBlur?: () => void;
 }
 
-const TimeSelect: React.FC<TimeSelectProps> = ({
+const TimeSelect = <T extends FieldValues>({
   label,
   name,
   register,
@@ -157,7 +156,7 @@ const TimeSelect: React.FC<TimeSelectProps> = ({
   value,
   onChange,
   onBlur,
-}) => {
+}: TimeSelectProps<T>) => {
   const [focused, setFocused] = useState(false);
   const [internalValue, setInternalValue] = useState(value || "");
 
