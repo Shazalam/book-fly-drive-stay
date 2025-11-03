@@ -1,5 +1,4 @@
-import Home from "./(pages)/home/Home";
-
+import Home from "./(routes)/home/Home";
 
 
 export default function page() {
