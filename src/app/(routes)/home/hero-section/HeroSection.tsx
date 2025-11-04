@@ -190,25 +190,25 @@ const HeroSection = () => {
 
   const slides = [
     {
-      image: "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=1600&auto=format&fit=crop",
+      image: "/images/car-hero-section.avif",
       heading: "Drive Your Dreams",
       subheading: "From exotic supercars to elegant luxury sedans. Experience automotive perfection with white-glove service.",
       alt: "Luxury Car",
     },
     {
-      image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1600&auto=format&fit=crop",
+      image: "/images/car-hero-section.avif",
       heading: "Fly First Class, Every Time",
       subheading: "Premium routes, exclusive deals, seamless booking. Your journey begins the moment you book with us.",
       alt: "Flight",
     },
     {
-      image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?q=80&w=1600&auto=format&fit=crop",
+      image: "/images/car-hero-section.avif",
       heading: "Where Luxury Meets Paradise",
       subheading: "Curated 5-star hotels and resorts worldwide. Wake up to breathtaking views and unmatched comfort.",
       alt: "Luxury Hotel",
     },
     {
-      image: "https://images.unsplash.com/photo-1548574505-5e239809ee19?q=80&w=1600&auto=format&fit=crop",
+      image: "/images/car-hero-section.avif",
       heading: "Sail Into Extraordinary",
       subheading: "Discover the world's most stunning destinations by sea. All-inclusive luxury cruising reimagined.",
       alt: "Cruise",
