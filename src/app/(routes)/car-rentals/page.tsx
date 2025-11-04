@@ -142,7 +142,7 @@ export const metadata: Metadata = {
     description: "Premium rental cars across United States and Canada with best-in-class service",
     images: [
       {
-        url: "/og-car-rental.jpg",
+        url: "/logo.png",
         width: 1200,
         height: 630,
         alt: "Premium Car Rentals USA Canada",
