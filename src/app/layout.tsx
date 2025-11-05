@@ -96,7 +96,7 @@ export default function RootLayout({
         <Providers>
           <GoogleTagManager />
           <Navbar />
-          <div className="sm:pt-[100px] md:pt-[80px]">
+          <div className="sm:pt-[100px] md:pt-[80px] bg-amber-500">
             {children}
           </div>
           <Footer />

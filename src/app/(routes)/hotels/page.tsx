@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import HotelHeroSection from "./HotelHeroSection";
 import ServiceProcess from "./ServiceProcess";
 import HotelFeatures from "./HotelFeatures";
-import HotelCTA from "./HotelCTA";
+import CTASection from "@/app/(components)/common/CTASection";
 
 export const metadata: Metadata = {
   title: "Luxury Hotel Reservations | Expert Booking Service | USA & Worldwide",
@@ -50,7 +50,23 @@ export default function Hotels() {
       <HotelHeroSection />
       <ServiceProcess />
       <HotelFeatures />
-      <HotelCTA />
+      <CTASection
+        title="Ready for Your Next"
+        titleHighlight="Getaway?"
+        description="Let our experts find your perfect hotel. Contact us today to start planning."
+        trustBadge="No hidden fees • Best rate guarantee • Expert service"
+        trustIcon="🏨"
+        gradientFrom="from-indigo-900"
+        gradientVia="via-purple-900"
+        gradientTo="to-pink-900"
+        highlightFrom="from-pink-300"
+        highlightTo="to-yellow-300"
+        textColor="text-purple-100"
+        buttonTextColor="text-indigo-900"
+        buttonHoverBg="hover:bg-purple-50"
+        shadowColor="hover:shadow-purple-500/50"
+      />
+
     </main>
   );
 }
