@@ -146,10 +146,10 @@ const AboutUs = () => {
           <AnimatedSection delay={0.2}>
             <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-3xl p-10 md:p-12 border border-blue-100">
               <p className="text-lg text-gray-700 leading-relaxed mb-6">
-                Whether you're planning a <span className="font-semibold text-blue-600">family vacation</span>, a <span className="font-semibold text-blue-600">business trip</span>, or a <span className="font-semibold text-blue-600">spontaneous getaway</span>, we're here to make your travel plans as simple and enjoyable as possible.
+               {` Whether you're planning a`} <span className="font-semibold text-blue-600">family vacation</span>, a <span className="font-semibold text-blue-600">business trip</span>, or a <span className="font-semibold text-blue-600">spontaneous getaway</span>, {`we're here to make your travel plans as simple and enjoyable as possible.`}
               </p>
               <p className="text-lg text-gray-700 leading-relaxed">
-                We understand that convenience, affordability, and quality service are key to an unforgettable travel experience. That's why we've built a platform that connects you with reliable services and ensures every part of your trip is taken care of.
+               {` We understand that convenience, affordability, and quality service are key to an unforgettable travel experience. That's why we've built a platform that connects you with reliable services and ensures every part of your trip is taken care of.`}
               </p>
             </div>
           </AnimatedSection>
@@ -165,7 +165,7 @@ const AboutUs = () => {
                 Who We Are
               </h2>
               <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-                We are a passionate team of travel experts dedicated to helping you find the best travel solutions. With years of experience in the travel industry, we've built lasting relationships with trusted partners worldwide.
+               {` We are a passionate team of travel experts dedicated to helping you find the best travel solutions. With years of experience in the travel industry, we've built lasting relationships with trusted partners worldwide.`}
               </p>
             </div>
           </AnimatedSection>
