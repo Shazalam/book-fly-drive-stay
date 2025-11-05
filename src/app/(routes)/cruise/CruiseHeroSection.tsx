@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 
-const HotelHeroSection = () => {
+const CruiseHeroSection = () => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -16,22 +16,22 @@ const HotelHeroSection = () => {
         {/* Background Image */}
         <div className="absolute inset-0">
           <Image
-            src="/images/hotel-hero-section.avif"
-            alt="Luxury Hotel"
+            src="/images/cruise-hero-section.avif"
+            alt="Luxury Cruise"
             fill
             priority
             className="object-cover object-center"
             quality={90}
           />
           {/* Dark Overlay for better text visibility */}
-          <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/80 via-purple-900/75 to-pink-900/80"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/85 via-cyan-900/80 to-teal-900/85"></div>
           <div className="absolute inset-0 bg-black/30"></div>
         </div>
 
         {/* Floating Elements */}
         <div className="absolute inset-0">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-pink-400/10 rounded-full blur-3xl animate-float"></div>
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-400/10 rounded-full blur-3xl animate-float-delayed"></div>
+          <div className="absolute top-20 left-10 w-72 h-72 bg-cyan-400/10 rounded-full blur-3xl animate-float"></div>
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-teal-400/10 rounded-full blur-3xl animate-float-delayed"></div>
         </div>
       </div>
 
@@ -47,7 +47,7 @@ const HotelHeroSection = () => {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-400"></span>
           </span>
-          <span className="text-sm font-semibold text-white">🏨 Luxury Hotels & Resorts Worldwide</span>
+          <span className="text-sm font-semibold text-white">🚢 Luxury Cruise Experiences Worldwide</span>
         </div>
 
         {/* Main Headline */}
@@ -57,30 +57,30 @@ const HotelHeroSection = () => {
           }`}
         >
           <span className="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white drop-shadow-2xl">
-            Your Perfect Stay,
+            Sail Into
           </span>
-          <span className="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black mt-2 bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-300 bg-clip-text text-transparent">
-            Expertly Curated
+          <span className="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black mt-2 bg-gradient-to-r from-cyan-300 via-teal-300 to-blue-300 bg-clip-text text-transparent">
+            Paradise
           </span>
         </h1>
 
         {/* Subheadline */}
         <p
-          className={`text-xl sm:text-2xl md:text-3xl mb-12 text-purple-50 max-w-4xl mx-auto leading-relaxed font-light transition-all duration-1000 delay-200 ${
+          className={`text-xl sm:text-2xl md:text-3xl mb-12 text-cyan-50 max-w-4xl mx-auto leading-relaxed font-light transition-all duration-1000 delay-200 ${
             isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          Tell us your ideal getaway.{" "}
-          <span className="text-white font-semibold">We'll find your dream hotel.</span>
+          Share your dream destination.{" "}
+          <span className="text-white font-semibold">{`We'll craft your perfect voyage.`}</span>
         </p>
 
         {/* Contact Text */}
         <p
-          className={`text-lg text-purple-100 font-medium transition-all duration-1000 delay-300 ${
+          className={`text-lg text-cyan-100 font-medium transition-all duration-1000 delay-300 ${
             isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          📞 <span className="text-white font-semibold">Ready to book?</span> Contact us today
+          📞 <span className="text-white font-semibold">Ready to set sail?</span> Contact us today
         </p>
       </div>
 
@@ -115,4 +115,4 @@ const HotelHeroSection = () => {
   );
 };
 
-export default HotelHeroSection;
+export default CruiseHeroSection;

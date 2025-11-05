@@ -1,7 +1,7 @@
-import CruiseCTA from "./CruiseCTA ";
-import CruiseFeatures from "./CruiseFeatures ";
-import CruiseHeroSection from "./CruiseHeroSection ";
-import CruiseServiceProcess from "./CruiseServiceProcess ";
+import CruiseCTA from "./CruiseCTA";
+import CruiseFeatures from "./CruiseFeatures.";
+import CruiseHeroSection from "./CruiseHeroSection";
+import CruiseServiceProcess from "./CruiseServiceProcess";
 
 import { Metadata } from "next";
 

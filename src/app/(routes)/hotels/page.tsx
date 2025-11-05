@@ -1,8 +1,8 @@
 import { Metadata } from "next";
-import HotelHeroSection from "./HotelHeroSection ";
-import ServiceProcess from "./ServiceProcess ";
-import HotelFeatures from "./HotelFeatures ";
-import HotelCTA from "./HotelCTA ";
+import HotelHeroSection from "./HotelHeroSection";
+import ServiceProcess from "./ServiceProcess";
+import HotelFeatures from "./HotelFeatures";
+import HotelCTA from "./HotelCTA";
 
 export const metadata: Metadata = {
   title: "Luxury Hotel Reservations | Expert Booking Service | USA & Worldwide",
