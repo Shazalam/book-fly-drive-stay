@@ -1,4 +1,5 @@
-import CruiseCTA from "./CruiseCTA";
+
+import CTASection from "@/app/(components)/common/CTASection";
 import CruiseFeatures from "./CruiseFeatures.";
 import CruiseHeroSection from "./CruiseHeroSection";
 import CruiseServiceProcess from "./CruiseServiceProcess";
@@ -53,7 +54,23 @@ export default function Cruise() {
       <CruiseHeroSection />
       <CruiseServiceProcess />
       <CruiseFeatures />
-      <CruiseCTA />
+      <CTASection
+        title="Ready to Set"
+        titleHighlight="Sail?"
+        description="Let our cruise specialists find your perfect voyage. Contact us today to start planning."
+        trustBadge="No hidden fees • Best rate guarantee • Expert service"
+        trustIcon="⚓"
+        gradientFrom="from-cyan-900"
+        gradientVia="via-blue-900"
+        gradientTo="to-teal-900"
+        highlightFrom="from-cyan-300"
+        highlightTo="to-teal-300"
+        textColor="text-cyan-100"
+        buttonTextColor="text-cyan-900"
+        buttonHoverBg="hover:bg-cyan-50"
+        shadowColor="hover:shadow-cyan-500/50"
+      />
+
     </main>
   );
 }

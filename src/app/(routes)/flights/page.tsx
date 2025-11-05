@@ -4,8 +4,8 @@ import FlightHero from "./FlightHero";
 import ServiceProcess from "./ServiceProcess";
 import ServiceFeatures from "./ServiceFeatures";
 import ServiceBenefits from "./ServiceBenefits";
-import FlightCTA from "./FlightCTA";
 import { Metadata } from "next";
+import CTASection from "@/app/(components)/common/CTASection";
 
 export const metadata: Metadata = {
   title: "Premium Flight Reservations | USA & Canada | Expert Booking Service",
@@ -64,7 +64,19 @@ const Flights = () => {
         <ServiceProcess />
         <ServiceFeatures />
         <ServiceBenefits />
-        <FlightCTA />
+        <CTASection
+          title="Ready to Take"
+          titleHighlight="Flight?"
+          description="Let our flight experts find your perfect journey. Contact us today to start planning."
+          trustBadge="No hidden fees • Best rate guarantee • Expert service"
+          trustIcon="✈️"
+          gradientFrom="from-blue-900"
+          gradientVia="via-indigo-900"
+          gradientTo="to-purple-900"
+          highlightFrom="from-blue-300"
+          highlightTo="to-purple-300"
+        />
+
       </div>
     </>
   );

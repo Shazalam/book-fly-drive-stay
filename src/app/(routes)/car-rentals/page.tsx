@@ -59,11 +59,8 @@ const CarRentals = () => {
       <CTASection
         title="Ready to Experience Premium Car Rental?"
         description="Join thousands of satisfied customers across the United States and Canada who trust us for their transportation needs."
-        phoneNumber="+18449545425"
-        phoneDisplay="+1 (844) 954-5425"
-        email="carrentals@bookflydrivestay.com"
-        emailDisplay="Email Us"
         gradientFrom="from-blue-900"
+        gradientVia="via-indigo-900"
         gradientTo="to-indigo-900"
       />
 

@@ -3,7 +3,7 @@ import HeroSection from "./hero-section/HeroSection";
 import CarRentalCompanies from "./carRentalCompanies/CarRentalCompanies";
 import ServicesOverview from './services/ServicesGrid';
 import HowWeWork from './HowWeWork/HowWeWork';
-import ContactCta from './contact-cta/ContactCta';
+import CTASection from '@/app/(components)/common/CTASection';
 
 const Home = () => {
   return (
@@ -29,7 +29,17 @@ const Home = () => {
 
         {/* Contact CTA */}
         <div id="contact" className="scroll-mt-20">
-          <ContactCta />
+          <CTASection
+            title="Ready to Plan Your"
+            titleHighlight="Journey?"
+            description="Contact us directly for personalized travel reservation services."
+            descriptionHighlight="Let us handle the details while you focus on your adventure."
+            trustBadge="We respect your privacy • No hidden fees • Expert service"
+            gradientFrom="from-blue-900"
+            gradientVia="via-indigo-900"
+            gradientTo="to-purple-900"
+          />
+
         </div>
       </div>
     </>
