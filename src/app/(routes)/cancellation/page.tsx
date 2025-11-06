@@ -5,7 +5,6 @@ import {
   AccordionTrigger,
 } from "@/app/(components)/ui/accordion";
 import { CancellationArray } from "./cancellationArray";
-import DialogBox from "@/app/(components)/dialogBox/dialogBox";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -53,7 +52,6 @@ const Cancellation = () => {
             </AccordionItem>
           </Accordion>
         ))}
-        <DialogBox />
       </div>
     </>
   );

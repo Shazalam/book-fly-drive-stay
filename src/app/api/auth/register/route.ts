@@ -102,7 +102,7 @@ export async function POST(request: NextRequest) {
     try {
       await sendEmail({
         to: email,
-        subject: 'Verify Your Email - TravelApp',
+        subject: 'Verify Your Email - BookFlyDriveStay',
         html: generateOtpEmail(otp, `${firstName} ${lastName}`),
       });
     } catch (emailError) {

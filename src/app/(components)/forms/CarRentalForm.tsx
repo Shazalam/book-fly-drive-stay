@@ -520,7 +520,7 @@ const CarRentalForm: React.FC<CarRentalFormProps> = ({ onSubmit, isMobile }) => 
 
       {/* Checkbox Section */}
       <div className="flex flex-col sm:flex-row gap-4">
-        <Controller
+        {/* <Controller
           name="isDropoffSame"
           control={control}
           render={({ field }) => (
@@ -537,9 +537,9 @@ const CarRentalForm: React.FC<CarRentalFormProps> = ({ onSubmit, isMobile }) => 
               }}
             />
           )}
-        />
+        /> */}
 
-        <Controller
+        {/* <Controller
           name="addHotel"
           control={control}
           render={({ field }) => (
@@ -551,9 +551,9 @@ const CarRentalForm: React.FC<CarRentalFormProps> = ({ onSubmit, isMobile }) => 
               onChange={(e) => field.onChange(e.target.checked)}
             />
           )}
-        />
+        /> */}
 
-        <Controller
+        {/* <Controller
           name="addFlight"
           control={control}
           render={({ field }) => (
@@ -565,7 +565,7 @@ const CarRentalForm: React.FC<CarRentalFormProps> = ({ onSubmit, isMobile }) => 
               onChange={(e) => field.onChange(e.target.checked)}
             />
           )}
-        />
+        /> */}
       </div>
 
       {/* Submit Button */}
