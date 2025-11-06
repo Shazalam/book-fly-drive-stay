@@ -14,6 +14,7 @@ import Button from "@/app/(components)/common/Button";
 import { clearError, registerUser } from "@/app/(store)/slices/authSlice";
 
 export default function RegisterForm() {
+  
   const [showPassword, setShowPassword] = useState(false);
   const [redirectTo, setRedirectTo] = useState('/search/cars'); // Default value
   
@@ -27,6 +28,7 @@ export default function RegisterForm() {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const redirect = urlParams.get('redirect');
+    console.log("redirect =>", redirect)
     if (redirect) {
       setRedirectTo(redirect);
     }
@@ -50,9 +52,7 @@ export default function RegisterForm() {
     },
   });
 
-  const formValues = watch();
-  console.log('Form values:', formValues);
-  console.log('Redirect to:', redirectTo); // Debug log
+  console.log("watch =>", watch)
 
   // Clear errors when component unmounts
   useEffect(() => {
@@ -82,6 +82,8 @@ export default function RegisterForm() {
       email: data.email.toLowerCase().trim(),
       password: data.password,
     };
+
+    console.log("Register Form Data =>", apiData)
 
     dispatch(registerUser(apiData));
   };

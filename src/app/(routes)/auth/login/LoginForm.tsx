@@ -93,7 +93,7 @@ export default function LoginForm() {
           icon={<FiMail className="w-4 h-4" />}
           placeholder="Enter your email"
           variant="priceline"
-          size="md"
+          inputSize="md"
         />
 
         <InputField
@@ -106,7 +106,7 @@ export default function LoginForm() {
           icon={<FiLock className="w-4 h-4" />}
           placeholder="Enter your password"
           variant="priceline"
-          size="md"
+          inputSize="md"
           iconRight={
             <button
               type="button"

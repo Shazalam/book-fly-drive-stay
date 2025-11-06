@@ -60,7 +60,7 @@ export default function FindMyTripPage() {
           icon={<FiMail className="w-4 h-4" />}
           placeholder="Enter your email address"
           variant="priceline"
-          size="md"
+          inputSize="md"
         />
 
         <InputField
@@ -73,7 +73,7 @@ export default function FindMyTripPage() {
           icon={<FiFileText className="w-4 h-4" />}
           placeholder="Enter itinerary number"
           variant="priceline"
-          size="md"
+          inputSize="md"
         />
 
         <Button

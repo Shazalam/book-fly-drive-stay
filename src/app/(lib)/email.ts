@@ -24,7 +24,7 @@ export interface EmailOptions {
 export async function sendEmail({ to, subject, html }: EmailOptions): Promise<void> {
   try {
     await transporter.sendMail({
-      from: `"TravelApp" <${emailUser}>`,
+      from: `"BookFlyDriveStay" <${emailUser}>`,
       to,
       subject,
       html,
@@ -52,18 +52,18 @@ export function generateOtpEmail(otp: string, name: string): string {
     <body>
         <div class="container">
             <div class="header">
-                <h1>TravelApp</h1>
+                <h1>BookFlyDriveStay</h1>
                 <p>Email Verification</p>
             </div>
             <div class="content">
                 <h2>Hello ${name},</h2>
-                <p>Thank you for registering with TravelApp. Use the OTP below to verify your email address:</p>
+                <p>Thank you for registering with BookFlyDriveStay. Use the OTP below to verify your email address:</p>
                 <div class="otp-code">${otp}</div>
                 <p>This OTP will expire in 10 minutes.</p>
                 <p>If you didn't create an account with us, please ignore this email.</p>
             </div>
             <div class="footer">
-                <p>&copy; 2024 TravelApp. All rights reserved.</p>
+                <p>&copy; 2024 BookFlyDriveStay. All rights reserved.</p>
             </div>
         </div>
     </body>

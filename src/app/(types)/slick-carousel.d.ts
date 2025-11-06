@@ -1,1 +1,0 @@
-declare module "slick-carousel";

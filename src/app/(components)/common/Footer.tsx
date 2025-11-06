@@ -8,7 +8,7 @@ import logo from "../../../../public/icons/logo.png";
 
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
+    <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white px-1 sm:px-5 md:px-19">
       {/* Main Footer Content */}
       <div className="container mx-auto px-6 md:px-12 lg:px-20 py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">

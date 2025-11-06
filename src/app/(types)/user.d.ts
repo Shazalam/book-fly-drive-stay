@@ -1,15 +1,13 @@
-// export interface User {
-//   _id: string;
-//   firstName: string;
-//   lastName: string;
-//   email: string;
-//   password: string;
-//   phone?: string;
-//   emailVerified: boolean;
-//   avatar?: string;
-//   createdAt: Date;
-//   updatedAt: Date;
-// }
+export interface IUser  {
+  _id?: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  isVerified: boolean;
+  otp?: string;
+  otpExpiration?: Date;
+}
 
 export interface UserResponse {
   _id: string;
