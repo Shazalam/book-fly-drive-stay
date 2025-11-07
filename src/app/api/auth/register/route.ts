@@ -14,7 +14,9 @@ export async function POST(request: NextRequest) {
 
     const body: RegisterRequest = await request.json();
     const { firstName, lastName, email, password } = body;
+    console.log("registr request =>", body)
 
+    
     // Validation
     if (!firstName?.trim()) {
       return ApiResponse.badRequest(
@@ -127,12 +129,12 @@ export async function POST(request: NextRequest) {
       'Account created successfully. Please check your email for verification code.'
     );
 
-  } catch (error:unknown) {
+  } catch (error: unknown) {
     console.error('Registration error:', error);
-    
+
     // Safe way to get error message from unknown type
     const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
-    
+
     return ApiResponse.internalError(
       'Unable to create account. Please try again.',
       ErrorCode.DATABASE_ERROR,

@@ -10,9 +10,6 @@ import {
   FiHome,
   FiUser,
   FiLogOut,
-  FiHeart,
-  FiStar,
-  FiBriefcase,
   FiChevronRight,
   FiPhone,
   FiMail,
@@ -22,6 +19,7 @@ import { RiCarLine, RiShipLine } from "react-icons/ri";
 import { IoAirplaneOutline } from "react-icons/io5";
 import Image from "next/image";
 import logo from "../../../../public/icons/logo.png";
+import { useAppSelector } from "@/app/(hooks)/redux";
 
 const navList = [
   { name: "Home", href: "/", icon: <FiHome className="w-4 h-4" /> },
@@ -36,17 +34,11 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    const loggedIn =
-      typeof window !== "undefined" && localStorage.getItem("isLoggedIn") === "true";
-    setIsLoggedIn(Boolean(loggedIn));
-  }, []);
-
+  const { user } = useAppSelector(
+    (state) => state.auth
+  );
+ 
   const handleLogout = () => {
-    localStorage.setItem("isLoggedIn", "false");
-    setIsLoggedIn(false);
     setUserMenuOpen(false);
   };
 
@@ -182,8 +174,8 @@ export default function Navbar() {
 
       <nav
         className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled
-            ? "bg-white/98 backdrop-blur-xl shadow-lg border-b border-gray-200 lg:top-0"
-            : "bg-white/95 backdrop-blur-md shadow-sm lg:top-10"
+          ? "bg-white/98 backdrop-blur-xl shadow-lg border-b border-gray-200 lg:top-0"
+          : "bg-white/95 backdrop-blur-md shadow-sm lg:top-10"
           }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -216,7 +208,7 @@ export default function Navbar() {
             {/* Right Actions */}
             <div className="flex items-center gap-3">
               {/* Contact Info - Mobile/Tablet */}
-              <div className="flex lg:hidden items-center gap-2">
+              {/* <div className="flex lg:hidden items-center gap-2">
                 <a
                   href="tel:+1234567890"
                   className="p-2 rounded-full text-blue-600 bg-blue-50 hover:bg-blue-100 transition-colors"
@@ -229,10 +221,10 @@ export default function Navbar() {
                 >
                   <FiMail className="w-4 h-4" />
                 </a>
-              </div>
+              </div> */}
 
               {/* Login & Register Buttons */}
-              {!isLoggedIn && (
+              {!user && (
                 <div className="hidden lg:flex items-center gap-2">
                   <Link href={"/auth/login"}>
                     <button className="px-4 py-2 text-blue-600 hover:text-blue-700 font-medium transition-colors duration-200 hover:bg-blue-50 rounded-lg">
@@ -249,7 +241,7 @@ export default function Navbar() {
 
               {/* User Menu */}
               <div className="relative">
-                {isLoggedIn ? (
+                {user ? (
                   <>
                     <button
                       onClick={() => setUserMenuOpen(!userMenuOpen)}
@@ -269,12 +261,12 @@ export default function Navbar() {
                         >
                           <div className="p-2">
                             <div className="px-4 py-3 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg mb-2">
-                              <p className="text-sm font-semibold text-gray-900">Welcome back!</p>
+                              <p className="text-sm font-semibold text-gray-900">Welcome back {user.firstName}!</p>
                               <p className="text-xs text-gray-600 mt-0.5">Manage your travel plans</p>
                             </div>
 
                             <div className="space-y-1">
-                              <button className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
+                              {/* <button className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
                                 <FiUser className="w-4 h-4 text-gray-500" />
                                 <span className="font-medium">Profile</span>
                               </button>
@@ -292,7 +284,7 @@ export default function Navbar() {
                               >
                                 <FiBriefcase className="w-4 h-4" />
                                 <span className="font-medium">My Trips</span>
-                              </button>
+                              </button> */}
 
                               <div className="border-t border-gray-100 my-2"></div>
 
@@ -405,7 +397,7 @@ export default function Navbar() {
                   Account
                 </h3>
 
-                {isLoggedIn ? (
+                {user ? (
                   <div className="space-y-2">
                     <button className="w-full flex items-center justify-between p-4 bg-white rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200">
                       <div className="flex items-center gap-3">

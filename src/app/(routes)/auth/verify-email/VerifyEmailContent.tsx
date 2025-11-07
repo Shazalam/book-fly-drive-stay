@@ -172,6 +172,8 @@ export default function VerifyEmailContent() {
     const searchParams = useSearchParams();
     const rawEmail = searchParams.get("email");
     const email = rawEmail ? decodeURIComponent(rawEmail) : ""; // Always decode here
+    const rawPath = searchParams.get("redirect"); // could be /flights, /anywhere
+    const redirect = rawPath ? decodeURIComponent(rawPath) : "/"; // Always decode here
     console.log("searchParams =>", searchParams)
     console.log("email =>", email)
     const [otp, setOtp] = useState('');
@@ -195,7 +197,8 @@ export default function VerifyEmailContent() {
             setSuccess("Email verified successfully! Redirecting to login...");
             setTimeout(() => {
                 setSuccess(null);
-                router.push("/auth/login");
+                // router.push("/auth/login");
+                router.push(redirect);
             }, 2000);
         }
         return () => {
