@@ -45,8 +45,9 @@ export const registerSchema = baseUserSchema.extend({
 export const loginSchema = z.object({
   email: z.string().email('Please enter a valid email address'),
   password: z.string().min(1, 'Password is required'),
-  rememberMe: z.boolean().optional(),
 });
+
+
 
 // Backend-specific schema (no confirmPassword)
 export const registerApiSchema = baseUserSchema;

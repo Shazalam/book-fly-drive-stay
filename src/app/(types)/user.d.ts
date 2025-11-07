@@ -1,4 +1,4 @@
-export interface IUser  {
+export interface IUser {
   _id?: string;
   firstName: string;
   lastName: string;
@@ -22,12 +22,12 @@ export interface UserResponse {
 export interface RegisterResponseData {
   user: UserResponse;
   requiresVerification: boolean;
-  token?: string; // if you add JWT later
 }
 
 export interface LoginResponseData {
   user: UserResponse;
-  token: string;
+  requiresVerification: boolean;
+  message?:string
 }
 
 export interface AuthApiResponse<T = unknown> {
@@ -78,4 +78,7 @@ export interface VerifyOtpRequest {
 
 export interface ResendOtpRequest {
   email: string;
+}
+export interface JWTPayload {
+  userId: string;
 }
