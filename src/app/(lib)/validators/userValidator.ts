@@ -47,8 +47,6 @@ export const loginSchema = z.object({
   password: z.string().min(1, 'Password is required'),
 });
 
-
-
 // Backend-specific schema (no confirmPassword)
 export const registerApiSchema = baseUserSchema;
 

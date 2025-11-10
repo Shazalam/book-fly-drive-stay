@@ -1,13 +1,3 @@
-export interface IUser {
-  _id?: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  isVerified: boolean;
-  otp?: string;
-  otpExpiration?: Date;
-}
 
 export interface UserResponse {
   _id: string;
@@ -17,7 +7,7 @@ export interface UserResponse {
   emailVerified: boolean;
   createdAt: string; // or Date if you parse it
   updatedAt: string; // or Date if you parse it
-}
+} 
 
 export interface RegisterResponseData {
   user: UserResponse;
@@ -52,13 +42,6 @@ export interface VerificationToken {
   createdAt: Date;
 }
 
-// export interface AuthResponse {
-//   success: boolean;
-//   message?: string;
-//   user?: Omit<User, 'password'>;
-//   token?: string;
-// }
-
 export interface RegisterRequest {
   firstName: string;
   lastName: string;
@@ -79,6 +62,7 @@ export interface VerifyOtpRequest {
 export interface ResendOtpRequest {
   email: string;
 }
+
 export interface JWTPayload {
   userId: string;
 }
