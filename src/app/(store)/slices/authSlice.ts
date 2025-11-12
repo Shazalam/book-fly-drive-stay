@@ -1,17 +1,35 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { RegisterApiData } from '@/app/(lib)/validators/userValidator';
-import { AuthApiResponse, LoginResponseData, RegisterResponseData, UserResponse } from '@/app/(types)/user';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { RegisterApiData, VerifyOtpRequest } from '@/app/(lib)/validators/userValidator';
+import { LoginResponseData, RegisterResponseData, UserResponse, VerifyOtpResponse } from '@/app/(types)/user';
+import { ApiResponse, RejectedPayload } from '@/app/(types)/common';
 
-// Define the type for rejected payloads
-interface RejectedPayload {
-  message: string;
-  status: number;
-  error?: unknown;
+// Auth state interface
+interface AuthState {
+  user: UserResponse | null;
+  isAuthenticated: boolean;
+  isLoading: boolean;
+  error: string | null;
+  requiresVerification: boolean;
+  registeredEmail: string | null;
+  verificationLoading: boolean;
+  isAuthHydrated: boolean;          // ← add this!
 }
+
+// Initial state
+const initialState: AuthState = {
+  user: null,
+  isAuthenticated: false,
+  isLoading: false,
+  error: null,
+  requiresVerification: false,
+  registeredEmail: null,
+  verificationLoading: false,
+  isAuthHydrated: false       // ← add this!
+};
 
 // Async thunk for registration
 export const registerUser = createAsyncThunk<
-  AuthApiResponse<RegisterResponseData>, // Return type on success
+  ApiResponse<RegisterResponseData>, // Return type on success
   RegisterApiData,                       // Argument type
   { rejectValue: RejectedPayload }       // Rejected value type
 >(
@@ -24,7 +42,7 @@ export const registerUser = createAsyncThunk<
         body: JSON.stringify(userData),
       });
 
-      const data: AuthApiResponse<RegisterResponseData> = await response.json();
+      const data: ApiResponse<RegisterResponseData> = await response.json();
 
       if (!response.ok) {
         return rejectWithValue({
@@ -47,7 +65,7 @@ export const registerUser = createAsyncThunk<
 
 // Async thunk for login
 export const loginUser = createAsyncThunk<
-  AuthApiResponse<LoginResponseData>,
+  ApiResponse<LoginResponseData>,
   { email: string, password: string },
   { rejectValue: RejectedPayload }
 >(
@@ -60,7 +78,7 @@ export const loginUser = createAsyncThunk<
         body: JSON.stringify(credentials),
       });
 
-      const data: AuthApiResponse<LoginResponseData> = await response.json();
+      const data: ApiResponse<LoginResponseData> = await response.json();
 
       if (!response.ok) {
         return rejectWithValue({
@@ -83,8 +101,8 @@ export const loginUser = createAsyncThunk<
 
 // Async thunk for email verification
 export const verifyEmail = createAsyncThunk<
-  AuthApiResponse<{ user: UserResponse }>,
-  { email: string; otp: string },
+  ApiResponse<VerifyOtpResponse>,
+  VerifyOtpRequest,
   { rejectValue: RejectedPayload }
 >(
   'auth/verifyEmail',
@@ -96,7 +114,7 @@ export const verifyEmail = createAsyncThunk<
         body: JSON.stringify(verificationData),
       });
 
-      const data: AuthApiResponse<{ user: UserResponse }> = await response.json();
+      const data: ApiResponse<VerifyOtpResponse> = await response.json();
 
       if (!response.ok) {
         return rejectWithValue({
@@ -119,7 +137,7 @@ export const verifyEmail = createAsyncThunk<
 
 // Async thunk for resend OTP
 export const resendOtp = createAsyncThunk<
-  AuthApiResponse<null>,
+  ApiResponse<null>,
   string,
   { rejectValue: RejectedPayload }
 >(
@@ -132,7 +150,7 @@ export const resendOtp = createAsyncThunk<
         body: JSON.stringify({ email }),
       });
 
-      const data: AuthApiResponse<null> = await response.json();
+      const data: ApiResponse<null> = await response.json();
 
       if (!response.ok) {
         return rejectWithValue({
@@ -155,7 +173,7 @@ export const resendOtp = createAsyncThunk<
 
 
 export const getCurrentUser = createAsyncThunk<
-  AuthApiResponse<{ user: UserResponse }>, // Return type
+  ApiResponse<{ user: UserResponse }>, // Return type
   void,                                   // No args needed
   { rejectValue: string }
 >(
@@ -167,7 +185,7 @@ export const getCurrentUser = createAsyncThunk<
         credentials: 'include',                 // important for httpOnly cookie
       });
 
-      const data: AuthApiResponse<{ user: UserResponse }> = await res.json();
+      const data: ApiResponse<{ user: UserResponse }> = await res.json();
       if (!res.ok) {
         return rejectWithValue(data.message || "Failed to fetch user");
       }
@@ -177,27 +195,39 @@ export const getCurrentUser = createAsyncThunk<
     }
   }
 );
-// Auth state interface
-interface AuthState {
-  user: UserResponse | null;
-  isAuthenticated: boolean;
-  isLoading: boolean;
-  error: string | null;
-  requiresVerification: boolean;
-  registeredEmail: string | null;
-  verificationLoading: boolean;
-}
 
-// Initial state
-const initialState: AuthState = {
-  user: null,
-  isAuthenticated: false,
-  isLoading: false,
-  error: null,
-  requiresVerification: false,
-  registeredEmail: null,
-  verificationLoading: false,
-};
+export const logoutUser = createAsyncThunk<
+  ApiResponse<null>,
+  void,
+  { rejectValue: RejectedPayload }
+>(
+  'auth/logoutUser',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await fetch('/api/auth/logout', {
+        method: 'POST',
+        credentials: 'include',
+      });
+      const data: ApiResponse<null> = await response.json();
+
+      if (!response.ok) {
+        return rejectWithValue({
+          message: data.message || 'Logout failed',
+          status: response.status,
+          error: data.error,
+        });
+      }
+      return data;
+    } catch (err) {
+      const error = err as Error;
+      return rejectWithValue({
+        message: error.message || 'Network error',
+        status: 500,
+      });
+    }
+  }
+);
+
 
 // Auth slice
 const authSlice = createSlice({
@@ -206,46 +236,7 @@ const authSlice = createSlice({
   reducers: {
     clearError: (state) => {
       state.error = null;
-    },
-    setAuth: (state, action: PayloadAction<{ user: UserResponse; token: string }>) => {
-      state.user = action.payload.user;
-      state.isAuthenticated = true;
-      state.error = null;
-    },
-    logout: (state) => {
-      state.user = null;
-      state.isAuthenticated = false;
-      state.error = null;
-      state.requiresVerification = false;
-      state.registeredEmail = null;
-      if (typeof window !== 'undefined') {
-        localStorage.removeItem('auth_token');
-        localStorage.removeItem('user_data');
-      }
-    },
-    setVerificationRequired: (state, action: PayloadAction<string>) => {
-      state.requiresVerification = true;
-      state.registeredEmail = action.payload;
-    },
-    clearVerification: (state) => {
-      state.requiresVerification = false;
-      state.registeredEmail = null;
-    },
-    initializeAuth: (state) => {
-      if (typeof window !== 'undefined') {
-        const token = localStorage.getItem('auth_token');
-        const userData = localStorage.getItem('user_data');
-        if (token && userData) {
-          try {
-            state.user = JSON.parse(userData) as UserResponse;
-            state.isAuthenticated = true;
-          } catch {
-            localStorage.removeItem('auth_token');
-            localStorage.removeItem('user_data');
-          }
-        }
-      }
-    },
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -264,9 +255,6 @@ const authSlice = createSlice({
           state.registeredEmail = data.user.email;
         } else if (data?.user) {
           state.isAuthenticated = true;
-          // if (typeof window !== 'undefined') {
-          //   localStorage.setItem('user_data', JSON.stringify(data.user));
-          // }
         }
       })
       .addCase(registerUser.rejected, (state, action) => {
@@ -288,9 +276,6 @@ const authSlice = createSlice({
           state.registeredEmail = data.user.email;
         } else if (data?.user) {
           state.isAuthenticated = true;
-          // if (typeof window !== 'undefined') {
-          //   localStorage.setItem('user_data', JSON.stringify(data.user));
-          // }
         }
       })
       .addCase(loginUser.rejected, (state, action) => {
@@ -299,11 +284,11 @@ const authSlice = createSlice({
       })
       // Verify email
       .addCase(verifyEmail.pending, (state) => {
-        state.verificationLoading = true;
+        state.isLoading = true;
         state.error = null;
       })
       .addCase(verifyEmail.fulfilled, (state, action) => {
-        state.verificationLoading = false;
+        state.isLoading = false;
         state.error = null;
         const data = action.payload.data;
         if (data?.user) {
@@ -311,26 +296,24 @@ const authSlice = createSlice({
           state.requiresVerification = false;
           state.registeredEmail = null;
           state.isAuthenticated = true;
-          // if (typeof window !== 'undefined') {
-          //   localStorage.setItem('user_data', JSON.stringify(data.user));
-          // }
         }
       })
       .addCase(verifyEmail.rejected, (state, action) => {
-        state.verificationLoading = false;
+        state.isLoading = false;
+        state.isAuthenticated = true;
         state.error = action.payload?.message || 'Verification failed';
       })
       // Resend OTP
       .addCase(resendOtp.pending, (state) => {
-        state.verificationLoading = true;
+        state.isLoading = true;
         state.error = null;
       })
       .addCase(resendOtp.fulfilled, (state) => {
-        state.verificationLoading = false;
+        state.isLoading = false;
         state.error = null;
       })
       .addCase(resendOtp.rejected, (state, action) => {
-        state.verificationLoading = false;
+        state.isLoading = false;
         state.error = action.payload?.message || 'Failed to resend OTP';
       })
       .addCase(getCurrentUser.pending, (state) => {
@@ -342,25 +325,42 @@ const authSlice = createSlice({
         state.error = null;
         state.user = action.payload.data?.user ?? null;
         state.isAuthenticated = !!action.payload.data?.user;
+         state.isAuthHydrated = true;                 // ← set true here on success
       })
       .addCase(getCurrentUser.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload ?? 'Failed to fetch user';
         state.user = null;
         state.isAuthenticated = false;
-      });
+         state.isAuthHydrated = true;                 // ← set true here on success
+      })
+      // ...
+      .addCase(logoutUser.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(logoutUser.fulfilled, (state) => {
+        // Reset all auth state on logout
+        state.user = null;
+        state.isAuthenticated = false;
+        state.isLoading = false;
+        state.error = null;
+        state.requiresVerification = false;
+        state.registeredEmail = null;
+        state.verificationLoading = false;
+      })
+      .addCase(logoutUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload?.message || 'Logout failed';
+      })
+
 
   },
 });
 
 // Export actions
 export const {
-  clearError,
-  setAuth,
-  logout,
-  setVerificationRequired,
-  clearVerification,
-  initializeAuth,
+  clearError
 } = authSlice.actions;
 
 // Selectors
@@ -371,6 +371,6 @@ export const selectIsLoading = (state: { auth: AuthState }) => state.auth.isLoad
 export const selectAuthError = (state: { auth: AuthState }) => state.auth.error;
 export const selectRequiresVerification = (state: { auth: AuthState }) => state.auth.requiresVerification;
 export const selectRegisteredEmail = (state: { auth: AuthState }) => state.auth.registeredEmail;
-export const selectVerificationLoading = (state: { auth: AuthState }) => state.auth.verificationLoading;
+export const selectVerificationLoading = (state: { auth: AuthState }) => state.auth.isLoading;
 
 export default authSlice.reducer;

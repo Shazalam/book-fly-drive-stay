@@ -1,4 +1,7 @@
 
+// =====================
+// User core data types
+// =====================
 export interface UserResponse {
   _id: string;
   firstName: string;
@@ -9,6 +12,9 @@ export interface UserResponse {
   updatedAt: string; // or Date if you parse it
 } 
 
+// =====================
+// API response types
+// =====================
 export interface RegisterResponseData {
   user: UserResponse;
   requiresVerification: boolean;
@@ -20,35 +26,9 @@ export interface LoginResponseData {
   message?:string
 }
 
-export interface AuthApiResponse<T = unknown> {
-  status: 'success' | 'error';
-  message: string;
-  data?: T;
-  error?: {
-    code: string;
-    details?: unknown;
-  };
-  meta?: {
-    timestamp: string;
-    version: string;
-  };
-}
-
-export interface VerificationToken {
-  _id: string;
-  email: string;
-  token: string;
-  expires: Date;
-  createdAt: Date;
-}
-
-export interface RegisterRequest {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-}
-
+// =====================
+// Auth request types
+// =====================
 export interface LoginRequest {
   email: string;
   password: string;
@@ -63,6 +43,12 @@ export interface ResendOtpRequest {
   email: string;
 }
 
-export interface JWTPayload {
-  userId: string;
+// =====================
+// Verification/Token
+// =====================
+
+// For OTP verification success response:
+export interface VerifyOtpResponse {
+  user: UserResponse;
 }
+

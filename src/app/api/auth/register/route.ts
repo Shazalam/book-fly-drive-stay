@@ -3,7 +3,8 @@ import dbConnect from '@/app/(lib)/db';
 import { generateOtpEmail, sendEmail } from '@/app/(lib)/email';
 import { ApiResponse, ErrorCode } from '@/app/(lib)/utils/api-response';
 import { generateOtp } from '@/app/(lib)/utils/utils';
-import { RegisterRequest } from '@/app/(types)/user';
+import { RegisterApiData, registerApiSchema } from '@/app/(lib)/validators/userValidator';
+import { RegisterResponseData, UserResponse } from '@/app/(types)/user';
 import User from '@/app/models/User';
 import VerificationToken from '@/app/models/VerificationToken';
 import { NextRequest } from 'next/server';
@@ -12,11 +13,22 @@ export async function POST(request: NextRequest) {
   try {
     await dbConnect();
 
-    const body: RegisterRequest = await request.json();
-    const { firstName, lastName, email, password } = body;
-    console.log("registr request =>", body)
+    const rawBody = await request.json();
 
-    
+    const parseResult = registerApiSchema.safeParse(rawBody);
+    if (!parseResult.success) {
+      // Return Zod errors in generic format for your frontend
+      return ApiResponse.badRequest(
+        "Invalid input",
+        ErrorCode.VALIDATION_ERROR,
+        parseResult.error.flatten().fieldErrors
+      );
+    }
+
+    const body: RegisterApiData = parseResult.data; // Now TypeScript and runtime agree!
+
+    const { firstName, lastName, email, password } = body;
+ 
     // Validation
     if (!firstName?.trim()) {
       return ApiResponse.badRequest(
@@ -79,7 +91,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Create user
-    const user = await User.create({
+    const user:UserResponse = await User.create({
       firstName: firstName.trim(),
       lastName: lastName.trim(),
       email: email.toLowerCase().trim(),
@@ -112,14 +124,13 @@ export async function POST(request: NextRequest) {
       // Continue even if email fails for development
     }
 
-    return ApiResponse.created(
+    return ApiResponse.created<RegisterResponseData>(
       {
         user: {
           _id: user._id,
           firstName: user.firstName,
           lastName: user.lastName,
           email: user.email,
-          phone: user.phone,
           emailVerified: user.emailVerified,
           createdAt: user.createdAt,
           updatedAt: user.updatedAt,

@@ -19,7 +19,11 @@ import { RiCarLine, RiShipLine } from "react-icons/ri";
 import { IoAirplaneOutline } from "react-icons/io5";
 import Image from "next/image";
 import logo from "../../../../public/icons/logo.png";
-import { useAppSelector } from "@/app/(hooks)/redux";
+import { useAppDispatch, useAppSelector } from "@/app/(hooks)/redux";
+import NavbarSkeleton from "../skeletons/NavbarSkeleton";
+import { logoutUser } from "@/app/(store)/slices/authSlice";
+import { useApiToast } from "@/app/(hooks)/useApiToast";
+import { useRouter } from "next/navigation";
 
 const navList = [
   { name: "Home", href: "/", icon: <FiHome className="w-4 h-4" /> },
@@ -31,16 +35,41 @@ const navList = [
 
 export default function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
-  const { user } = useAppSelector(
+  const dispatch = useAppDispatch();
+  const { user, isAuthHydrated, isLoading, error } = useAppSelector(
     (state) => state.auth
   );
- 
-  const handleLogout = () => {
-    setUserMenuOpen(false);
+
+  const [logoutSuccess, setLogoutSuccess] = useState<string | null>(null);
+
+  // Show toast for logout operation
+  useApiToast({
+    loading: isLoading,
+    success: logoutSuccess, // Controlled through setLogoutSuccess
+    error,
+    loadingMsg: "Logging out...",
+    showToast: true,
+  });
+
+  // Handle logout:
+  const handleLogout = async () => {
+    setLogoutSuccess(null);
+    try {
+      await dispatch(logoutUser()).unwrap();
+      // result will be your ApiResponse if success
+      setLogoutSuccess("Logged out successfully!");
+      // Optionally redirect, close modals/drawers, or reset UI
+      setUserMenuOpen(false)
+      router.push("/auth/login");
+    } catch {
+      // error toast shown via Redux state and useApiToast
+    }
   };
+
 
   const handleScroll = useCallback(() => {
     setScrolled(window.scrollY > 8);
@@ -178,37 +207,39 @@ export default function Navbar() {
           : "bg-white/95 backdrop-blur-md shadow-sm lg:top-10"
           }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            {/* Logo */}
-            <Link href="/" className="flex items-center">
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="transition-transform"
-              >
-                <Image
-                  src={logo}
-                  alt="logo"
-                  width={140}
-                  height={45}
-                  priority
-                  className="hover:brightness-110 transition-all"
-                />
-              </motion.div>
-            </Link>
+        {
+          isAuthHydrated ? (
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="flex items-center justify-between h-16">
+                {/* Logo */}
+                <Link href="/" className="flex items-center">
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="transition-transform"
+                  >
+                    <Image
+                      src={logo}
+                      alt="logo"
+                      width={140}
+                      height={45}
+                      priority
+                      className="hover:brightness-110 transition-all"
+                    />
+                  </motion.div>
+                </Link>
 
-            {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center space-x-1">
-              {navList.map((item) => (
-                <DesktopNavLink key={item.href} item={item} />
-              ))}
-            </div>
+                {/* Desktop Navigation */}
+                <div className="hidden lg:flex items-center space-x-1">
+                  {navList.map((item) => (
+                    <DesktopNavLink key={item.href} item={item} />
+                  ))}
+                </div>
 
-            {/* Right Actions */}
-            <div className="flex items-center gap-3">
-              {/* Contact Info - Mobile/Tablet */}
-              {/* <div className="flex lg:hidden items-center gap-2">
+                {/* Right Actions */}
+                <div className="flex items-center gap-3">
+                  {/* Contact Info - Mobile/Tablet */}
+                  {/* <div className="flex lg:hidden items-center gap-2">
                 <a
                   href="tel:+1234567890"
                   className="p-2 rounded-full text-blue-600 bg-blue-50 hover:bg-blue-100 transition-colors"
@@ -223,50 +254,50 @@ export default function Navbar() {
                 </a>
               </div> */}
 
-              {/* Login & Register Buttons */}
-              {!user && (
-                <div className="hidden lg:flex items-center gap-2">
-                  <Link href={"/auth/login"}>
-                    <button className="px-4 py-2 text-blue-600 hover:text-blue-700 font-medium transition-colors duration-200 hover:bg-blue-50 rounded-lg">
-                      Login
-                    </button>
-                  </Link>
-                  <Link href={"/auth/register"}>
-                    <button className="px-5 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg font-medium hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 shadow-md hover:shadow-lg">
-                      Register
-                    </button>
-                  </Link>
-                </div>
-              )}
+                  {/* Login & Register Buttons */}
+                  {!user && (
+                    <div className="hidden lg:flex items-center gap-2">
+                      <Link href={"/auth/login"}>
+                        <button className="px-4 py-2 text-blue-600 hover:text-blue-700 font-medium transition-colors duration-200 hover:bg-blue-50 rounded-lg">
+                          Login
+                        </button>
+                      </Link>
+                      <Link href={"/auth/register"}>
+                        <button className="px-5 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg font-medium hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 shadow-md hover:shadow-lg">
+                          Register
+                        </button>
+                      </Link>
+                    </div>
+                  )}
 
-              {/* User Menu */}
-              <div className="relative">
-                {user ? (
-                  <>
-                    <button
-                      onClick={() => setUserMenuOpen(!userMenuOpen)}
-                      className="flex items-center gap-2 p-2.5 rounded-full text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200 border border-gray-200 hover:border-blue-300"
-                    >
-                      <FiUser className="w-5 h-5" />
-                    </button>
-
-                    <AnimatePresence>
-                      {userMenuOpen && (
-                        <motion.div
-                          initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                          animate={{ opacity: 1, y: 0, scale: 1 }}
-                          exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                          transition={{ duration: 0.15 }}
-                          className="absolute right-0 mt-3 w-64 bg-white rounded-xl shadow-2xl border border-gray-200 z-50 overflow-hidden"
+                  {/* User Menu */}
+                  <div className="relative">
+                    {user ? (
+                      <>
+                        <button
+                          onClick={() => setUserMenuOpen(!userMenuOpen)}
+                          className="flex items-center gap-2 p-2.5 rounded-full text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200 border border-gray-200 hover:border-blue-300 cursor-pointer"
                         >
-                          <div className="p-2">
-                            <div className="px-4 py-3 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg mb-2">
-                              <p className="text-sm font-semibold text-gray-900">Welcome back {user.firstName}!</p>
-                              <p className="text-xs text-gray-600 mt-0.5">Manage your travel plans</p>
-                            </div>
+                          <FiUser className="w-5 h-5" />
+                        </button>
 
-                            <div className="space-y-1">
-                              {/* <button className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
+                        <AnimatePresence>
+                          {userMenuOpen && (
+                            <motion.div
+                              initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                              animate={{ opacity: 1, y: 0, scale: 1 }}
+                              exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                              transition={{ duration: 0.15 }}
+                              className="absolute right-0 mt-3 w-64 bg-white rounded-xl shadow-2xl border border-gray-200 z-50 overflow-hidden"
+                            >
+                              <div className="p-2">
+                                <div className="px-4 py-3 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg mb-2">
+                                  <p className="text-sm font-semibold text-gray-900">Welcome back <strong>{user.firstName}!</strong></p>
+                                  <p className="text-xs text-gray-600 mt-0.5">Manage your travel plans</p>
+                                </div>
+
+                                <div className="space-y-1">
+                                  {/* <button className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
                                 <FiUser className="w-4 h-4 text-gray-500" />
                                 <span className="font-medium">Profile</span>
                               </button>
@@ -286,34 +317,38 @@ export default function Navbar() {
                                 <span className="font-medium">My Trips</span>
                               </button> */}
 
-                              <div className="border-t border-gray-100 my-2"></div>
+                                  <div className="border-t border-gray-100 my-2"></div>
 
-                              <button
-                                onClick={handleLogout}
-                                className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                              >
-                                <FiLogOut className="w-4 h-4" />
-                                <span className="font-medium">Log Out</span>
-                              </button>
-                            </div>
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </>
-                ) : null}
+                                  <button
+                                    onClick={handleLogout}
+                                    className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                                  >
+                                    <FiLogOut className="w-4 h-4" />
+                                    <span className="font-medium">Log Out</span>
+                                  </button>
+                                </div>
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </>
+                    ) : null}
+                  </div>
+
+                  {/* Mobile Hamburger */}
+                  <button
+                    onClick={() => setIsOpen(true)}
+                    className="lg:hidden p-2.5 rounded-full text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200 border border-gray-200 hover:border-blue-300"
+                  >
+                    <FiMenu className="w-5 h-5" />
+                  </button>
+                </div>
               </div>
-
-              {/* Mobile Hamburger */}
-              <button
-                onClick={() => setIsOpen(true)}
-                className="lg:hidden p-2.5 rounded-full text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200 border border-gray-200 hover:border-blue-300"
-              >
-                <FiMenu className="w-5 h-5" />
-              </button>
             </div>
-          </div>
-        </div>
+          ) : (
+            <NavbarSkeleton />
+          )
+        }
       </nav>
 
       {/* Mobile Drawer */}
@@ -392,32 +427,11 @@ export default function Navbar() {
               </div>
 
               {/* User Section */}
-              <div className="p-4 border-t border-gray-200 bg-gray-50">
-                <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider px-2 mb-3">
-                  Account
-                </h3>
-
-                {user ? (
-                  <div className="space-y-2">
-                    <button className="w-full flex items-center justify-between p-4 bg-white rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200">
-                      <div className="flex items-center gap-3">
-                        <FiUser className="w-5 h-5 text-gray-500" />
-                        <span className="font-medium">Profile</span>
-                      </div>
-                      <FiChevronRight className="w-4 h-4 text-gray-400" />
-                    </button>
-
-                    <button
-                      onClick={handleLogout}
-                      className="w-full flex items-center justify-between p-4 bg-white rounded-lg text-red-600 hover:bg-red-50 transition-all duration-200"
-                    >
-                      <div className="flex items-center gap-3">
-                        <FiLogOut className="w-5 h-5" />
-                        <span className="font-medium">Log Out</span>
-                      </div>
-                    </button>
-                  </div>
-                ) : (
+              {!user && (
+                <div className="p-4 border-t border-gray-200 bg-gray-50">
+                  <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider px-2 mb-3">
+                    Account
+                  </h3>
                   <div className="space-y-3">
                     <Link
                       href="/auth/login"
@@ -434,8 +448,8 @@ export default function Navbar() {
                       Register
                     </Link>
                   </div>
-                )}
-              </div>
+                </div>
+              )}
             </motion.aside>
           </>
         )}
