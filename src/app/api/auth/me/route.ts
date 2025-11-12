@@ -4,8 +4,7 @@ import { ApiResponse, ErrorCode, HttpStatus } from '@/app/(lib)/utils/api-respon
 import User from '@/app/models/User';
 import { NextRequest } from 'next/server';
 import { verifyToken } from '@/app/(lib)/utils/utils';
-import { JWTPayload } from '@/app/(types)/user';
-
+import { JWTPayload } from '@/app/(types)/common';
 
 export async function GET(request: NextRequest) {
   try {

@@ -14,26 +14,12 @@ import Button from "@/app/(components)/common/Button";
 import { clearError, registerUser } from "@/app/(store)/slices/authSlice";
 
 export default function RegisterForm() {
-  
+
   const [showPassword, setShowPassword] = useState(false);
-  const [redirectTo, setRedirectTo] = useState('/search/cars'); // Default value
-  
+  const [redirectTo, setRedirectTo] = useState('/'); // Default value
+
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const { isLoading, error, requiresVerification, registeredEmail } = useAppSelector(
-    (state) => state.auth
-  );
-
-  // Get redirect parameter from URL on client side
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const redirect = urlParams.get('redirect');
-    console.log("redirect =>", redirect)
-    if (redirect) {
-      setRedirectTo(redirect);
-    }
-  }, []);
-
   const {
     register,
     handleSubmit,
@@ -51,6 +37,22 @@ export default function RegisterForm() {
       termsAccepted: false,
     },
   });
+
+  const { isLoading, error, requiresVerification, registeredEmail } = useAppSelector(
+    (state) => state.auth
+  );
+
+  // Get redirect parameter from URL on client side
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const redirect = urlParams.get('redirect');
+    console.log("redirect =>", redirect)
+    if (redirect) {
+      setRedirectTo(redirect);
+    }
+  }, []);
+
+
 
   console.log("watch =>", watch)
 
@@ -74,7 +76,7 @@ export default function RegisterForm() {
 
   const onSubmit = async (data: RegisterFormData) => {
     console.log('Form submitted with data:', data);
-    
+
     // Transform form data for API
     const apiData = {
       firstName: data.firstName.trim(),
