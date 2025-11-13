@@ -23,8 +23,7 @@ export default function RegisterForm() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isDirty, isValid },
-    watch,
+    formState: { errors, isDirty, isValid }
   } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
     mode: "onChange",
@@ -38,7 +37,7 @@ export default function RegisterForm() {
     },
   });
 
-  const { isLoading, error, requiresVerification, registeredEmail } = useAppSelector(
+  const { isLoading, requiresVerification, registeredEmail } = useAppSelector(
     (state) => state.auth
   );
 
@@ -51,10 +50,6 @@ export default function RegisterForm() {
       setRedirectTo(redirect);
     }
   }, []);
-
-
-
-  console.log("watch =>", watch)
 
   // Clear errors when component unmounts
   useEffect(() => {
@@ -103,11 +98,11 @@ export default function RegisterForm() {
       </div>
 
       {/* Error Alert */}
-      {error && (
+      {/* {error && (
         <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
           <p className="text-red-600 text-sm text-center">{error}</p>
         </div>
-      )}
+      )} */}
 
       {/* Registration Form */}
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 bg-white p-6 rounded-xl shadow-sm border">

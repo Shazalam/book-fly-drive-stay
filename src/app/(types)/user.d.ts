@@ -23,7 +23,6 @@ export interface RegisterResponseData {
 export interface LoginResponseData {
   user: UserResponse;
   requiresVerification: boolean;
-  message?:string
 }
 
 // =====================

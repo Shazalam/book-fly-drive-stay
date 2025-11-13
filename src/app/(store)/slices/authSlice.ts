@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { RegisterApiData, VerifyOtpRequest } from '@/app/(lib)/validators/userValidator';
+import { LoginFormData, RegisterApiData, VerifyOtpRequest } from '@/app/(lib)/validators/userValidator';
 import { LoginResponseData, RegisterResponseData, UserResponse, VerifyOtpResponse } from '@/app/(types)/user';
 import { ApiResponse, RejectedPayload } from '@/app/(types)/common';
 
@@ -66,7 +66,7 @@ export const registerUser = createAsyncThunk<
 // Async thunk for login
 export const loginUser = createAsyncThunk<
   ApiResponse<LoginResponseData>,
-  { email: string, password: string },
+  LoginFormData,
   { rejectValue: RejectedPayload }
 >(
   'auth/login',
@@ -80,6 +80,7 @@ export const loginUser = createAsyncThunk<
 
       const data: ApiResponse<LoginResponseData> = await response.json();
 
+      console.log("login User =>", data)
       if (!response.ok) {
         return rejectWithValue({
           message: data.message || 'Login failed',
@@ -274,8 +275,13 @@ const authSlice = createSlice({
         if (data?.requiresVerification) {
           state.requiresVerification = true;
           state.registeredEmail = data.user.email;
-        } else if (data?.user) {
+        }
+
+        if (!data?.requiresVerification && data?.user) {
+          state.user = data.user;
+          state.requiresVerification = false;
           state.isAuthenticated = true;
+          state.registeredEmail = null;
         }
       })
       .addCase(loginUser.rejected, (state, action) => {
@@ -325,14 +331,14 @@ const authSlice = createSlice({
         state.error = null;
         state.user = action.payload.data?.user ?? null;
         state.isAuthenticated = !!action.payload.data?.user;
-         state.isAuthHydrated = true;                 // ← set true here on success
+        state.isAuthHydrated = true;                 // ← set true here on success
       })
       .addCase(getCurrentUser.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload ?? 'Failed to fetch user';
         state.user = null;
         state.isAuthenticated = false;
-         state.isAuthHydrated = true;                 // ← set true here on success
+        state.isAuthHydrated = true;                 // ← set true here on success
       })
       // ...
       .addCase(logoutUser.pending, (state) => {
