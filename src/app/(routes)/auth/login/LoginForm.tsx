@@ -28,11 +28,11 @@
 //       : "/";
 
 //   // Redux state
-//   const { isLoading, error, requiresVerification, registeredEmail } = useAppSelector(selectAuth);
+//   const { loginLoading, error, requiresVerification, registeredEmail } = useAppSelector(selectAuth);
 
 //   // Toasts for error, loading, and success
 //   useApiToast({
-//     loading: isLoading,
+//     loading: loginLoading,
 //     error,
 //     success: requiresVerification ? "Signed in successfully!" : null,
 //     loadingMsg: "Signing in...",
@@ -151,10 +151,10 @@
 //         <Button
 //           type="submit"
 //           variant="primary"
-//           loading={isLoading}
+//           loading={loginLoading}
 //           fullWidth
 //         >
-//           {isLoading ? "Signing In..." : "Sign In"}
+//           {loginLoading ? "Signing In..." : "Sign In"}
 //         </Button>
 //       </form>
 
@@ -190,7 +190,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import InputField from "@/app/(components)/common/InputField";
 import Button from "@/app/(components)/common/Button";
 import { useAppDispatch, useAppSelector } from "@/app/(hooks)/redux";
-import { loginUser, clearError, selectAuth } from "@/app/(store)/slices/authSlice";
+import { loginUser, selectAuth, clearAllErrors, clearAllSuccess } from "@/app/(store)/slices/authSlice";
 import { useApiToast } from "@/app/(hooks)/useApiToast";
 
 type LoginFields = z.infer<typeof loginSchema>;
@@ -209,15 +209,13 @@ export default function LoginForm() {
       : "/";
 
   // Redux
-  const { isLoading, error, requiresVerification, user, registeredEmail } = useAppSelector(selectAuth);
-  const [success, setSuccess] = useState<string | null>(null);
+  const { loginLoading, loginError,loginSuccessMsg, requiresVerification, user, registeredEmail } = useAppSelector(selectAuth);
 
-  console.log("isLoading", isLoading,"error", error, "requiresVerification",requiresVerification,"user", user, "registeredEmail", registeredEmail )
   // Toasts for all async/user states (loading, error, success)
   useApiToast({
-    loading: isLoading,
-    error,
-    success,
+    loading: loginLoading,
+    error:loginError,
+    success:loginSuccessMsg,
     loadingMsg: "Signing in...",
     showToast: true,
   });
@@ -235,18 +233,18 @@ export default function LoginForm() {
   // Clear errors on component unmount
   useEffect(() => {
     return () => {
-      dispatch(clearError());
-      setSuccess(null);
+      dispatch(clearAllErrors());
+      dispatch(clearAllSuccess());
     };
   }, [dispatch]);
+
 
   // Redirect if verification is needed
   useEffect(() => {
     if (requiresVerification && registeredEmail) {
-      setSuccess("Check your email for a verification code!");
       // Let the success toast show for 1 second, then redirect
       const timerId = setTimeout(() => {
-        setSuccess(null);
+   
         const verifyUrl = new URL('/auth/verify-email', window.location.origin);
         verifyUrl.searchParams.set('email', encodeURIComponent(registeredEmail));
         verifyUrl.searchParams.set('redirect', redirectTo);
@@ -257,11 +255,10 @@ export default function LoginForm() {
 
     // Show success when fully authenticated and not requiring verification
     if (user && !requiresVerification) {
-      setSuccess("Signed in successfully!");
 
       // Optionally, redirect after a short delay
       const timerId = setTimeout(() => {
-        setSuccess(null);
+   
         if (redirectTo && redirectTo !== "/auth/login") {
           router.push(redirectTo);
         } else {
@@ -273,7 +270,6 @@ export default function LoginForm() {
   }, [requiresVerification, registeredEmail, router, redirectTo, user]);
 
   async function onSubmit(values: LoginFields) {
-    setSuccess(null);
     try {
       await dispatch(loginUser({ email: values.email, password: values.password })).unwrap();
       // No need to manually handle redirect: handled in useEffect
@@ -342,10 +338,10 @@ export default function LoginForm() {
         <Button
           type="submit"
           variant="primary"
-          loading={isLoading}
+          loading={loginLoading}
           fullWidth
         >
-          {isLoading ? "Signing In..." : "Sign In"}
+          {loginLoading ? "Signing In..." : "Sign In"}
         </Button>
       </form>
 
