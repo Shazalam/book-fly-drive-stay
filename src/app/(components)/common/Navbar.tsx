@@ -40,28 +40,25 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const dispatch = useAppDispatch();
-  const { user, isAuthHydrated, isLoading, error } = useAppSelector(
+
+  const { user, isAuthHydrated, logoutLoading, logoutError, logoutSuccessMsg } = useAppSelector(
     (state) => state.auth
   );
 
-  const [logoutSuccess, setLogoutSuccess] = useState<string | null>(null);
-
   // Show toast for logout operation
   useApiToast({
-    loading: isLoading,
-    success: logoutSuccess, // Controlled through setLogoutSuccess
-    error,
+    loading: logoutLoading,
+    success: logoutSuccessMsg, // Controlled through setLogoutSuccess
+    error:logoutError,
     loadingMsg: "Logging out...",
+    // loadingMsg: "Logging out...",
     showToast: true,
   });
 
   // Handle logout:
   const handleLogout = async () => {
-    setLogoutSuccess(null);
     try {
       await dispatch(logoutUser()).unwrap();
-      // result will be your ApiResponse if success
-      setLogoutSuccess("Logged out successfully!");
       // Optionally redirect, close modals/drawers, or reset UI
       setUserMenuOpen(false)
       router.push("/auth/login");
@@ -259,12 +256,12 @@ export default function Navbar() {
                     <div className="hidden lg:flex items-center gap-2">
                       <Link href={"/auth/login"}>
                         <button className="px-4 py-2 text-blue-600 hover:text-blue-700 font-medium transition-colors duration-200 hover:bg-blue-50 rounded-lg">
-                          Login
+                           Sign In
                         </button>
                       </Link>
                       <Link href={"/auth/register"}>
                         <button className="px-5 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg font-medium hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 shadow-md hover:shadow-lg">
-                          Register
+                           Sign Up
                         </button>
                       </Link>
                     </div>
@@ -438,14 +435,14 @@ export default function Navbar() {
                       onClick={() => setIsOpen(false)}
                       className="block w-full text-center py-3 bg-white border-2 border-blue-600 text-blue-600 rounded-lg font-semibold hover:bg-blue-50 transition-colors"
                     >
-                      Login
+                       Sign In
                     </Link>
                     <Link
                       href="/auth/register"
                       onClick={() => setIsOpen(false)}
                       className="block w-full text-center py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg font-semibold hover:from-blue-700 hover:to-indigo-700 transition-colors shadow-md"
                     >
-                      Register
+                       Sign Up
                     </Link>
                   </div>
                 </div>

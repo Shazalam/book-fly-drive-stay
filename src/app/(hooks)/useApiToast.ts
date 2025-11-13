@@ -13,7 +13,7 @@ export function useApiToast({
   success: string | null;
   error: string | null;
   loadingMsg?: string;
-  successMsg?: string;
+  successMsg?: string | null;
   errorMsg?: string;
   showToast?: boolean;
 }) {

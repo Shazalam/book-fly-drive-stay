@@ -8,6 +8,7 @@ import Providers from "./ReduxProvider";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import GlobalAuthInitializer from "./GlobalAuthInitializer/GlobalAuthInitializer";
+import { Toaster } from "react-hot-toast";
 
 
 const geistSans = Geist({
@@ -97,6 +98,7 @@ export default function RootLayout({
         <Providers>
           <GoogleTagManager />
           <Navbar />
+           <Toaster position="top-right" />
             {/* ✅ Run user fetch logic once globally */}
           <GlobalAuthInitializer />
           <div className="sm:pt-[100px] md:pt-[80px] bg-amber-500">

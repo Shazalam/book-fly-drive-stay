@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
       return ApiResponse.badRequest(
         'First name is required',
         ErrorCode.REQUIRED_FIELD,
-        // { field: 'firstName' }
+        { field: 'firstName' }
       );
     }
 
@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
       return ApiResponse.badRequest(
         'Last name is required',
         ErrorCode.REQUIRED_FIELD,
-        // { field: 'lastName' }
+        { field: 'lastName' }
       );
     }
 
@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
       return ApiResponse.badRequest(
         'Email is required',
         ErrorCode.REQUIRED_FIELD,
-        // { field: 'email' }
+        { field: 'email' }
       );
     }
 
@@ -58,7 +58,7 @@ export async function POST(request: NextRequest) {
       return ApiResponse.badRequest(
         'Password is required',
         ErrorCode.REQUIRED_FIELD,
-        // { field: 'password' }
+        { field: 'password' }
       );
     }
 
@@ -66,7 +66,7 @@ export async function POST(request: NextRequest) {
       return ApiResponse.badRequest(
         'Password must be at least 6 characters',
         ErrorCode.INVALID_PASSWORD,
-        // { minLength: 6 }
+        { minLength: 6 }
       );
     }
 
@@ -76,7 +76,7 @@ export async function POST(request: NextRequest) {
       return ApiResponse.badRequest(
         'Please provide a valid email address',
         ErrorCode.INVALID_EMAIL,
-        // { field: 'email' }
+        { field: 'email' }
       );
     }
 

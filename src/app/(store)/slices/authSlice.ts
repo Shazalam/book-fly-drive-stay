@@ -7,24 +7,68 @@ import { ApiResponse, RejectedPayload } from '@/app/(types)/common';
 interface AuthState {
   user: UserResponse | null;
   isAuthenticated: boolean;
-  isLoading: boolean;
-  error: string | null;
   requiresVerification: boolean;
   registeredEmail: string | null;
-  verificationLoading: boolean;
   isAuthHydrated: boolean;          // ← add this!
+
+  // Per-action states!
+  loginLoading: boolean;
+  loginError: string | null;
+  loginSuccessMsg: string | null;
+
+  registerLoading: boolean;
+  registerError: string | null;
+  registerSuccessMsg: string | null;
+
+  verifyOtpLoading: boolean;
+  verifyOtpError: string | null;
+  verifyOtpSuccessMsg: string | null;
+
+  logoutLoading: boolean;
+  logoutError: string | null;
+  logoutSuccessMsg: string | null;
+
+  getCurrentUserLoading: boolean;
+  getCurrentUserError: string | null;
+  getCurrentUserSuccessMsg: string | null;
+
+  resendOtpLoading: boolean;
+  resendOtpError: string | null;
+  resendOtpSuccessMsg: string | null;
 }
 
 // Initial state
 const initialState: AuthState = {
   user: null,
   isAuthenticated: false,
-  isLoading: false,
-  error: null,
   requiresVerification: false,
   registeredEmail: null,
-  verificationLoading: false,
-  isAuthHydrated: false       // ← add this!
+  isAuthHydrated: false,       // ← add this!
+
+  // Per-action states!
+  loginLoading: false,
+  loginError: null,
+  loginSuccessMsg: null,
+
+  registerLoading: false,
+  registerError: null,
+  registerSuccessMsg: null,
+
+  verifyOtpLoading: false,
+  verifyOtpError: null,
+  verifyOtpSuccessMsg: null,
+
+  logoutLoading: false,
+  logoutError: null,
+  logoutSuccessMsg: null,
+
+  getCurrentUserLoading: false,
+  getCurrentUserError: null,
+  getCurrentUserSuccessMsg: null,
+
+  resendOtpLoading: false,
+  resendOtpError: null,
+  resendOtpSuccessMsg: null,
 };
 
 // Async thunk for registration
@@ -235,42 +279,102 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    clearError: (state) => {
-      state.error = null;
+    // Global clear for all errors (good for route changes/unmount)
+    clearAllErrors: (state) => {
+      state.loginError = null;
+      state.registerError = null;
+      state.verifyOtpError = null;
+      state.logoutError = null;
+      state.getCurrentUserError = null;
+      state.resendOtpError = null;
+      // ...add any future error fields here as well
+    },
+    // Global clear for all success messages
+    clearAllSuccess: (state) => {
+      state.loginSuccessMsg = null;
+      state.registerSuccessMsg = null;
+      state.verifyOtpSuccessMsg = null;
+      state.logoutSuccessMsg = null;
+      state.getCurrentUserSuccessMsg = null;
+      state.resendOtpSuccessMsg = null;
+      // ...add any future success fields here as well
+    },
+    // Optional: clear error per-action
+    clearLoginError: (state) => { state.loginError = null; },
+    clearRegisterError: (state) => { state.registerError = null; },
+    clearVerifyOtpError: (state) => { state.verifyOtpError = null; },
+    clearLogoutError: (state) => { state.logoutError = null; },
+    clearResendOtpError: (state) => { state.resendOtpError = null; },
+    clearGetCurrentUserError: (state) => { state.getCurrentUserError = null; },
+
+    // Optional: clear success per-action
+    clearLoginSuccess: (state) => { state.loginSuccessMsg = null; },
+    clearRegisterSuccess: (state) => { state.registerSuccessMsg = null; },
+    clearVerifyOtpSuccess: (state) => { state.verifyOtpSuccessMsg = null; },
+    clearLogoutSuccess: (state) => { state.logoutSuccessMsg = null; },
+    clearResendOtpSuccess: (state) => { state.resendOtpSuccessMsg = null; },
+    clearGetCurrentUserSuccess: (state) => { state.getCurrentUserSuccessMsg = null; },
+
+    // (Optional) for toast-driven resets on navigation:
+    resetAuthUi: (state) => {
+      // This can clear all error/success/loading in one reducer if you want
+      state.loginError = null;
+      state.registerError = null;
+      state.verifyOtpError = null;
+      state.logoutError = null;
+      state.getCurrentUserError = null;
+      state.resendOtpError = null;
+      state.loginSuccessMsg = null;
+      state.registerSuccessMsg = null;
+      state.verifyOtpSuccessMsg = null;
+      state.logoutSuccessMsg = null;
+      state.getCurrentUserSuccessMsg = null;
+      state.resendOtpSuccessMsg = null;
+      state.loginLoading = false;
+      state.registerLoading = false;
+      state.verifyOtpLoading = false;
+      state.logoutLoading = false;
+      state.getCurrentUserLoading = false;
+      state.resendOtpLoading = false;
     }
   },
   extraReducers: (builder) => {
     builder
       // Register
       .addCase(registerUser.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
+        state.registerLoading = true;
+        state.registerError = null;
         state.requiresVerification = false;
+        state.registerSuccessMsg = null;
       })
       .addCase(registerUser.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.error = null;
+        state.registerLoading = false;
+        state.registerError = null;
         const data = action.payload.data;
         if (data?.requiresVerification) {
           state.requiresVerification = true;
           state.registeredEmail = data.user.email;
+          state.registerSuccessMsg = action.payload.message || "Registered successfully!";
         } else if (data?.user) {
           state.isAuthenticated = true;
         }
       })
       .addCase(registerUser.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload?.message || 'Registration failed';
+        state.registerLoading = false;
+        state.registerError = action.payload?.message || 'Registration failed';
+        state.registerSuccessMsg = null;
       })
       // Login
       .addCase(loginUser.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
+        state.loginLoading = true;
+        state.loginError = null;
         state.requiresVerification = false;
+        state.loginSuccessMsg = null;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.error = null;
+        state.loginLoading = false;
+        state.loginError = null;
+        state.loginSuccessMsg = action.payload.message
         const data = action.payload.data;
         if (data?.requiresVerification) {
           state.requiresVerification = true;
@@ -285,79 +389,86 @@ const authSlice = createSlice({
         }
       })
       .addCase(loginUser.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload?.message || 'Login failed';
+        state.loginLoading = false;
+        state.loginError = action.payload?.message || 'Login failed';
+        state.loginSuccessMsg = null;
       })
       // Verify email
       .addCase(verifyEmail.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
+        state.verifyOtpLoading = true;
+        state.verifyOtpError = null;
+        state.verifyOtpSuccessMsg = null
       })
       .addCase(verifyEmail.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.error = null;
+        state.verifyOtpLoading = false;
+        state.verifyOtpError = null;
+
         const data = action.payload.data;
         if (data?.user) {
           state.user = data.user;
           state.requiresVerification = false;
           state.registeredEmail = null;
           state.isAuthenticated = true;
+          state.verifyOtpSuccessMsg = action.payload.message || "Email verified!";
         }
       })
       .addCase(verifyEmail.rejected, (state, action) => {
-        state.isLoading = false;
+        state.verifyOtpLoading = false;
         state.isAuthenticated = true;
-        state.error = action.payload?.message || 'Verification failed';
+        state.verifyOtpError = action.payload?.message || 'Verification failed';
+        state.verifyOtpSuccessMsg = null
       })
       // Resend OTP
       .addCase(resendOtp.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
+        state.resendOtpLoading = true;
+        state.resendOtpError = null;
       })
       .addCase(resendOtp.fulfilled, (state) => {
-        state.isLoading = false;
-        state.error = null;
+        state.resendOtpLoading = false;
+        state.resendOtpError = null;
       })
       .addCase(resendOtp.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload?.message || 'Failed to resend OTP';
+        state.resendOtpLoading = false;
+        state.resendOtpError = action.payload?.message || 'Failed to resend OTP';
       })
       .addCase(getCurrentUser.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
+        state.getCurrentUserLoading = true;
+        state.getCurrentUserError = null;
       })
       .addCase(getCurrentUser.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.error = null;
+        state.getCurrentUserLoading = false;
+        state.getCurrentUserError = null;
         state.user = action.payload.data?.user ?? null;
         state.isAuthenticated = !!action.payload.data?.user;
         state.isAuthHydrated = true;                 // ← set true here on success
       })
       .addCase(getCurrentUser.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload ?? 'Failed to fetch user';
+        state.getCurrentUserLoading = false;
+        state.getCurrentUserError = action.payload ?? 'Failed to fetch user';
         state.user = null;
         state.isAuthenticated = false;
         state.isAuthHydrated = true;                 // ← set true here on success
       })
       // ...
       .addCase(logoutUser.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
+        state.logoutLoading = true;
+        state.logoutError = null;
+        state.logoutSuccessMsg = null;
       })
-      .addCase(logoutUser.fulfilled, (state) => {
+      .addCase(logoutUser.fulfilled, (state, action) => {
         // Reset all auth state on logout
+        state.logoutLoading = false;
         state.user = null;
         state.isAuthenticated = false;
-        state.isLoading = false;
-        state.error = null;
+        state.logoutError = null;
         state.requiresVerification = false;
         state.registeredEmail = null;
-        state.verificationLoading = false;
+        state.logoutSuccessMsg = action.payload.message || "Logout Successful!";
       })
       .addCase(logoutUser.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload?.message || 'Logout failed';
+        state.logoutLoading = false;
+        state.logoutError = action.payload?.message || 'Logout failed';
+        state.logoutSuccessMsg = null;
       })
 
 
@@ -365,18 +476,31 @@ const authSlice = createSlice({
 });
 
 // Export actions
+// Export actions (place after your createSlice definition)
 export const {
-  clearError
+  clearAllErrors,
+  clearAllSuccess,
+  clearLoginError,
+  clearRegisterError,
+  clearVerifyOtpError,
+  clearLogoutError,
+  clearResendOtpError,
+  clearGetCurrentUserError,
+  clearLoginSuccess,
+  clearRegisterSuccess,
+  clearVerifyOtpSuccess,
+  clearLogoutSuccess,
+  clearResendOtpSuccess,
+  clearGetCurrentUserSuccess,
+  resetAuthUi // if using the global UI reset/cleanup
 } = authSlice.actions;
+
 
 // Selectors
 export const selectAuth = (state: { auth: AuthState }) => state.auth;
 export const selectUser = (state: { auth: AuthState }) => state.auth.user;
 export const selectIsAuthenticated = (state: { auth: AuthState }) => state.auth.isAuthenticated;
-export const selectIsLoading = (state: { auth: AuthState }) => state.auth.isLoading;
-export const selectAuthError = (state: { auth: AuthState }) => state.auth.error;
 export const selectRequiresVerification = (state: { auth: AuthState }) => state.auth.requiresVerification;
 export const selectRegisteredEmail = (state: { auth: AuthState }) => state.auth.registeredEmail;
-export const selectVerificationLoading = (state: { auth: AuthState }) => state.auth.isLoading;
 
 export default authSlice.reducer;

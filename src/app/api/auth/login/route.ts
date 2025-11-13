@@ -106,7 +106,7 @@ export async function POST(request: NextRequest) {
 
         const response = ApiResponse.success<LoginResponseData>(
             responseBody,
-            "Login successful."
+            "Signed in successfully!"
         );
 
         // Set HTTP-only auth token

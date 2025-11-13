@@ -8,6 +8,7 @@ import VerificationToken from '@/app/models/VerificationToken';
 import { NextRequest } from 'next/server';
 
 export async function POST(request: NextRequest) {
+    
   try {
     await dbConnect();
 
