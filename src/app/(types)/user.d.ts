@@ -28,18 +28,9 @@ export interface LoginResponseData {
 // =====================
 // Auth request types
 // =====================
-export interface LoginRequest {
-  email: string;
-  password: string;
-}
-
 export interface VerifyOtpRequest {
   email: string;
   otp: string;
-}
-
-export interface ResendOtpRequest {
-  email: string;
 }
 
 // =====================
