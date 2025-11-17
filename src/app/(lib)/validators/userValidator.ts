@@ -8,19 +8,19 @@ const baseUserSchema = z.object({
     .min(1, 'First name is required')
     .max(50, 'First name must be less than 50 characters')
     .regex(/^[a-zA-Z\s]*$/, 'First name can only contain letters and spaces'),
-  
+
   lastName: z
     .string()
     .min(1, 'Last name is required')
     .max(50, 'Last name must be less than 50 characters')
     .regex(/^[a-zA-Z\s]*$/, 'Last name can only contain letters and spaces'),
-  
+
   email: z
     .string()
     .min(1, 'Email is required')
     .email('Please enter a valid email address')
     .max(100, 'Email must be less than 100 characters'),
-  
+
   password: z
     .string()
     .min(6, 'Password must be at least 6 characters')
@@ -59,6 +59,15 @@ export const verifyOtpSchema = z.object({
     .length(6, 'OTP must be exactly 6 digits')
     .regex(/^[0-9]+$/, 'OTP must be numeric'),
 });
+
+export const resendOtpSchema = z.object({
+  email: z
+    .string()
+    .min(1, 'Email is required')
+    .email('Please enter a valid email address'),
+});
+
+export type ResendOtpData = z.infer<typeof resendOtpSchema>;
 
 export type VerifyOtpRequest = z.infer<typeof verifyOtpSchema>;
 

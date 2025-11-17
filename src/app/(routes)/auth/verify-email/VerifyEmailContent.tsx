@@ -19,8 +19,32 @@ export default function VerifyEmailContent() {
     const router = useRouter();
     const searchParams = useSearchParams();
 
-    const { verifyOtpLoading, verifyOtpError, verifyOtpSuccessMsg, user } = useAppSelector(selectAuth);
-    const [resendLoading, setResendLoading] = React.useState(false);
+    const { verifyOtpLoading, verifyOtpError, verifyOtpSuccessMsg, user, otpExpires, resendOtpLoading, resendOtpError, resendOtpSuccessMsg } = useAppSelector(selectAuth);
+
+    const [timeLeft, setTimeLeft] = React.useState(getTimeLeft(otpExpires ? new Date(otpExpires) : null));
+    const [currentAction, setCurrentAction] = React.useState<"verify" | "resend" | null>(null);
+
+    function getTimeLeft(expires: Date | null) {
+        if (!expires) return 0;
+        return Math.max(0, Math.floor((expires.getTime() - Date.now()) / 1000)); // in seconds
+    }
+
+
+    useEffect(() => {
+        if (!otpExpires) {
+            setTimeLeft(0);
+            return;
+        }
+        const target = new Date(otpExpires).getTime();
+        const interval = setInterval(() => {
+            const secondsLeft = Math.max(0, Math.floor((target - Date.now()) / 1000));
+            setTimeLeft(secondsLeft);
+            if (secondsLeft <= 0) clearInterval(interval);
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [otpExpires]);
+
 
     // Pull & decode params
     const email = useMemo(
@@ -46,30 +70,30 @@ export default function VerifyEmailContent() {
     });
 
     // Toast for async feedback
+    // useApiToast({
+    //     loading: verifyOtpLoading || resendOtpLoading,
+    //     success: verifyOtpSuccessMsg || resendOtpSuccessMsg,
+    //     error: verifyOtpError || resendOtpError,
+    //     loadingMsg: verifyOtpLoading ? "Verifying OTP..." : "Resending OTP...",
+    //     errorMsg: verifyOtpError ?? "Failed to verify.",
+    //     showToast: true
+    // });
+
     useApiToast({
-        loading: verifyOtpLoading,
-        success: verifyOtpSuccessMsg,
-        error: verifyOtpError,
-        loadingMsg: "Verifying OTP...",
-        errorMsg: verifyOtpError ?? "Failed to verify.",
-        showToast: true
+        loading: currentAction === "verify" ? verifyOtpLoading :
+            currentAction === "resend" ? resendOtpLoading : false,
+        success: currentAction === "verify" ? verifyOtpSuccessMsg :
+            currentAction === "resend" ? resendOtpSuccessMsg : null,
+        error: currentAction === "verify" ? verifyOtpError :
+            currentAction === "resend" ? resendOtpError : null,
+        loadingMsg: currentAction === "verify" ? "Verifying OTP..." :
+            currentAction === "resend" ? "Resending OTP..." : "",
+        errorMsg: currentAction === "verify"
+            ? verifyOtpError ?? "Failed to verify."
+            : resendOtpError ?? "Failed to resend OTP.",
+        showToast: !!currentAction
     });
 
-    // On success, immediately redirect
-    // useEffect(() => {
-    //     if (user?.emailVerified) {
-    //         // setSuccess("Email verified successfully! Redirecting to login...");
-    //         router.push(redirect);
-    //     }
-
-    //     return () => {
-    //         dispatch(clearAllErrors());
-    //         dispatch(clearAllSuccess());
-    //     };
-    // }, [user, router, dispatch]);
-
-    console.log("verifyOtpSuccessMsg  =>", verifyOtpSuccessMsg)
-    console.log("user  =>", user)
 
     useEffect(() => {
         if (user?.emailVerified) {
@@ -87,6 +111,35 @@ export default function VerifyEmailContent() {
         // };
     }, [user, verifyOtpSuccessMsg, router, dispatch, redirect]);
 
+    useEffect(() => {
+        if (
+            currentAction === "verify" &&
+            (verifyOtpSuccessMsg || verifyOtpError)
+        ) {
+            const timeout = setTimeout(() => setCurrentAction(null), 1500);
+           
+            return () => clearTimeout(timeout);
+        }
+        if (
+            currentAction === "resend" &&
+            (resendOtpSuccessMsg || resendOtpError)
+        ) {
+                // dispatch(clearAllErrors());
+                // dispatch(clearAllSuccess());
+            const timeout = setTimeout(() => setCurrentAction(null), 1500);
+            return () => clearTimeout(timeout);
+        }
+         dispatch(clearAllErrors());
+            dispatch(clearAllSuccess());
+    }, [
+        currentAction,
+        verifyOtpSuccessMsg,
+        verifyOtpError,
+        resendOtpSuccessMsg,
+        resendOtpError,
+        dispatch
+    ]);
+
 
     useEffect(() => {
         // Always clear errors (redux and RHF) on unmount
@@ -99,6 +152,7 @@ export default function VerifyEmailContent() {
 
     // Submit handler
     const onSubmit = async (data: VerifyOtpRequest) => {
+        setCurrentAction("verify");
         try {
             await dispatch(verifyEmail(data)).unwrap();
             // You may redirect here or rely on the useEffect to handle it
@@ -110,11 +164,15 @@ export default function VerifyEmailContent() {
 
     // Resend handler
     const handleResendOtp = async () => {
-        setResendLoading(true);
+        setCurrentAction("resend");
         try {
-            await dispatch(resendOtp(email)).unwrap();
-        } finally {
-            setResendLoading(false);
+            // const data = { email: email }
+             setValue("otp", "");
+            await dispatch(resendOtp({ email })).unwrap();
+        }
+        finally {
+            // setCurrentAction(null);
+            // console.log("handleResending OTP!")
         }
     };
 
@@ -155,24 +213,37 @@ export default function VerifyEmailContent() {
                         autoComplete="one-time-code"
                         disabled={verifyOtpLoading}
                     />
+
+
                     <Button
                         type="submit"
                         loading={verifyOtpLoading}
                         variant="primary"
                         fullWidth
+                        disabled={timeLeft === 0}
                     >
                         {verifyOtpLoading ? "Verifying..." : "Verify Email"}
                     </Button>
                 </form>
-
+                {timeLeft > 0 ? (
+                    <div className="text-center text-sm text-gray-500 mt-2">
+                        OTP expires in <span className="font-semibold text-blue-600">
+                            {`${Math.floor(timeLeft / 60)}:${(timeLeft % 60).toString().padStart(2, '0')}`}
+                        </span> minutes
+                    </div>
+                ) : (
+                    <div className="text-center text-sm text-red-600 mt-2">
+                        OTP has expired. Please request a new code.
+                    </div>
+                )}
                 <div className="text-center space-y-3">
                     <button
                         onClick={handleResendOtp}
-                        disabled={resendLoading}
+                        disabled={resendOtpLoading || timeLeft !== 0}
                         className="text-blue-600 hover:text-blue-700 font-medium disabled:opacity-50"
                         type="button"
                     >
-                        {resendLoading ? "Sending..." : "Resend OTP"}
+                        {resendOtpLoading ? "Sending..." : "Resend OTP"}
                     </button>
                     <div className="pt-2">
                         <Link

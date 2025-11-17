@@ -42,8 +42,6 @@ export default function RegisterForm() {
     (state) => state.auth
   );
 
-  console.log("successMsg =>", registerSuccessMsg)
-
   useApiToast({
     loading: registerLoading,
     error: registerError,
