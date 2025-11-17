@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { LoginFormData, RegisterApiData, VerifyOtpRequest } from '@/app/(lib)/validators/userValidator';
-import { LoginResponseData, RegisterResponseData, UserResponse, VerifyOtpResponse } from '@/app/(types)/user';
+import { LoginFormData, RegisterApiData, ResendOtpData, VerifyOtpRequest } from '@/app/(lib)/validators/userValidator';
+import { LoginResponseData, RegisterResponseData, ResendOtpResponseData, UserResponse, VerifyOtpResponse } from '@/app/(types)/user';
 import { ApiResponse, RejectedPayload } from '@/app/(types)/common';
 
 // Auth state interface
@@ -10,6 +10,9 @@ interface AuthState {
   requiresVerification: boolean;
   registeredEmail: string | null;
   isAuthHydrated: boolean;          // ← add this!
+
+  // ADD THIS ↓
+  otpExpires: Date | null;  // or Date | null if you prefer
 
   // Per-action states!
   loginLoading: boolean;
@@ -44,6 +47,9 @@ const initialState: AuthState = {
   requiresVerification: false,
   registeredEmail: null,
   isAuthHydrated: false,       // ← add this!
+
+  // ADD THIS ↓
+  otpExpires: null,  // or Date | null if you prefer
 
   // Per-action states!
   loginLoading: false,
@@ -182,20 +188,22 @@ export const verifyEmail = createAsyncThunk<
 
 // Async thunk for resend OTP
 export const resendOtp = createAsyncThunk<
-  ApiResponse<null>,
-  string,
+  ApiResponse<ResendOtpResponseData>,
+  ResendOtpData,
   { rejectValue: RejectedPayload }
 >(
   'auth/resendOtp',
   async (email, { rejectWithValue }) => {
     try {
+
+      console.log("slice email =>", email)
       const response = await fetch('/api/auth/resend-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify(email),
       });
 
-      const data: ApiResponse<null> = await response.json();
+      const data: ApiResponse<ResendOtpResponseData> = await response.json();
 
       if (!response.ok) {
         return rejectWithValue({
@@ -355,6 +363,8 @@ const authSlice = createSlice({
           state.requiresVerification = true;
           state.registeredEmail = data.user.email;
           state.registerSuccessMsg = action.payload.message || "Registered successfully!";
+          const expires = data?.otpExpires;
+          state.otpExpires = expires ? new Date(expires) : null;
         } else if (data?.user) {
           state.isAuthenticated = true;
         }
@@ -423,9 +433,12 @@ const authSlice = createSlice({
         state.resendOtpLoading = true;
         state.resendOtpError = null;
       })
-      .addCase(resendOtp.fulfilled, (state) => {
+      .addCase(resendOtp.fulfilled, (state, action) => {
         state.resendOtpLoading = false;
         state.resendOtpError = null;
+        state.resendOtpSuccessMsg = action.payload.message;
+        const expires = action.payload.data?.otpExpires;
+        state.otpExpires = expires ? new Date(expires) : null;
       })
       .addCase(resendOtp.rejected, (state, action) => {
         state.resendOtpLoading = false;

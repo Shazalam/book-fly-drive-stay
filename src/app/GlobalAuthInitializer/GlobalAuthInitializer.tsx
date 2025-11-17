@@ -9,7 +9,6 @@ export default function GlobalAuthInitializer() {
   const { user } = useAppSelector((s) => s.auth);
   const pathname = usePathname();
 
-
   useEffect(() => {
 
     if (pathname === "/login" || pathname === "/register") return;
@@ -18,7 +17,7 @@ export default function GlobalAuthInitializer() {
       dispatch(getCurrentUser());
     }
 
-  }, [dispatch, pathname]); // avoid infinite loops
+  }, [dispatch, pathname, user]); // avoid infinite loops
 
   return null; // this component doesn’t render anything visually
 }

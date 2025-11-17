@@ -24,12 +24,15 @@ const verificationTokenSchema = new Schema<IVerificationToken>({
   createdAt: {
     type: Date,
     default: Date.now,
-    expires: 600, // 10 minutes in seconds
+    // expires: 60, // 10 minutes in seconds
   },
 });
 
 // Compound index for faster queries
-verificationTokenSchema.index({ email: 1, token: 1 });
+// verificationTokenSchema.index({ expires: 1, token: 1 });
+
+// TTL index on the expires field to delete once this time is reached
+verificationTokenSchema.index({ expires: 1 }, { expireAfterSeconds: 0 });
 
 export default mongoose.models.VerificationToken || 
   mongoose.model<IVerificationToken>('VerificationToken', verificationTokenSchema);

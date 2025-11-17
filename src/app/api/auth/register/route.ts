@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
     const body: RegisterApiData = parseResult.data; // Now TypeScript and runtime agree!
 
     const { firstName, lastName, email, password } = body;
- 
+
     // Validation
     if (!firstName?.trim()) {
       return ApiResponse.badRequest(
@@ -91,7 +91,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Create user
-    const user:UserResponse = await User.create({
+    const user: UserResponse = await User.create({
       firstName: firstName.trim(),
       lastName: lastName.trim(),
       email: email.toLowerCase().trim(),
@@ -100,7 +100,7 @@ export async function POST(request: NextRequest) {
 
     // Generate OTP
     const otp = generateOtp();
-    const expires = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+    const expires = new Date(Date.now() + 1 * 60 * 1000); // 10 minutes
 
     // Delete any existing tokens for this email
     await VerificationToken.deleteMany({ email: email.toLowerCase() });
@@ -136,6 +136,7 @@ export async function POST(request: NextRequest) {
           updatedAt: user.updatedAt,
         },
         requiresVerification: true,
+        otpExpires: expires,
       },
       'Account created successfully. Please check your email for verification code.'
     );
