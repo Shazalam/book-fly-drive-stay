@@ -13,7 +13,6 @@ export async function POST(request: NextRequest) {
     await dbConnect();
 
     const body = await request.json();
-    console.log("resend OTP email body =>", body)
     // Validate request with Zod
     const parsed = resendOtpSchema.safeParse(body);
     if (!parsed.success) {

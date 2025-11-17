@@ -80,7 +80,6 @@ export default function RegisterForm() {
   }, [requiresVerification, registeredEmail, redirectTo, router]);
 
   const onSubmit = async (data: RegisterFormData) => {
-    console.log('Form submitted with data:', data);
 
     // Transform form data for API
     const apiData = {

@@ -130,7 +130,6 @@ export const loginUser = createAsyncThunk<
 
       const data: ApiResponse<LoginResponseData> = await response.json();
 
-      console.log("login User =>", data)
       if (!response.ok) {
         return rejectWithValue({
           message: data.message || 'Login failed',
@@ -195,8 +194,6 @@ export const resendOtp = createAsyncThunk<
   'auth/resendOtp',
   async (email, { rejectWithValue }) => {
     try {
-
-      console.log("slice email =>", email)
       const response = await fetch('/api/auth/resend-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

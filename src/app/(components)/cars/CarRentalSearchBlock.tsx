@@ -12,7 +12,6 @@ const CarRentalSearchBlock = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const handleFormSubmit = (data: CarRentalFormValues) => {
-    console.log("🚗 Car Rental Data =>", data);
     alert(`Searching cars from ${data.pickupLocation} to ${data.dropoffLocation || data.pickupLocation}`);
 
     // Close the drawer on successful mobile submission

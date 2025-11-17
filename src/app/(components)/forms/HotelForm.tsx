@@ -72,7 +72,6 @@ const HotelForm = () => {
 
   // --- Handlers ---
   const onSubmit = (data: HotelFormValues) => {
-    console.log("🏨 Hotel Booking Data =>", data);
     alert(`Searching hotels in ${data.destination} for ${data.adults} adults in ${data.rooms} rooms.`);
     reset();
   };
