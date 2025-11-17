@@ -117,20 +117,20 @@ export default function VerifyEmailContent() {
             (verifyOtpSuccessMsg || verifyOtpError)
         ) {
             const timeout = setTimeout(() => setCurrentAction(null), 1500);
-           
+
             return () => clearTimeout(timeout);
         }
         if (
             currentAction === "resend" &&
             (resendOtpSuccessMsg || resendOtpError)
         ) {
-                // dispatch(clearAllErrors());
-                // dispatch(clearAllSuccess());
+            // dispatch(clearAllErrors());
+            // dispatch(clearAllSuccess());
             const timeout = setTimeout(() => setCurrentAction(null), 1500);
             return () => clearTimeout(timeout);
         }
-         dispatch(clearAllErrors());
-            dispatch(clearAllSuccess());
+        dispatch(clearAllErrors());
+        dispatch(clearAllSuccess());
     }, [
         currentAction,
         verifyOtpSuccessMsg,
@@ -167,12 +167,11 @@ export default function VerifyEmailContent() {
         setCurrentAction("resend");
         try {
             // const data = { email: email }
-             setValue("otp", "");
+            setValue("otp", "");
             await dispatch(resendOtp({ email })).unwrap();
         }
-        finally {
-            // setCurrentAction(null);
-            // console.log("handleResending OTP!")
+        catch{
+            // Optional: handle local error UI if needed (usually not needed here)
         }
     };
 

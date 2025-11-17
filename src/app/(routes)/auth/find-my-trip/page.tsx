@@ -31,9 +31,6 @@ export default function FindMyTripPage() {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Add your find trip logic here
-    console.log('Find trip data:', formData);
-    
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 2000));
     setIsSubmitting(false);
