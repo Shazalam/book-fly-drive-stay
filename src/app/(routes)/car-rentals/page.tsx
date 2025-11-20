@@ -8,28 +8,35 @@ import CTASection from "@/app/(components)/common/CTASection";
 
 
 export const metadata: Metadata = {
-  title: "Premium Car Rentals | USA & Canada | Luxury & Economy Vehicles",
-  description: "Expert car rental reservation service across USA & Canada. Luxury sedans, SUVs, economy cars with personalized booking assistance and professional service.",
+  // Title uses template from root layout automatically
+  title: "Car Rentals USA & Canada | Compare Prices on Economy to Luxury",
+
+  // Startup-authentic, SEO-optimized description
+  description: "Compare car rental prices across USA & Canada. Economy cars, SUVs, luxury sedans from top providers. Transparent pricing, instant quotes, no hidden fees.",
+  icons: {
+    icon: "/icons/logo.png",
+  },
+  // Enhanced, long-tail keywords for better targeting
   keywords: [
     "car rental USA",
     "car rental Canada",
-    "luxury car rental",
-    "business rental cars",
-    "premium vehicles",
-    "car rental service USA",
-    "vehicle rental Canada",
-    "SUV rental",
-    "sedan rental",
-    "car reservation service",
-    "North America car rental",
-    "professional car booking"
+    "cheap car rental United States",
+    "SUV rental near me",
+    "luxury car rental comparison",
+    "economy car booking",
+    "airport car rental deals",
+    "weekly car rental rates",
+    "business car rental North America",
+    "rental car price comparison",
+    "affordable vehicle rental",
+    "car hire USA Canada"
   ],
   openGraph: {
-    title: "Premium Car Rentals | USA & Canada",
-    description: "Expert car rental reservation service across United States and Canada with personalized assistance",
+    title: "Car Rentals USA & Canada | Compare Top Providers",
+    description: "Compare car rental prices from leading providers. Economy to luxury vehicles across USA & Canada with transparent pricing.",
     images: [
       {
-        url: "/logo.png",
+        url: "/icons/logo.png",
         width: 1200,
         height: 630,
         alt: "Premium Car Rentals USA Canada",
@@ -40,12 +47,22 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Premium Car Rentals | USA & Canada",
-    description: "Expert car rental service with personalized booking assistance",
-    images: ["/logo.png"],
+    title: "Car Rentals USA & Canada | BookFlyDriveStay",
+    description: "Compare prices on economy, SUV & luxury car rentals. Transparent pricing across North America.",
+    images: ["/icons/logo.png"],
   },
   alternates: {
     canonical: "https://bookflydrivestay.com/car-rentals",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 };
 
