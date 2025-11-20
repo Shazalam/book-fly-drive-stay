@@ -13,8 +13,14 @@ export const metadata: Metadata = {
 
   // Startup-authentic, SEO-optimized description
   description: "Compare car rental prices across USA & Canada. Economy cars, SUVs, luxury sedans from top providers. Transparent pricing, instant quotes, no hidden fees.",
+  
   icons: {
-    icon: "/icons/logo.png",
+    icon: [
+      { url: '/icons/logo.png' },
+      { url: '/icon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/icon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: '/apple-touch-icon.png',
   },
   // Enhanced, long-tail keywords for better targeting
   keywords: [

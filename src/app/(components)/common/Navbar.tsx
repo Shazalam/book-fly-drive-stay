@@ -30,7 +30,7 @@ const navList = [
   { name: "Cars", href: "/car-rentals", icon: <RiCarLine className="w-4 h-4" /> },
   { name: "Flights", href: "/flights", icon: <IoAirplaneOutline className="w-4 h-4" /> },
   { name: "Hotels", href: "/hotels", icon: <HiOutlineBuildingOffice2 className="w-4 h-4" /> },
-  { name: "Cruise", href: "/cruise", icon: <RiShipLine className="w-4 h-4" /> },
+  { name: "Cruises", href: "/cruises", icon: <RiShipLine className="w-4 h-4" /> },
 ];
 
 export default function Navbar() {
