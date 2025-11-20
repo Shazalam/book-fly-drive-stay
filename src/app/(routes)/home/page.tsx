@@ -6,9 +6,6 @@ import HowWeWork from './HowWeWork/HowWeWork';
 import CTASection from '@/app/(components)/common/CTASection';
 import { Metadata } from 'next';
 
-
-
-
 export const metadata: Metadata = {
   // TIER 1: CRITICAL
   title: {

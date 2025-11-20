@@ -8,42 +8,70 @@ import { Metadata } from "next";
 import CTASection from "@/app/(components)/common/CTASection";
 
 export const metadata: Metadata = {
-  title: "Premium Flight Reservations | USA & Canada | Expert Booking Service",
-  description: "Expert flight reservation service across USA & Canada. We handle your flight bookings with personalized service, best routes, and competitive fares. Professional travel assistance.",
+  title: "Affordable Flight Deals USA & Canada | Compare & Book Best Airfares Online",
+
+  description: "Compare flight prices across USA & Canada. Find cheap domestic & international airfares, direct and connecting flights from top airlines. Transparent pricing, instant booking—no hidden fees.",
+
   keywords: [
-    "flight reservations USA",
-    "flight booking Canada",
-    "premium flight service",
-    "expert flight booking",
-    "travel booking assistance",
-    "flight reservation service",
-    "USA Canada flights",
-    "professional flight booking",
-    "air travel reservations",
-    "flight booking expert"
+    "cheap flights USA",
+    "compare flight prices",
+    "flight deals Canada",
+    "book flights online",
+    "domestic flight booking",
+    "international airfares",
+    "flights to USA",
+    "flights to Canada",
+    "fly one way USA Canada",
+    "airfare comparison"
   ],
+
   openGraph: {
-    title: "Premium Flight Reservations | USA & Canada",
-    description: "Expert flight reservation service across United States and Canada with personalized booking assistance",
+    title: "Flight Deals USA & Canada | Compare & Book Airfares",
+    description: "Find and compare flight prices from top airlines. Cheap fares, flexible options—no hidden booking fees.",
+    url: "https://www.bookflydrivestay.com/flights",
+    siteName: "BookFlyDriveStay",
     images: [
       {
-        url: "/logo.png",
+        url: "/flights-og.png",
         width: 1200,
         height: 630,
-        alt: "Premium Flight Reservations USA Canada",
+        alt: "Cheap Flights USA Canada - BookFlyDriveStay",
+        type: "image/png",
       },
     ],
     type: "website",
     locale: "en_US",
   },
+
   twitter: {
     card: "summary_large_image",
-    title: "Premium Flight Reservations | USA & Canada",
-    description: "Expert flight reservation service with personalized booking assistance",
-    images: ["/logo.png"],
+    title: "Flight Deals USA & Canada | BookFlyDriveStay",
+    description: "Compare airfares, find cheap flights in USA & Canada. No booking fees, instant results.",
+    images: ["/flights-twitter.png"],
   },
+
+  icons: {
+    icon: [
+      { url: '/icons/logo.png' },
+      { url: '/icon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/icon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: '/apple-touch-icon.png',
+  },
+
   alternates: {
-    canonical: "https://bookflydrivestay.com/flights",
+    canonical: "https://www.bookflydrivestay.com/flights",
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 };
 
