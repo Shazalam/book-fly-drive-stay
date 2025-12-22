@@ -1,10 +1,10 @@
 
-import { Metadata } from "next";
 import HeroSection from "./HeroSection";
 import ServiceFeatures from "./ServiceFeatures";
 import RentalProcess from "./RentalProcess";
 // import ServiceAreas from "./ServiceAreas";
 import CTASection from "@/app/(components)/common/CTASection";
+import { Metadata } from "next";
 
 
 export const metadata: Metadata = {

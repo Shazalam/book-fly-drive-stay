@@ -1,11 +1,12 @@
 import React from "react";
-import Head from "next/head";
 import FlightHero from "./FlightHero";
 import ServiceProcess from "./ServiceProcess";
 import ServiceFeatures from "./ServiceFeatures";
 import ServiceBenefits from "./ServiceBenefits";
-import { Metadata } from "next";
 import CTASection from "@/app/(components)/common/CTASection";
+
+import Head from "next/head";
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Affordable Flight Deals USA & Canada | Compare & Book Best Airfares Online",

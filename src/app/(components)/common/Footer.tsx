@@ -1,10 +1,12 @@
-import Link from "next/link";
-import Image from "next/image";
+
 import { FiMail, FiPhone } from "react-icons/fi";
 import { RiCarLine, RiShipLine } from "react-icons/ri";
 import { IoAirplaneOutline } from "react-icons/io5";
 import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
-import logo from "../../../../public/icons/logo.png";
+import Link from "next/link";
+import Image from "next/image"
+import logo from "../../../../public/icons/logo.png"
+
 
 const Footer = () => {
   return (
