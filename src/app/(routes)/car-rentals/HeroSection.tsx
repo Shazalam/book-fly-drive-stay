@@ -61,20 +61,7 @@ const CarHero = () => {
       {/* Main Content */}
       <div className="relative z-10 px-6 max-w-6xl mx-auto text-center">
         {/* Badge */}
-        <div
-          className={`inline-flex items-center gap-3 bg-white/10 backdrop-blur-lg rounded-full px-6 py-3 mb-8 border border-white/20 shadow-lg hover:scale-105 transition-all duration-300 ${
-            isLoaded ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
-          }`}
-        >
-          <span className="relative flex h-3 w-3">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-400 shadow-lg shadow-emerald-400/50"></span>
-          </span>
-          <span className="text-sm font-semibold text-white tracking-wide">
-            🚗 Serving 500+ Locations Across USA & Canada
-          </span>
-        </div>
-
+      
         {/* Main Heading */}
         <h1
           className={`mb-6 leading-tight transition-all duration-1000 delay-100 ${
@@ -90,7 +77,7 @@ const CarHero = () => {
         </h1>
 
         {/* Subheading */}
-        <p
+        {/* <p
           className={`text-xl sm:text-2xl md:text-3xl mb-12 text-blue-100 max-w-4xl mx-auto leading-relaxed font-light transition-all duration-1000 delay-200 ${
             isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
@@ -98,7 +85,20 @@ const CarHero = () => {
           Premium car rental experience across{" "}
           <span className="font-semibold text-white">North America</span>. From luxury sedans to
           family SUVs — your perfect ride awaits.
-        </p>
+        </p> */}
+
+<p
+  className={`text-xl sm:text-2xl md:text-3xl mb-12 text-blue-100 max-w-4xl mx-auto leading-relaxed font-light transition-all duration-1000 delay-200 ${
+    isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+  }`}
+>
+  Find the perfect ride for every journey.
+  <br />
+  <span className="font-semibold text-white">
+    Luxury sedans, powerful SUVs, and unmatched comfort
+  </span>{" "}
+  — all crafted for a seamless drive.
+</p>
 
         {/* Contact Text */}
         <p
