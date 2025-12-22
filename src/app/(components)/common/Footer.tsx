@@ -1,10 +1,12 @@
-import Link from "next/link";
-import Image from "next/image";
-import { FiMail, FiPhone, FiMapPin } from "react-icons/fi";
+
+import { FiMail, FiPhone } from "react-icons/fi";
 import { RiCarLine, RiShipLine } from "react-icons/ri";
 import { IoAirplaneOutline } from "react-icons/io5";
 import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
-import logo from "../../../../public/icons/logo.png";
+import Link from "next/link";
+import Image from "next/image"
+import logo from "../../../../public/icons/logo.png"
+
 
 const Footer = () => {
   return (
@@ -43,10 +45,6 @@ const Footer = () => {
                 <FiMail className="w-4 h-4 group-hover:scale-110 transition-transform" />
                 <span className="text-sm">contact@bookflydrivestay.com</span>
               </a>
-              <div className="flex items-start gap-3 text-gray-200">
-                <FiMapPin className="w-4 h-4 mt-1 flex-shrink-0" />
-                <span className="text-sm">Serving USA & Canada</span>
-              </div>
             </div>
           </div>
 

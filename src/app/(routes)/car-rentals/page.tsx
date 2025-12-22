@@ -1,10 +1,10 @@
 
-import { Metadata } from "next";
 import HeroSection from "./HeroSection";
 import ServiceFeatures from "./ServiceFeatures";
 import RentalProcess from "./RentalProcess";
-import ServiceAreas from "./ServiceAreas";
+// import ServiceAreas from "./ServiceAreas";
 import CTASection from "@/app/(components)/common/CTASection";
+import { Metadata } from "next";
 
 
 export const metadata: Metadata = {
@@ -78,7 +78,7 @@ const CarRentals = () => {
       <HeroSection />
       <ServiceFeatures />
       <RentalProcess />
-      <ServiceAreas />
+      {/* <ServiceAreas /> */}
       <CTASection
         title="Ready to Experience Premium Car Rental?"
         description="Join thousands of satisfied customers across the United States and Canada who trust us for their transportation needs."

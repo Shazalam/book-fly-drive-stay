@@ -29,7 +29,6 @@ export default function VerifyEmailContent() {
         return Math.max(0, Math.floor((expires.getTime() - Date.now()) / 1000)); // in seconds
     }
 
-
     useEffect(() => {
         if (!otpExpires) {
             setTimeLeft(0);

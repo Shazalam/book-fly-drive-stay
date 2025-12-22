@@ -1,26 +1,30 @@
 const ServiceFeatures = () => {
   const features = [
-    {
-      title: "Multi-Airline Access",
-      description: "Exclusive partnerships with 50+ major airlines worldwide",
-      benefits: ["Best price guarantee", "Flexible options", "Premium routes"]
-    },
-    {
-      title: "Expert Route Planning",
-      description: "Optimized flight paths with minimal layovers and best timing",
-      benefits: ["Time efficiency", "Cost optimization", "Comfort focus"]
-    },
-    {
-      title: "24/7 Reservation Support",
-      description: "Round-the-clock assistance for all your flight needs",
-      benefits: ["Instant changes", "Emergency support", "Expert guidance"]
-    },
-    {
-      title: "Secure Payment Handling",
-      description: "Protected transactions with comprehensive booking insurance",
-      benefits: ["Payment security", "Booking protection", "Transparent pricing"]
-    }
-  ];
+  {
+    title: "Multi-Airline Access",
+    description: "Access to a wide range of major and regional airlines in one place",
+    benefits: [
+      "Competitive pricing options",
+      "Multiple flight choices for your route",
+      "Ability to compare different airlines easily",
+    ],
+  },
+  {
+    title: "Expert Route Planning",
+    description: "Optimized flight paths with minimal layovers and best timing",
+    benefits: ["Time efficiency", "Cost optimization", "Comfort focus"],
+  },
+  {
+    title: "Reservation Assistance",
+    description: "Friendly support to help you with bookings and changes",
+    benefits: ["Help with changes during working hours", "Clear guidance on options", "Support via call, email, or chat"],
+  },
+  {
+    title: "Secure Payment Handling",
+    description: "Protected transactions with clear and transparent booking details",
+    benefits: ["Payment security", "Booking protection options", "Transparent pricing"],
+  },
+];
 
   return (
     <section className="py-20 bg-gradient-to-br from-blue-50 to-indigo-50">

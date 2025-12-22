@@ -47,7 +47,6 @@ export const loginSchema = z.object({
   password: z.string().min(1, 'Password is required'),
 });
 
-
 // Zod schema for OTP verification request
 export const verifyOtpSchema = z.object({
   email: z

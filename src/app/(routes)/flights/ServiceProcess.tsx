@@ -20,8 +20,8 @@ const ServiceProcess = () => {
     },
     {
       number: "04",
-      title: "Support & Updates",
-      description: "24/7 support throughout your journey",
+      title: "Smooth Changes & Flexibility",
+      description: "Plans changed? We make adjustments as painless as possible",
       details: ["Flight updates", "Change assistance", "Emergency support"]
     }
   ];
@@ -45,7 +45,7 @@ const ServiceProcess = () => {
               <div className="w-20 h-20 bg-blue-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                 {step.number}
               </div>
-              
+
               {/* Step Content */}
               <div className="bg-gradient-to-b from-gray-50 to-white rounded-2xl p-6 shadow-sm border border-gray-100 group-hover:shadow-md transition-all duration-300">
                 <h3 className="text-xl font-semibold text-gray-900 mb-3">
@@ -54,7 +54,7 @@ const ServiceProcess = () => {
                 <p className="text-gray-600 mb-4">
                   {step.description}
                 </p>
-                
+
                 {/* Step Details */}
                 <ul className="text-left space-y-2">
                   {step.details.map((detail, idx) => (
