@@ -12,11 +12,17 @@ const ServiceFeatures = () => {
     {
       icon: (
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M18 10c0-3.314-2.686-6-6-6S6 6.686 6 10v2a2 2 0 01-2 2H3v2a3 3 0 003 3h3l2.5 2 2.5-2h3a3 3 0 003-3v-2h-1a2 2 0 01-2-2v-2z"
+          />
         </svg>
       ),
-      title: "24/7 Customer Support",
-      description: "Round-the-clock assistance for booking modifications, roadside help, and any inquiries during your rental period."
+      title: "Dedicated Customer Support",
+      description:
+        "Friendly support team available during business hours to help with bookings, changes, and questions.",
     },
     {
       icon: (
