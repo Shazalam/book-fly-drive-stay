@@ -379,6 +379,8 @@ import {
 } from "../../(types)/CarRentalSchema";
 import TimeSelect from "../common/TimeSelect";
 import InputField from "../common/InputField";
+import Button from "../common/Button";
+import { FaLocationDot } from "react-icons/fa6";
 
 interface CarRentalFormProps {
   onSubmit: (data: CarRentalFormValues) => void;
@@ -386,6 +388,7 @@ interface CarRentalFormProps {
 }
 
 const CarRentalForm: React.FC<CarRentalFormProps> = ({ onSubmit, isMobile }) => {
+
   const {
     control,
     handleSubmit,
@@ -423,158 +426,126 @@ const CarRentalForm: React.FC<CarRentalFormProps> = ({ onSubmit, isMobile }) => 
   };
 
   return (
-    <form
+     <form
       onSubmit={handleSubmit(handleFormSubmit)}
-      className={`bg-white shadow-md rounded-2xl p-6 space-y-6 ${isMobile ? "w-full" : "max-w-2xl mx-auto"
-        }`}
+      className={`
+        bg-white/95 backdrop-blur
+        shadow-xl rounded-2xl border border-slate-200
+        p-4 sm:p-5 md:p-6
+        space-y-5
+        w-full
+        ${isMobile ? "" : "max-w-4xl md:max-w-5xl lg:max-w-6xl mx-auto"}
+      `}
     >
-      {/* Pickup Location */}
-      <Controller
-        name="pickupLocation"
-        control={control}
-        render={({ field }) => (
-          <InputField
-            {...field}
-            label="Pick-up Location"
-            placeholder="Enter pick-up location"
-            error={errors.pickupLocation}
+      {/* Locations */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+        <Controller
+          name="pickupLocation"
+          control={control}
+          render={({ field }) => (
+            <InputField
+              {...field}
+              label="Pick-up Location"
+              placeholder="City, airport or address"
+              icon={<FaLocationDot />}
+              error={errors.pickupLocation}
+            />
+          )}
+        />
+
+        {!isDropoffSame && (
+          <Controller
+            name="dropoffLocation"
+            control={control}
+            render={({ field }) => (
+              <InputField
+                {...field}
+                label="Drop-off Location"
+                placeholder="City, airport or address"
+                icon={<FaLocationDot />}
+                error={errors.dropoffLocation}
+              />
+            )}
           />
         )}
-      />
-
-      {/* Drop-off Location (hidden if same as pickup) */}
-      {!isDropoffSame && (
-        <Controller
-          name="dropoffLocation"
-          control={control}
-          render={({ field }) => (
-            <InputField
-              {...field}
-              label="Drop-off Location"
-              placeholder="Enter drop-off location"
-              error={errors.dropoffLocation}
-            />
-          )}
-        />
-      )}
-
-      {/* Pickup Date & Time */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <Controller
-          name="pickupDate"
-          control={control}
-          render={({ field }) => (
-            <InputField
-              {...field}
-              type="date"
-              label="Pick-up Date"
-              error={errors.pickupDate}
-            />
-          )}
-        />
-
-        <Controller
-          name="pickupTime"
-          control={control}
-          render={({ field }) => (
-            <TimeSelect
-              {...field}
-              label="Pick-up Time"
-              placeholder="Select time"
-              options={TIME_SLOTS}
-              error={errors.pickupTime}
-            />
-          )}
-        />
       </div>
 
-      {/* Drop-off Date & Time */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <Controller
-          name="dropoffDate"
-          control={control}
-          render={({ field }) => (
-            <InputField
-              {...field}
-              type="date"
-              label="Drop-off Date"
-              error={errors.dropoffDate}
+      {/* Dates & times */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+        {/* Pickup block */}
+        <div className="space-y-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <Controller
+              name="pickupDate"
+              control={control}
+              render={({ field }) => (
+                <InputField
+                  {...field}
+                  type="date"
+                  label="Pick-up Date"
+                  error={errors.pickupDate}
+                />
+              )}
             />
-          )}
-        />
 
-        <Controller
-          name="dropoffTime"
-          control={control}
-          render={({ field }) => (
-            <TimeSelect
-              {...field}
-              label="Drop-off Time"
-              placeholder="Select time"
-              options={TIME_SLOTS}
-              error={errors.dropoffTime}
+            <Controller
+              name="pickupTime"
+              control={control}
+              render={({ field }) => (
+                <TimeSelect
+                  {...field}
+                  label="Time"
+                  placeholder="Select time"
+                  options={TIME_SLOTS}
+                  error={errors.pickupTime}
+                />
+              )}
             />
-          )}
-        />
+          </div>
+        </div>
+
+        {/* Dropoff block */}
+        <div className="space-y-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <Controller
+              name="dropoffDate"
+              control={control}
+              render={({ field }) => (
+                <InputField
+                  {...field}
+                  type="date"
+                  label="Drop-off Date"
+                  error={errors.dropoffDate}
+                />
+              )}
+            />
+
+            <Controller
+              name="dropoffTime"
+              control={control}
+              render={({ field }) => (
+                <TimeSelect
+                  {...field}
+                  label="Time"
+                  placeholder="Select time"
+                  options={TIME_SLOTS}
+                  error={errors.dropoffTime}
+                />
+              )}
+            />
+          </div>
+        </div>
       </div>
 
-      {/* Checkbox Section */}
-      <div className="flex flex-col sm:flex-row gap-4">
-        {/* <Controller
-          name="isDropoffSame"
-          control={control}
-          render={({ field }) => (
-            <InputField
-              {...field}
-              type="checkbox"
-              label="Drop-off same as pick-up"
-              value={field.value}
-              onChange={(e) => {
-                const checked = e.target.checked;
-                field.onChange(checked);
-                if (checked)
-                  setValue("dropoffLocation", watch("pickupLocation"));
-              }}
-            />
-          )}
-        /> */}
-
-        {/* <Controller
-          name="addHotel"
-          control={control}
-          render={({ field }) => (
-            <InputField
-              {...field}
-              type="checkbox"
-              label="Add Hotel"
-              value={field.value}
-              onChange={(e) => field.onChange(e.target.checked)}
-            />
-          )}
-        /> */}
-
-        {/* <Controller
-          name="addFlight"
-          control={control}
-          render={({ field }) => (
-            <InputField
-              {...field}
-              type="checkbox"
-              label="Add Flight"
-              value={field.value}
-              onChange={(e) => field.onChange(e.target.checked)}
-            />
-          )}
-        /> */}
+      {/* Checkbox row – keep responsive */}
+      <div className="flex flex-wrap gap-3 items-center text-xs sm:text-sm">
+        {/* Future checkboxes go here */}
       </div>
 
-      {/* Submit Button */}
-      <button
-        type="submit"
-        className="w-full bg-emerald-600 text-white py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-all duration-200"
-      >
+      {/* Submit */}
+      <Button type="submit" variant="primary" size="md" fullWidth>
         Search Cars
-      </button>
+      </Button>
     </form>
   );
 };

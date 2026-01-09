@@ -11,7 +11,7 @@ export function useApiToast({
 }: {
   loading: boolean;
   success: string | null;
-  error: string | null;
+  error: string | null; 
   loadingMsg?: string;
   successMsg?: string | null;
   errorMsg?: string;

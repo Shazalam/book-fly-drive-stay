@@ -5,6 +5,7 @@ import { ApiResponse, RejectedPayload } from '@/app/(types)/common';
 
 // Auth state interface
 interface AuthState {
+  
   user: UserResponse | null;
   isAuthenticated: boolean;
   requiresVerification: boolean;
@@ -480,8 +481,6 @@ const authSlice = createSlice({
         state.logoutError = action.payload?.message || 'Logout failed';
         state.logoutSuccessMsg = null;
       })
-
-
   },
 });
 
@@ -504,7 +503,6 @@ export const {
   clearGetCurrentUserSuccess,
   resetAuthUi // if using the global UI reset/cleanup
 } = authSlice.actions;
-
 
 // Selectors
 export const selectAuth = (state: { auth: AuthState }) => state.auth;
