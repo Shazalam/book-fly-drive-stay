@@ -208,6 +208,7 @@ const CarHero = () => {
 
   return (
     <section className="relative min-h-screen flex items-start justify-center overflow-hidden">
+
       {/* Animated Background */}
       <div className="absolute inset-0 z-0">
         {/* Background Image */}
@@ -256,8 +257,7 @@ const CarHero = () => {
       </div>
 
       {/* Main Content */}
-      {/* Main Content */}
-      <div className="relative z-10 w-full px-4 sm:px-6 lg:px- pt-8">
+      <div className="relative z-10 w-full px-4 sm:px-6 lg:px- pt-20">
         <div className="max-w-7xl mx-auto text-center space-y-6 sm:space-y-8">
           {/* Heading */}
           <h1

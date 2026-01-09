@@ -474,7 +474,7 @@ const CarRentalForm: React.FC<CarRentalFormProps> = ({ onSubmit, isMobile }) => 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
         {/* Pickup block */}
         <div className="space-y-2">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-3">
             <Controller
               name="pickupDate"
               control={control}
@@ -506,7 +506,7 @@ const CarRentalForm: React.FC<CarRentalFormProps> = ({ onSubmit, isMobile }) => 
 
         {/* Dropoff block */}
         <div className="space-y-2">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-3">
             <Controller
               name="dropoffDate"
               control={control}
