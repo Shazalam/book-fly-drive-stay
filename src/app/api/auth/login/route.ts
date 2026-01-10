@@ -8,8 +8,8 @@ import { LoginFormData, loginSchema } from '@/app/(lib)/validators/userValidator
 import { generateOtp, generateToken } from '@/app/(lib)/utils/utils';
 import { LoginResponseData } from '@/app/(types)/user';
 import { generateOtpEmail, sendEmail } from '@/app/(lib)/email';
-
 export async function POST(request: NextRequest) {
+    
     try {
         await dbConnect();
 

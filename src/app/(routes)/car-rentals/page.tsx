@@ -5,6 +5,7 @@ import RentalProcess from "./RentalProcess";
 // import ServiceAreas from "./ServiceAreas";
 import CTASection from "@/app/(components)/common/CTASection";
 import { Metadata } from "next";
+import CarCategoryGrid from "./CarCategoryGrid";
 
 
 export const metadata: Metadata = {
@@ -76,6 +77,7 @@ const CarRentals = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <HeroSection />
+      <CarCategoryGrid />
       <ServiceFeatures />
       <RentalProcess />
       {/* <ServiceAreas /> */}

@@ -24,8 +24,6 @@ export async function POST(request: NextRequest) {
     }
     const { email } = parsed.data as ResendOtpData;
 
-
-
     // Check if user exists
     const user = await User.findOne({ email: email.toLowerCase() });
     if (!user) {
