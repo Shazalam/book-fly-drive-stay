@@ -5,21 +5,21 @@ import Image from 'next/image';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import ace from "../../../utils/assests/ace.png"
-import Hertz from "../../../utils/assests/Hertz.avif"
-import Alamo from "../../../utils/assests/Alamo.png"
-import budget from "../../../utils/assests/budget.png"
-import avis from "../../../utils/assests/avis.png"
-import Enterprise from "../../../utils/assests/Enterprise.png"
-import europecar from "../../../utils/assests/europecar.png"
-import fox from "../../../utils/assests/foxjpeg.jpeg"
-import NU from "../../../utils/assests/NU.webp"
-import Payless from "../../../utils/assests/payless.png"
-import Sixt from "../../../utils/assests/sixt.avif"
-import thrifty from "../../../utils/assests/thrifty.png"
-import uSave from "../../../utils/assests/u-Save.png"
-import National from "../../../utils/assests/National.png"
 
+import ace from "../../../utils/assests/companies-logos/ace.png"
+import Hertz from "../../../utils/assests/companies-logos/Hertz.webp"
+import Alamo from "../../../utils/assests/companies-logos/Alamo.png"
+import budget from "../../../utils/assests/companies-logos/budget.png"
+import avis from "../../../utils/assests/companies-logos/avis.png"
+import Enterprise from "../../../utils/assests/companies-logos/Enterprise.png"
+import europecar from "../../../utils/assests/companies-logos/europecar.png"
+import fox from "../../../utils/assests/companies-logos/foxjpeg.jpeg"
+import NU from "../../../utils/assests/companies-logos/NU.webp"
+import Payless from "../../../utils/assests/companies-logos/payless.png"
+import Sixt from "../../../utils/assests/companies-logos/sixt.webp"
+import thrifty from "../../../utils/assests/companies-logos/thrifty.png"
+import uSave from "../../../utils/assests/companies-logos/u-Save.png"
+import National from "../../../utils/assests/companies-logos/National.png"
 
 import "./CarRentalCompanies.css";
 const carRentalCompanies = [
@@ -38,7 +38,6 @@ const carRentalCompanies = [
     { name: 'U-Save Car Rental', image: uSave },
     { name: 'National Car Rental', image: National },
 ];
-
 
 const CarRentalCompanies = () => {
     const settings = {

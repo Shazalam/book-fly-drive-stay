@@ -4,18 +4,18 @@ import Image from "next/image";
 import Button from "@/app/(components)/common/Button";
 
 // Cars-images
-import small from "../../utils/assests/cars-images/small-car.avif"
+import small from "../../utils/assests/cars-images/small-car.webp"
 import medium from "../../utils/assests/cars-images/medium-car.webp"
 import convertible from "../../utils/assests/cars-images/Convertible.webp"
-import van from "../../utils/assests/cars-images/van-car.avif"
+import van from "../../utils/assests/cars-images/van-car.webp"
 import suv from "../../utils/assests/cars-images/suv-car.webp"
 import pickupCar from "../../utils/assests/cars-images/pickup-car.webp"
-import luxuryCar from "../../utils/assests/cars-images/luxury-car.avif"
+import luxuryCar from "../../utils/assests/cars-images/luxury-car.webp"
 import ford from "../../utils/assests/cars-images/ford-expidition.jpg"
 
 // Companies-logos
 import ace from "../../utils/assests/companies-logos/ace.png";
-import Hertz from "../../utils/assests/companies-logos/Hertz.avif";
+import Hertz from "../../utils/assests/companies-logos/Hertz.webp";
 import Alamo from "../../utils/assests/companies-logos/Alamo.png";
 import budget from "../../utils/assests/companies-logos/budget.png";
 import avis from "../../utils/assests/companies-logos/avis.png";
@@ -24,7 +24,7 @@ import europecar from "../../utils/assests/companies-logos/europecar.png";
 import fox from "../../utils/assests/companies-logos/foxjpeg.jpeg";
 import NU from "../../utils/assests/companies-logos/NU.webp";
 import Payless from "../../utils/assests/companies-logos/payless.png";
-import Sixt from "../../utils/assests/companies-logos/sixt.avif";
+import Sixt from "../../utils/assests/companies-logos/sixt.webp";
 import thrifty from "../../utils/assests/companies-logos/thrifty.png";
 import uSave from "../../utils/assests/companies-logos/u-Save.png";
 import National from "../../utils/assests/companies-logos/National.png";

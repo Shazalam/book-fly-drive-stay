@@ -215,7 +215,6 @@ const CarHero = () => {
         <div className="absolute inset-0">
           <Image
             src="/images/car-hero-section.avif"
-            // src="/images/car-hero-section-avif"
             alt="Luxury Car"
             fill
             priority
@@ -275,8 +274,6 @@ const CarHero = () => {
               Search, Compare, and Save
             </span>
           </h1>
-
-
           {/* Form container */}
           <div
             className={`
