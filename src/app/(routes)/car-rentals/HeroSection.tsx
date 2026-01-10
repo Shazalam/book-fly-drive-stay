@@ -185,13 +185,13 @@
 // export default CarHero;
 
 
+
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import InputField from "@/app/(components)/common/InputField";
-import { FaLocationDot } from "react-icons/fa6";
 import CarRentalForm from "@/app/(components)/forms/CarRentalForm";
 import { CarRentalFormValues } from "@/app/(types)/CarRentalSchema";
+import Button from "@/app/(components)/common/Button";
 
 const CarHero = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -257,7 +257,7 @@ const CarHero = () => {
       </div>
 
       {/* Main Content */}
-      <div className="relative z-10 w-full px-4 sm:px-6 lg:px- pt-20">
+      <div className="relative z-10 w-full px-4 sm:px-6 lg:px- pt-25 pb-10 sm:pb-1">
         <div className="max-w-7xl mx-auto text-center space-y-6 sm:space-y-8">
           {/* Heading */}
           <h1
@@ -268,10 +268,10 @@ const CarHero = () => {
     ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}
   `}
           >
-            <span className="block text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white enhanced-text-shadow">
+            <span className="block text-3xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white enhanced-text-shadow">
               Car Rental –
             </span>
-            <span className="block text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mt-1 sm:mt-2 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent animate-gradient-shift bg-300%">
+            <span className="block text-3xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mt-1 sm:mt-2 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent animate-gradient-shift bg-300%">
               Search, Compare, and Save
             </span>
           </h1>
@@ -286,6 +286,20 @@ const CarHero = () => {
             `}
           >
             <CarRentalForm onSubmit={handleCarRentalSubmit} isMobile={false} />
+            {/* Contact button below form */}
+            <div className="mt-4 sm:mt-5 max-w-md mx-auto">
+              <Button
+                variant="outline"
+                size="md"
+                fullWidth={true}
+                onClick={() => {
+                  window.location.href = "tel:+18449545425";
+                }}
+                className="border-white/80 text-white hover:bg-white/10 focus:ring-white/40"
+              >
+                Call us: +1 (844) 954-5425
+              </Button>
+            </div>
           </div>
         </div>
       </div>
