@@ -1,42 +1,7 @@
 // src/app/api/locations/route.ts
-import { NextResponse } from "next/server";
 import axios from "axios";
-
-// Define interfaces for API responses
-interface GooglePrediction {
-  place_id: string;
-  structured_formatting: {
-    main_text: string;
-    secondary_text?: string;
-  };
-}
-
-interface GoogleApiResponse {
-  predictions?: GooglePrediction[];
-}
-
-interface AmadeusAddress {
-  cityName?: string;
-  countryCode?: string;
-}
-
-interface AmadeusLocation {
-  iataCode?: string;
-  id?: string;
-  name: string;
-  address?: AmadeusAddress;
-}
-
-interface AmadeusApiResponse {
-  data?: AmadeusLocation[];
-}
-
-interface NormalizedLocation {
-  id: string;
-  name: string;
-  address: string;
-  source: "google" | "amadeus";
-}
+import { AmadeusApiResponse, AmadeusLocation, GoogleApiResponse, GooglePrediction, NormalizedLocation } from "@/app/(types)/location";
+import { badRequest, ErrorCode, internalError, success } from "@/app/(lib)/utils/api-response";
 
 // 🟢 STEP 1: Get Amadeus Access Token
 const getAmadeusAccessToken = async () => {
@@ -59,7 +24,7 @@ const getAmadeusAccessToken = async () => {
   } catch (error: unknown) {
     // Safe error handling for unknown type
     let errorMessage = "Unknown error occurred";
-    
+
     if (axios.isAxiosError(error)) {
       // Axios error with response data
       errorMessage = error.response?.data ? JSON.stringify(error.response.data) : error.message;
@@ -70,19 +35,21 @@ const getAmadeusAccessToken = async () => {
       // Fallback for other error types
       errorMessage = String(error);
     }
-    
+
     console.error("❌ Amadeus token error:", errorMessage);
     throw new Error("Failed to authenticate Amadeus");
   }
 };
 
+
 // 🟡 STEP 2: Handle GET request
 export async function GET(req: Request) {
+
   const { searchParams } = new URL(req.url);
   const query = searchParams.get("search");
 
   if (!query) {
-    return NextResponse.json({ success: false, message: "Missing search query", data: [] });
+    return badRequest("Missing search query");
   }
 
   try {
@@ -133,16 +100,14 @@ export async function GET(req: Request) {
     const combined = [...googleData, ...amadeusData];
 
     // 6️⃣ Return unified JSON
-    return NextResponse.json({
-      success: true,
-      query,
-      count: combined.length,
-      data: combined,
-    });
+    return success(
+      { query, count: combined.length, data: combined },
+      "Locations fetched successfully"
+    );
   } catch (error: unknown) {
     // Safe error handling for unknown type
     let errorMessage = "Unknown error occurred";
-    
+
     if (axios.isAxiosError(error)) {
       // Axios error with response data
       errorMessage = error.response?.data ? JSON.stringify(error.response.data) : error.message;
@@ -153,11 +118,10 @@ export async function GET(req: Request) {
       // Fallback for other error types
       errorMessage = String(error);
     }
-    
+
     console.error("❌ Combined search error:", errorMessage);
-    return NextResponse.json(
-      { success: false, message: "Failed to fetch combined data" },
-      { status: 500 }
-    );
+    return internalError("Failed to fetch combined data", ErrorCode.EXTERNAL_SERVICE_ERROR, {
+      error: errorMessage,
+    });
   }
 }
