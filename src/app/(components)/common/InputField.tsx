@@ -66,7 +66,7 @@ const InputField: React.FC<InputFieldProps> = ({
           id={rest.name}
           type={type}
           className={clsx(
-            "w-full placeholder-gray-800 px-3 sm:px-4 focus:outline-none",
+            "w-full placeholder-gray-500 px-3 sm:px-4 focus:outline-none",
             icon && "pl-9 sm:pl-10",
             iconRight && "pr-9 sm:pr-10",
             variantClasses[variant],

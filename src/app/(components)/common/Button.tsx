@@ -57,6 +57,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           fullWidth && "w-full",
           className,
           loading && "opacity-70 cursor-not-allowed"
+          
         )}
         {...props}
       >

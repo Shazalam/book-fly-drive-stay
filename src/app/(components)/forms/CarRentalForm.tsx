@@ -364,12 +364,9 @@
 
 
 
-
-
-
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -381,6 +378,9 @@ import TimeSelect from "../common/TimeSelect";
 import InputField from "../common/InputField";
 import Button from "../common/Button";
 import { FaLocationDot } from "react-icons/fa6";
+import { useDebounce } from "@/app/(hooks)/useDebounce";
+import { useAppDispatch, useAppSelector } from "@/app/(hooks)/redux";
+import { clearLocationsData, fetchLocations, resetLocationsUi, selectLocationItems, selectLocationsError, selectLocationsLoading } from "@/app/(store)/slices/locationSlice";
 
 interface CarRentalFormProps {
   onSubmit: (data: CarRentalFormValues) => void;
@@ -410,8 +410,56 @@ const CarRentalForm: React.FC<CarRentalFormProps> = ({ onSubmit, isMobile }) => 
     },
   });
 
+  const dispatch = useAppDispatch()
+  const items = useAppSelector(selectLocationItems);
+  const loading = useAppSelector(selectLocationsLoading);
+  const error = useAppSelector(selectLocationsError);
+
   const isDropoffSame = watch("isDropoffSame");
   const pickupLocation = watch("pickupLocation");
+  const dropoffLocation = watch("dropoffLocation");
+
+  const [activeField, setActiveField] = useState<"pickup" | "dropoff" | null>(null);
+  const [selectedPickup, setSelectedPickup] = useState("");
+  const [selectedDropoff, setSelectedDropoff] = useState("");
+
+  const debouncedPickup = useDebounce(pickupLocation, 400);
+  const debouncedDropoff = useDebounce(dropoffLocation, 400);
+
+  // Effect for pickup
+  useEffect(() => {
+    if (activeField !== "pickup") return;
+
+    const query = debouncedPickup.trim();
+
+    if (!query) {
+      dispatch(clearLocationsData());
+      dispatch(resetLocationsUi());
+      return;
+    }
+
+    // Do not refetch if it's exactly the selected value
+    if (query === selectedPickup) return;
+
+    dispatch(fetchLocations(debouncedPickup));
+  }, [debouncedPickup, activeField, dispatch, selectedPickup]);
+
+  // Effect for dropoff
+  useEffect(() => {
+    if (activeField !== "dropoff") return;
+
+    const query = debouncedDropoff.trim();
+
+    if (!query) {
+      dispatch(clearLocationsData());
+      dispatch(resetLocationsUi());
+      return;
+    }
+
+    if (query === selectedDropoff) return;
+
+    dispatch(fetchLocations(debouncedDropoff));
+  }, [debouncedDropoff, activeField, dispatch, selectedDropoff]);
 
   // Handle the "same as pickup" logic
   useEffect(() => {
@@ -420,13 +468,30 @@ const CarRentalForm: React.FC<CarRentalFormProps> = ({ onSubmit, isMobile }) => 
     }
   }, [isDropoffSame, pickupLocation, setValue]);
 
-
   const handleFormSubmit: SubmitHandler<CarRentalFormValues> = (values) => {
     onSubmit(values);
   };
 
+  const handleSelectLocations = (name: string, field: "pickupLocation" | "dropoffLocation") => {
+    setValue(field, name, { shouldValidate: true, shouldDirty: true })
+
+    if (field === "pickupLocation") {
+      setSelectedPickup(name);
+    } else {
+      setSelectedDropoff(name);
+    }
+
+    dispatch(clearLocationsData())
+    dispatch(resetLocationsUi())
+
+    // Close dropdown
+    setActiveField(null);
+  }
+
+  const showDropdown = !!activeField && (items.length > 0 || loading || !!error);
+
   return (
-     <form
+    <form
       onSubmit={handleSubmit(handleFormSubmit)}
       className={`
         bg-white/95 backdrop-blur
@@ -439,35 +504,133 @@ const CarRentalForm: React.FC<CarRentalFormProps> = ({ onSubmit, isMobile }) => 
     >
       {/* Locations */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
-        <Controller
-          name="pickupLocation"
-          control={control}
-          render={({ field }) => (
-            <InputField
-              {...field}
-              label="Pick-up Location"
-              placeholder="City, airport or address"
-              icon={<FaLocationDot />}
-              error={errors.pickupLocation}
-            />
-          )}
-        />
-
-        {!isDropoffSame && (
+        {/* Pickup */}
+        <div className="relative">
           <Controller
-            name="dropoffLocation"
+            name="pickupLocation"
             control={control}
             render={({ field }) => (
               <InputField
                 {...field}
-                label="Drop-off Location"
+                label="Pick-up Location"
                 placeholder="City, airport or address"
                 icon={<FaLocationDot />}
-                error={errors.dropoffLocation}
+                error={errors.pickupLocation}
+                onFocus={() => setActiveField("pickup")}
               />
             )}
           />
-        )}
+
+          {showDropdown && activeField === "pickup" && (
+            <div className="absolute left-0 right-0 mt-1 z-20 rounded-lg bg-[#130a3a] border border-white/10 shadow-xl max-h-64 overflow-y-auto">
+              {loading && (
+                <div className="px-3 py-2 text-xs text-slate-300">
+                  Searching locations...
+                </div>
+              )}
+
+              {error && !loading && (
+                <div className="px-3 py-2 text-xs text-red-400">{error}</div>
+              )}
+
+              {!loading && !error && items.length > 0 && (
+                <>
+                  {items.map((loc) => (
+                    <button
+                      key={`${loc.source}-${loc.id}`}
+                      type="button"
+                      onClick={() =>
+                        handleSelectLocations(loc.name, "pickupLocation")
+                      }
+                      className="w-full text-left px-3 py-2 text-xs sm:text-sm text-slate-100 hover:bg-[#1d1246] flex flex-col"
+                    >
+                      <span className="font-medium">{loc.name}</span>
+                      {loc.address && (
+                        <span className="text-[11px] text-slate-300">
+                          {loc.address}
+                        </span>
+                      )}
+                      <span className="text-[10px] text-slate-500 uppercase mt-0.5">
+                        {loc.source}
+                      </span>
+                    </button>
+                  ))}
+                </>
+              )}
+
+              {!loading && !error && items.length === 0 && (
+                <div className="px-3 py-2 text-xs text-slate-300">
+                  No locations found.
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+
+        {/* Dropoff */}
+        <div className="relative">
+          {!isDropoffSame && (
+            <Controller
+              name="dropoffLocation"
+              control={control}
+              render={({ field }) => (
+                <InputField
+                  {...field}
+                  label="Drop-off Location"
+                  placeholder="City, airport or address"
+                  icon={<FaLocationDot />}
+                  error={errors.dropoffLocation}
+                  onFocus={() => setActiveField("dropoff")}
+                />
+              )}
+            />
+          )}
+
+          {showDropdown && !isDropoffSame && activeField === "dropoff" && (
+            <div className="absolute left-0 right-0 mt-1 z-20 rounded-lg bg-[#130a3a] border border-white/10 shadow-xl max-h-64 overflow-y-auto">
+              {loading && (
+                <div className="px-3 py-2 text-xs text-slate-300">
+                  Searching locations...
+                </div>
+              )}
+
+              {error && !loading && (
+                <div className="px-3 py-2 text-xs text-red-400">{error}</div>
+              )}
+
+              {!loading && !error && items.length > 0 && (
+                <>
+                  {items.map((loc) => (
+                    <button
+                      key={`${loc.source}-${loc.id}`}
+                      type="button"
+                      onClick={() =>
+                        handleSelectLocations(loc.name, "dropoffLocation")
+                      }
+                      className="w-full text-left px-3 py-2 text-xs sm:text-sm text-slate-100 hover:bg-[#1d1246] flex flex-col"
+                    >
+                      <span className="font-medium">{loc.name}</span>
+                      {loc.address && (
+                        <span className="text-[11px] text-slate-300">
+                          {loc.address}
+                        </span>
+                      )}
+                      <span className="text-[10px] text-slate-500 uppercase mt-0.5">
+                        {loc.source}
+                      </span>
+                    </button>
+                  ))}
+                </>
+              )}
+
+              {!loading && !error && items.length === 0 && (
+                <div className="px-3 py-2 text-xs text-slate-300">
+                  No locations found.
+                </div>
+              )}
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Dates & times */}
@@ -543,7 +706,12 @@ const CarRentalForm: React.FC<CarRentalFormProps> = ({ onSubmit, isMobile }) => 
       </div>
 
       {/* Submit */}
-      <Button type="submit" variant="primary" size="md" fullWidth>
+      <Button type="submit" variant="primary" size="md" fullWidth
+        onClick={() => {
+          window.location.href = "tel:+18449545425";
+        }}
+        className="cursor-pointer"
+      >
         Search Cars
       </Button>
     </form>
